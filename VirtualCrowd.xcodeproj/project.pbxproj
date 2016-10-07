@@ -8,13 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		654F03FF1DA84C2100622268 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654F03FE1DA84C2100622268 /* AppDelegate.swift */; };
-		654F04011DA84C2100622268 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654F04001DA84C2100622268 /* ViewController.swift */; };
 		654F04041DA84C2100622268 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 654F04021DA84C2100622268 /* Main.storyboard */; };
 		654F04071DA84C2100622268 /* VirtualCrowd.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 654F04051DA84C2100622268 /* VirtualCrowd.xcdatamodeld */; };
 		654F04091DA84C2100622268 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 654F04081DA84C2100622268 /* Assets.xcassets */; };
 		654F040C1DA84C2100622268 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 654F040A1DA84C2100622268 /* LaunchScreen.storyboard */; };
 		654F04171DA84C2200622268 /* VirtualCrowdTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654F04161DA84C2200622268 /* VirtualCrowdTests.swift */; };
 		654F04221DA84C2200622268 /* VirtualCrowdUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654F04211DA84C2200622268 /* VirtualCrowdUITests.swift */; };
+		654F04301DA84CFA00622268 /* OpeningScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654F042F1DA84CFA00622268 /* OpeningScreenViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,7 +37,6 @@
 /* Begin PBXFileReference section */
 		654F03FB1DA84C2100622268 /* VirtualCrowd.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VirtualCrowd.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		654F03FE1DA84C2100622268 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		654F04001DA84C2100622268 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		654F04031DA84C2100622268 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		654F04061DA84C2100622268 /* VirtualCrowd.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = VirtualCrowd.xcdatamodel; sourceTree = "<group>"; };
 		654F04081DA84C2100622268 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -49,6 +48,7 @@
 		654F041D1DA84C2200622268 /* VirtualCrowdUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VirtualCrowdUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		654F04211DA84C2200622268 /* VirtualCrowdUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualCrowdUITests.swift; sourceTree = "<group>"; };
 		654F04231DA84C2200622268 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		654F042F1DA84CFA00622268 /* OpeningScreenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpeningScreenViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,8 +100,8 @@
 			isa = PBXGroup;
 			children = (
 				654F03FE1DA84C2100622268 /* AppDelegate.swift */,
-				654F04001DA84C2100622268 /* ViewController.swift */,
 				654F04021DA84C2100622268 /* Main.storyboard */,
+				654F042F1DA84CFA00622268 /* OpeningScreenViewController.swift */,
 				654F04081DA84C2100622268 /* Assets.xcassets */,
 				654F040A1DA84C2100622268 /* LaunchScreen.storyboard */,
 				654F040D1DA84C2100622268 /* Info.plist */,
@@ -265,8 +265,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				654F04301DA84CFA00622268 /* OpeningScreenViewController.swift in Sources */,
 				654F04071DA84C2100622268 /* VirtualCrowd.xcdatamodeld in Sources */,
-				654F04011DA84C2100622268 /* ViewController.swift in Sources */,
 				654F03FF1DA84C2100622268 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -516,6 +516,7 @@
 				654F04281DA84C2200622268 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		654F04291DA84C2200622268 /* Build configuration list for PBXNativeTarget "VirtualCrowdTests" */ = {
 			isa = XCConfigurationList;
@@ -524,6 +525,7 @@
 				654F042B1DA84C2200622268 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		654F042C1DA84C2200622268 /* Build configuration list for PBXNativeTarget "VirtualCrowdUITests" */ = {
 			isa = XCConfigurationList;
@@ -532,6 +534,7 @@
 				654F042E1DA84C2200622268 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
