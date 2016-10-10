@@ -9,12 +9,18 @@
 import UIKit
 
 class OpeningScreenViewController: UIViewController {
+    
+    @IBOutlet weak var joinCrowdCodeEntryTextField: UITextField!
+    @IBOutlet weak var createCrowdTitleTextEntry: UITextField!
+    @IBOutlet weak var createCrowdTimeLimitEntry: UITextField!
+    
+    
+    
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        // Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {
@@ -32,5 +38,15 @@ class OpeningScreenViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     
+    @IBAction func JoinSessionPressed(_ sender: UIButton) {
+        
+    }
 
+    @IBAction func createSessionButtonPressed(_ sender: UIButton) {
+        
+    }
+    
+    @IBAction func pastSessionsButtonTapped(_ sender: UIButton) {
+        
+    }
 }

@@ -3,10 +3,11 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Virtual Crowd-->
+        <!--Opening Screen View Controller-->
         <scene sceneID="Nps-Ql-AeU">
             <objects>
                 <viewController id="372-Tk-dse" customClass="OpeningScreenViewController" customModule="VirtualCrowd" customModuleProvider="target" sceneMemberID="viewController">
@@ -24,18 +25,124 @@
                                     <constraint firstAttribute="width" constant="375" id="nvb-cc-39L"/>
                                 </constraints>
                             </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Virtual Crowd" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OPl-5F-Cy8">
+                                <fontDescription key="fontDescription" type="system" pointSize="40"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VJk-yh-ZGC">
+                                <color key="backgroundColor" red="0.8114392305" green="0.83899120260000004" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="284" id="Gtm-h4-GiV"/>
+                                    <constraint firstAttribute="height" constant="71" id="ngP-4J-Zu0"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gxb-91-slX">
+                                <color key="backgroundColor" red="0.8114392305" green="0.83899120260000004" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="48" id="Swg-lI-tiY"/>
+                                    <constraint firstAttribute="width" constant="284" id="lZG-hR-Tjw"/>
+                                </constraints>
+                            </view>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="42" translatesAutoresizingMaskIntoConstraints="NO" id="s7r-FK-99g">
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="lqW-lA-JFO">
+                                        <subviews>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Code Here" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sF6-3D-vQO">
+                                                <color key="backgroundColor" red="1" green="0.98039215690000003" blue="0.90980392160000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="textColor"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </textField>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cgd-4I-00L">
+                                                <state key="normal" title="Join Session"/>
+                                                <connections>
+                                                    <action selector="JoinSessionPressed:" destination="372-Tk-dse" eventType="touchUpInside" id="Xs8-xT-nkf"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="1ru-jz-RWf">
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Pqs-x8-Cuf">
+                                                <subviews>
+                                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Title Here" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="msi-oF-Bmb">
+                                                        <color key="backgroundColor" red="1" green="0.98039215690000003" blue="0.90980392160000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <nil key="textColor"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                        <textInputTraits key="textInputTraits"/>
+                                                    </textField>
+                                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Time Limit Here" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Rqb-oG-iwQ">
+                                                        <color key="backgroundColor" red="1" green="0.98039215690000003" blue="0.90980392160000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <nil key="textColor"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                        <textInputTraits key="textInputTraits"/>
+                                                    </textField>
+                                                </subviews>
+                                            </stackView>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="auG-mj-2y7">
+                                                <state key="normal" title="Create Session"/>
+                                                <connections>
+                                                    <action selector="createSessionButtonPressed:" destination="372-Tk-dse" eventType="touchUpInside" id="fVQ-qt-KOG"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pry-Or-S9n">
+                                        <color key="backgroundColor" red="0.8114392305" green="0.83899120260000004" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal" title="Past Sessions"/>
+                                        <connections>
+                                            <action selector="pastSessionsButtonTapped:" destination="372-Tk-dse" eventType="touchUpInside" id="Izi-Y0-vZQ"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="cgd-4I-00L" firstAttribute="width" secondItem="auG-mj-2y7" secondAttribute="width" id="V2R-fd-sGa"/>
+                                </constraints>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="gxb-91-slX" firstAttribute="centerX" secondItem="aJV-vg-yXW" secondAttribute="centerX" id="6M3-Pg-wUX"/>
+                            <constraint firstItem="VJk-yh-ZGC" firstAttribute="centerX" secondItem="aJV-vg-yXW" secondAttribute="centerX" id="7Vx-AI-8cG"/>
+                            <constraint firstItem="b6X-Mt-fQ0" firstAttribute="top" secondItem="s7r-FK-99g" secondAttribute="bottom" constant="20" id="PQW-Q3-jCc"/>
                             <constraint firstItem="b6X-Mt-fQ0" firstAttribute="top" secondItem="gbI-71-zkX" secondAttribute="bottom" constant="320" id="RJB-gf-SxW"/>
+                            <constraint firstItem="s7r-FK-99g" firstAttribute="centerX" secondItem="aJV-vg-yXW" secondAttribute="centerX" id="VMc-H8-hnn"/>
+                            <constraint firstItem="OPl-5F-Cy8" firstAttribute="centerX" secondItem="aJV-vg-yXW" secondAttribute="centerX" id="alY-gs-wK5"/>
+                            <constraint firstItem="b6X-Mt-fQ0" firstAttribute="top" secondItem="VJk-yh-ZGC" secondAttribute="bottom" constant="86" id="fg0-A5-xCz"/>
                             <constraint firstItem="gbI-71-zkX" firstAttribute="centerX" secondItem="aJV-vg-yXW" secondAttribute="centerX" id="h1l-cP-mI9"/>
+                            <constraint firstItem="OPl-5F-Cy8" firstAttribute="top" secondItem="aJV-vg-yXW" secondAttribute="topMargin" constant="98" id="pkH-ea-X23"/>
+                            <constraint firstItem="VJk-yh-ZGC" firstAttribute="top" secondItem="gxb-91-slX" secondAttribute="bottom" constant="29" id="qxi-P2-SU6"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Virtual Crowd" id="YBM-bx-TSq"/>
+                    <navigationItem key="navigationItem" id="YBM-bx-TSq"/>
+                    <connections>
+                        <outlet property="createCrowdTimeLimitEntry" destination="Rqb-oG-iwQ" id="tiy-hr-omy"/>
+                        <outlet property="createCrowdTitleTextEntry" destination="msi-oF-Bmb" id="AaP-US-UaY"/>
+                        <outlet property="joinCrowdCodeEntryTextField" destination="sF6-3D-vQO" id="K1T-47-Y33"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2GH-rl-KkG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="519.20000000000005" y="123.68815592203899"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="vOG-Rv-fSE">
+            <objects>
+                <viewController id="dmb-ZR-2cg" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Wk6-Bg-opm"/>
+                        <viewControllerLayoutGuide type="bottom" id="Zep-cY-YLI"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="0eI-1o-lgh">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="PAR-S3-WUD" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1138" y="126"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="vDH-5v-djW">

@@ -16,10 +16,9 @@ class SessionController {
     var inactiveSessions: [Session] = []
     
     func createSession(title: String, timeLimit: TimeInterval) {
-        // FIX THIS
-        let session = Session(title: title, id: UUID(), code: randomCodeGenerator(), questions: nil, timeLimit: TimeInterval(), isActive: true, date: Date(), crowdNumber: 5)
         
-        self.activeSessions.append(session)
+        
+        
     }
     
     func randomCodeGenerator() -> String {
