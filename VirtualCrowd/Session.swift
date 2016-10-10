@@ -25,3 +25,7 @@ struct Session {
         return fireDateFromThisMorning
     }
 }
+
+func ==(lhs: Session, rhs: Session) -> Bool {
+    return lhs.id == rhs.id
+}

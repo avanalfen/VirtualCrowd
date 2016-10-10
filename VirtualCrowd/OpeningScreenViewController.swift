@@ -10,38 +10,26 @@ import UIKit
 
 class OpeningScreenViewController: UIViewController {
     
+    // MARK: Properties
+    
     @IBOutlet weak var joinCrowdCodeEntryTextField: UITextField!
     @IBOutlet weak var createCrowdTitleTextEntry: UITextField!
     @IBOutlet weak var createCrowdTimeLimitEntry: UITextField!
     
+    // MARK: View Setup
     
-    
-    
-
     override func viewDidLoad() {
         super.viewDidLoad()
         
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
-
     
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
+    // MARK: Button Functions
     
     @IBAction func JoinSessionPressed(_ sender: UIButton) {
         
     }
-
+    
     @IBAction func createSessionButtonPressed(_ sender: UIButton) {
         
     }
@@ -49,4 +37,15 @@ class OpeningScreenViewController: UIViewController {
     @IBAction func pastSessionsButtonTapped(_ sender: UIButton) {
         
     }
+    
+    // MARK: - Navigation
+    
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using segue.destinationViewController.
+        // Pass the selected object to the new view controller.
+    }
+    
+    
+    
 }

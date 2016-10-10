@@ -12,15 +12,14 @@ class Question {
     
     let statement: String
     let notes: String
-    let votes: Int
+    let upVotes: Int
     let session: Session?
     
     init(statement: String, notes: String = "", votes: Int = 0, session: Session?) {
         self.statement = statement
         self.notes = notes
-        self.votes = votes
+        self.upVotes = votes
         self.session = session
     }
-    
 }
 

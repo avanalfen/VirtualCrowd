@@ -28,7 +28,14 @@ class SessionController {
         var session = session
         let newQuestion = Question(statement: statement, session: session)
         session.questions.append(newQuestion)
-        
+    }
+    
+    func sessionNowInactive(session: Session) {
+        let session = session
+        if let index = activeSessions.index(where: {$0 == session}) {
+        activeSessions.remove(at: index)
+        }
+        inactiveSessions.append(session)
     }
     
     // MARK: random code generator
