@@ -14,6 +14,9 @@ class QuestionController {
     
     var questionPool: [Question] = []
     
+    
+    // MARK: functions
+    
     func createQuestion(statement: String) {
         
         let newQuestion = Question(statement: "Can you explain that a little more?", notes: "", votes: 0)
