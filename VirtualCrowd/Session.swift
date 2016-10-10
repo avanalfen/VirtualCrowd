@@ -13,10 +13,15 @@ struct Session {
     let title: String
     let id: UUID
     let code: String
-    let questions: [Question]?
+    let questions: [Question]
     let timeLimit: TimeInterval
     let isActive: Bool
     let date: Date
     let crowdNumber: Int
     
+    var fireDate: NSDate? {
+        guard let thisMorningAtMidnight = DateHelper.thisMorningAtMidnight else { return nil }
+        let fireDateFromThisMorning = NSDate(timeInterval: timeLimit, since: thisMorningAtMidnight as Date)
+        return fireDateFromThisMorning
+    }
 }

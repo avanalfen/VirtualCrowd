@@ -8,11 +8,19 @@
 
 import Foundation
 
-struct Question {
+class Question {
     
     let statement: String
     let notes: String
     let votes: Int
-    let id = NSUUID()
+    let session: Session?
+    
+    init(statement: String, notes: String = "", votes: Int = 0, session: Session?) {
+        self.statement = statement
+        self.notes = notes
+        self.votes = votes
+        self.session = session
+    }
     
 }
+

@@ -58,6 +58,7 @@
                                                 <state key="normal" title="Join Session"/>
                                                 <connections>
                                                     <action selector="JoinSessionPressed:" destination="372-Tk-dse" eventType="touchUpInside" id="Xs8-xT-nkf"/>
+                                                    <segue destination="uoH-uS-XaE" kind="show" id="MjD-dc-hsV"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -84,6 +85,7 @@
                                                 <state key="normal" title="Create Session"/>
                                                 <connections>
                                                     <action selector="createSessionButtonPressed:" destination="372-Tk-dse" eventType="touchUpInside" id="fVQ-qt-KOG"/>
+                                                    <segue destination="uoH-uS-XaE" kind="show" id="9RZ-ZW-gbm"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -127,22 +129,33 @@
             <point key="canvasLocation" x="519.20000000000005" y="123.68815592203899"/>
         </scene>
         <!--View Controller-->
-        <scene sceneID="vOG-Rv-fSE">
+        <scene sceneID="pRw-ts-4es">
             <objects>
-                <viewController id="dmb-ZR-2cg" sceneMemberID="viewController">
+                <viewController id="uoH-uS-XaE" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="Wk6-Bg-opm"/>
-                        <viewControllerLayoutGuide type="bottom" id="Zep-cY-YLI"/>
+                        <viewControllerLayoutGuide type="top" id="TpT-C2-kCz"/>
+                        <viewControllerLayoutGuide type="bottom" id="bvi-sE-dwu"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="0eI-1o-lgh">
+                    <view key="view" contentMode="scaleToFill" id="bOx-np-4SX">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Success!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gkv-YP-RJM">
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="gkv-YP-RJM" firstAttribute="centerY" secondItem="bOx-np-4SX" secondAttribute="centerY" id="Dgz-JP-v6n"/>
+                            <constraint firstItem="gkv-YP-RJM" firstAttribute="centerX" secondItem="bOx-np-4SX" secondAttribute="centerX" id="Y6A-Sw-ZHE"/>
+                        </constraints>
                     </view>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="PAR-S3-WUD" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4fd-SC-lFY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1138" y="126"/>
+            <point key="canvasLocation" x="1389" y="123"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="vDH-5v-djW">
@@ -166,4 +179,7 @@
     <resources>
         <image name="Crowd" width="512" height="166"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="MjD-dc-hsV"/>
+    </inferredMetricsTieBreakers>
 </document>
