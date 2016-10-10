@@ -13,7 +13,7 @@ struct Session {
     let title: String
     let id: UUID
     let code: String
-    let questions: [Question]
+    var questions: [Question]
     let timeLimit: TimeInterval
     let isActive: Bool
     let date: Date

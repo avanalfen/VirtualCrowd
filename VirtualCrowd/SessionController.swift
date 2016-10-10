@@ -12,13 +12,26 @@ class SessionController {
     
     static let sharedController = SessionController()
     
+    // MARK: properties
+    
     var activeSessions: [Session] = []
     var inactiveSessions: [Session] = []
+    
+    // MARK: functions
     
     func createSession(title: String, timeLimit: TimeInterval) {
         let session = Session(title: title, id: UUID(), code: randomCodeGenerator(), questions: [], timeLimit: timeLimit, isActive: true, date: Date(), crowdNumber: 1)
         activeSessions.append(session)
     }
+    
+    func addQuestionToSession(statement: String, session: Session) {
+        var session = session
+        let newQuestion = Question(statement: statement, session: session)
+        session.questions.append(newQuestion)
+        
+    }
+    
+    // MARK: random code generator
     
     func randomCodeGenerator() -> String {
         let characters: NSString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
