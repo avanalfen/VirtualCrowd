@@ -8,10 +8,10 @@
 
 import Foundation
 
-struct Session {
+struct Session: Equatable {
     
     let title: String
-    let id: UUID
+    let identifier: String
     let code: String
     var questions: [Question]
     let timeLimit: TimeInterval
@@ -27,5 +27,5 @@ struct Session {
 }
 
 func ==(lhs: Session, rhs: Session) -> Bool {
-    return lhs.id == rhs.id
+    return lhs.identifier == rhs.identifier
 }

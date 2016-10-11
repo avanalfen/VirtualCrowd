@@ -22,6 +22,7 @@
 		654F04371DA84DF400622268 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654F04361DA84DF400622268 /* Session.swift */; };
 		654F043B1DA84E2900622268 /* SessionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654F043A1DA84E2900622268 /* SessionController.swift */; };
 		654F043E1DA84E5C00622268 /* PublicFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654F043D1DA84E5C00622268 /* PublicFunctions.swift */; };
+		659C6C7B1DAD2F8B00572019 /* Crowd.png in Resources */ = {isa = PBXBuildFile; fileRef = 659C6C7A1DAD2F8B00572019 /* Crowd.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +64,7 @@
 		654F04361DA84DF400622268 /* Session.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
 		654F043A1DA84E2900622268 /* SessionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionController.swift; sourceTree = "<group>"; };
 		654F043D1DA84E5C00622268 /* PublicFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublicFunctions.swift; sourceTree = "<group>"; };
+		659C6C7A1DAD2F8B00572019 /* Crowd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Crowd.png; path = ../Crowd.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -182,6 +184,7 @@
 			children = (
 				654F043D1DA84E5C00622268 /* PublicFunctions.swift */,
 				654F04081DA84C2100622268 /* Assets.xcassets */,
+				659C6C7A1DAD2F8B00572019 /* Crowd.png */,
 				654F040A1DA84C2100622268 /* LaunchScreen.storyboard */,
 				654F040D1DA84C2100622268 /* Info.plist */,
 				654F04051DA84C2100622268 /* VirtualCrowd.xcdatamodeld */,
@@ -302,6 +305,7 @@
 				654F040C1DA84C2100622268 /* LaunchScreen.storyboard in Resources */,
 				654F04091DA84C2100622268 /* Assets.xcassets in Resources */,
 				654F04041DA84C2100622268 /* Main.storyboard in Resources */,
+				659C6C7B1DAD2F8B00572019 /* Crowd.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

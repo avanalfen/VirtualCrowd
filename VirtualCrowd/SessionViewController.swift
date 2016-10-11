@@ -9,25 +9,39 @@
 import UIKit
 
 class SessionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    
+    // MARK: Properties
+    
+    var session: Session?
+    
+    // MARK: View Setup
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        guard let session = self.session else { return 0 }
+        return session.questions.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "questionCell") as? QuestionTableViewCell else { return QuestionTableViewCell() }
+        let question = session?.questions[indexPath.row]
         
-        cell.questionTextLabel.text = "This is a really big question"
-        cell.upVoteButton.titleLabel?.text = "72"
+        cell.questionTextLabel.text = question?.statement
+        cell.upVoteButton.titleLabel?.text = String(describing: question?.upVotes)
         
         return cell
     }
+    
+    // MARK: Functions
+    
+    @IBAction func addQuestionButtonTapped(_ sender: UIBarButtonItem) {
+        
+    }
+    
     
     // MARK: - Navigation
 

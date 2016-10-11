@@ -20,7 +20,7 @@ class SessionController {
     // MARK: functions
     
     func createSession(title: String, code: String, timeLimit: TimeInterval) {
-        let session = Session(title: title, id: UUID(), code: code, questions: [], timeLimit: timeLimit, isActive: true, date: Date(), crowdNumber: 1)
+        let session = Session(title: title, identifier: UUID().uuidString, code: code, questions: [], timeLimit: timeLimit, isActive: true, date: Date(), crowdNumber: 1)
         activeSessions.append(session)
     }
     
@@ -41,7 +41,7 @@ class SessionController {
     // MARK: random code generator
     
     func randomCodeGenerator() -> String {
-        let characters: NSString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        let characters: NSString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
         let randomCodeString: NSMutableString = NSMutableString(capacity: 5)
         
         for _ in 0...4 {
@@ -54,13 +54,13 @@ class SessionController {
     
     // MARK: deleteThis
     func mockData() {
-        let session = Session(title: "Test", id: UUID(), code: randomCodeGenerator(), questions: [], timeLimit: 60, isActive: false, date: Date(), crowdNumber: 1)
+        let session = Session(title: "Test", identifier: UUID().uuidString, code: randomCodeGenerator(), questions: [], timeLimit: 60, isActive: false, date: Date(), crowdNumber: 1)
         _ = Question(statement: "What do you want?", session: session)
         _ = Question(statement: "Explain more please", session: session)
         _ = Question(statement: "I'm confused", session: session)
         inactiveSessions.append(session)
         
-        let session2 = Session(title: "Test", id: UUID(), code: randomCodeGenerator(), questions: [], timeLimit: 60, isActive: false, date: Date(), crowdNumber: 1)
+        let session2 = Session(title: "Test", identifier: UUID().uuidString, code: randomCodeGenerator(), questions: [], timeLimit: 60, isActive: false, date: Date(), crowdNumber: 1)
         _ = Question(statement: "What do you want?", session: session2)
         _ = Question(statement: "Explain more please", session: session2)
         _ = Question(statement: "I'm confused", session: session2)

@@ -16,6 +16,8 @@ class OpeningScreenViewController: UIViewController {
     @IBOutlet weak var createCrowdTitleTextEntry: UITextField!
     @IBOutlet weak var createCrowdTimeLimitEntry: UITextField!
     
+    var crowdCreatedUUID: String = ""
+    
     // MARK: View Setup
     
     override func viewDidLoad() {
@@ -35,7 +37,9 @@ class OpeningScreenViewController: UIViewController {
     @IBAction func createSessionButtonPressed(_ sender: UIButton) {
         guard let title = createCrowdTitleTextEntry.text, let time = Double(createCrowdTimeLimitEntry.text!) else { return }
         let code = SessionController.sharedController.randomCodeGenerator()
-        SessionController.sharedController.createSession(title: title, code: code, timeLimit: time)
+        let session = Session(title: title, identifier: UUID().uuidString, code: code, questions: [], timeLimit: time, isActive: true, date: Date(), crowdNumber: 1)
+        self.crowdCreatedUUID = session.identifier
+        SessionController.sharedController.activeSessions.append(session)
         doNothing()
     }
     
@@ -49,11 +53,17 @@ class OpeningScreenViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        
+        if segue.identifier == "createSession" {
+            let destinationVC = segue.destination as? SessionViewController
+            let sessionArray = SessionController.sharedController.activeSessions.filter({ $0.identifier == self.crowdCreatedUUID })
+            let sessionToSend = sessionArray[0]
+            destinationVC?.session = sessionToSend
+        }
     }
     
     // MARK: deleteThis
     func doNothing() {
         
     }
-    
 }
