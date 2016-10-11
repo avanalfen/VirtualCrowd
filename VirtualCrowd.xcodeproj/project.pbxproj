@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		651BFBAC1DAC2E1F004042E8 /* DateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651BFBAB1DAC2E1F004042E8 /* DateHelper.swift */; };
+		651BFBAF1DAC83F9004042E8 /* QuestionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651BFBAE1DAC83F9004042E8 /* QuestionTableViewCell.swift */; };
+		651BFBB11DAC8436004042E8 /* SessionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651BFBB01DAC8436004042E8 /* SessionViewController.swift */; };
 		654F03FF1DA84C2100622268 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654F03FE1DA84C2100622268 /* AppDelegate.swift */; };
 		654F04041DA84C2100622268 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 654F04021DA84C2100622268 /* Main.storyboard */; };
 		654F04071DA84C2100622268 /* VirtualCrowd.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 654F04051DA84C2100622268 /* VirtualCrowd.xcdatamodeld */; };
@@ -41,6 +43,8 @@
 
 /* Begin PBXFileReference section */
 		651BFBAB1DAC2E1F004042E8 /* DateHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateHelper.swift; sourceTree = "<group>"; };
+		651BFBAE1DAC83F9004042E8 /* QuestionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuestionTableViewCell.swift; sourceTree = "<group>"; };
+		651BFBB01DAC8436004042E8 /* SessionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionViewController.swift; sourceTree = "<group>"; };
 		654F03FB1DA84C2100622268 /* VirtualCrowd.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VirtualCrowd.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		654F03FE1DA84C2100622268 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		654F04031DA84C2100622268 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -86,6 +90,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		651BFBAD1DAC83A1004042E8 /* Custom */ = {
+			isa = PBXGroup;
+			children = (
+				651BFBAE1DAC83F9004042E8 /* QuestionTableViewCell.swift */,
+			);
+			name = Custom;
+			sourceTree = "<group>";
+		};
 		654F03F21DA84C2100622268 = {
 			isa = PBXGroup;
 			children = (
@@ -114,12 +126,9 @@
 				651BFBAB1DAC2E1F004042E8 /* DateHelper.swift */,
 				654F04311DA84D9000622268 /* Models */,
 				654F04331DA84DA700622268 /* ModelControllers */,
+				651BFBAD1DAC83A1004042E8 /* Custom */,
 				654F04321DA84D9B00622268 /* ViewControllers */,
-				654F043C1DA84E4200622268 /* PublicFiles */,
-				654F04081DA84C2100622268 /* Assets.xcassets */,
-				654F040A1DA84C2100622268 /* LaunchScreen.storyboard */,
-				654F040D1DA84C2100622268 /* Info.plist */,
-				654F04051DA84C2100622268 /* VirtualCrowd.xcdatamodeld */,
+				654F043C1DA84E4200622268 /* Extras */,
 			);
 			path = VirtualCrowd;
 			sourceTree = "<group>";
@@ -155,6 +164,7 @@
 			isa = PBXGroup;
 			children = (
 				654F042F1DA84CFA00622268 /* OpeningScreenViewController.swift */,
+				651BFBB01DAC8436004042E8 /* SessionViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -167,12 +177,16 @@
 			name = ModelControllers;
 			sourceTree = "<group>";
 		};
-		654F043C1DA84E4200622268 /* PublicFiles */ = {
+		654F043C1DA84E4200622268 /* Extras */ = {
 			isa = PBXGroup;
 			children = (
 				654F043D1DA84E5C00622268 /* PublicFunctions.swift */,
+				654F04081DA84C2100622268 /* Assets.xcassets */,
+				654F040A1DA84C2100622268 /* LaunchScreen.storyboard */,
+				654F040D1DA84C2100622268 /* Info.plist */,
+				654F04051DA84C2100622268 /* VirtualCrowd.xcdatamodeld */,
 			);
-			name = PublicFiles;
+			name = Extras;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -315,9 +329,11 @@
 				654F043E1DA84E5C00622268 /* PublicFunctions.swift in Sources */,
 				654F043B1DA84E2900622268 /* SessionController.swift in Sources */,
 				654F04371DA84DF400622268 /* Session.swift in Sources */,
+				651BFBB11DAC8436004042E8 /* SessionViewController.swift in Sources */,
 				654F04301DA84CFA00622268 /* OpeningScreenViewController.swift in Sources */,
 				654F04351DA84DDB00622268 /* Question.swift in Sources */,
 				654F04071DA84C2100622268 /* VirtualCrowd.xcdatamodeld in Sources */,
+				651BFBAF1DAC83F9004042E8 /* QuestionTableViewCell.swift in Sources */,
 				651BFBAC1DAC2E1F004042E8 /* DateHelper.swift in Sources */,
 				654F03FF1DA84C2100622268 /* AppDelegate.swift in Sources */,
 			);

@@ -19,8 +19,8 @@ class SessionController {
     
     // MARK: functions
     
-    func createSession(title: String, timeLimit: TimeInterval) {
-        let session = Session(title: title, id: UUID(), code: randomCodeGenerator(), questions: [], timeLimit: timeLimit, isActive: true, date: Date(), crowdNumber: 1)
+    func createSession(title: String, code: String, timeLimit: TimeInterval) {
+        let session = Session(title: title, id: UUID(), code: code, questions: [], timeLimit: timeLimit, isActive: true, date: Date(), crowdNumber: 1)
         activeSessions.append(session)
     }
     
@@ -50,5 +50,20 @@ class SessionController {
             randomCodeString.appendFormat("%C", characters.character(at: Int(random)))
         }
         return randomCodeString as String
+    }
+    
+    // MARK: deleteThis
+    func mockData() {
+        let session = Session(title: "Test", id: UUID(), code: randomCodeGenerator(), questions: [], timeLimit: 60, isActive: false, date: Date(), crowdNumber: 1)
+        _ = Question(statement: "What do you want?", session: session)
+        _ = Question(statement: "Explain more please", session: session)
+        _ = Question(statement: "I'm confused", session: session)
+        inactiveSessions.append(session)
+        
+        let session2 = Session(title: "Test", id: UUID(), code: randomCodeGenerator(), questions: [], timeLimit: 60, isActive: false, date: Date(), crowdNumber: 1)
+        _ = Question(statement: "What do you want?", session: session2)
+        _ = Question(statement: "Explain more please", session: session2)
+        _ = Question(statement: "I'm confused", session: session2)
+        activeSessions.append(session2)
     }
 }

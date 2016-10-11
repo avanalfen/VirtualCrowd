@@ -20,7 +20,9 @@ class OpeningScreenViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        // MARK: deleteThis
+        SessionController.sharedController.mockData()
+        doNothing()
     }
     
     
@@ -31,7 +33,10 @@ class OpeningScreenViewController: UIViewController {
     }
     
     @IBAction func createSessionButtonPressed(_ sender: UIButton) {
-        
+        guard let title = createCrowdTitleTextEntry.text, let time = Double(createCrowdTimeLimitEntry.text!) else { return }
+        let code = SessionController.sharedController.randomCodeGenerator()
+        SessionController.sharedController.createSession(title: title, code: code, timeLimit: time)
+        doNothing()
     }
     
     @IBAction func pastSessionsButtonTapped(_ sender: UIButton) {
@@ -46,6 +51,9 @@ class OpeningScreenViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     
-    
+    // MARK: deleteThis
+    func doNothing() {
+        
+    }
     
 }
