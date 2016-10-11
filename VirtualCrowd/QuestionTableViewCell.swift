@@ -21,7 +21,6 @@ class QuestionTableViewCell: UITableViewCell {
         
     }
     
-    
     // MARK: Provided Functions
 
     override func awakeFromNib() {

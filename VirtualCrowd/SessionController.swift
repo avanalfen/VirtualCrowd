@@ -33,9 +33,19 @@ class SessionController {
     func sessionNowInactive(session: Session) {
         let session = session
         if let index = activeSessions.index(where: {$0 == session}) {
-        activeSessions.remove(at: index)
+            activeSessions.remove(at: index)
         }
         inactiveSessions.append(session)
+    }
+    
+    func addVoteToQuestion(question: Question) {
+        if question.votedOn == false {
+            question.upVotes += 1
+            question.votedOn = true
+        } else {
+            question.upVotes -= 1
+            question.votedOn = false
+        }
     }
     
     // MARK: random code generator
@@ -54,13 +64,13 @@ class SessionController {
     
     // MARK: deleteThis
     func mockData() {
-        let session = Session(title: "Test", identifier: UUID().uuidString, code: randomCodeGenerator(), questions: [], timeLimit: 60, isActive: false, date: Date(), crowdNumber: 1)
+        let session = Session(title: "Test", identifier: UUID().uuidString, code: "ABC123", questions: [], timeLimit: 60, isActive: false, date: Date(), crowdNumber: 1)
         _ = Question(statement: "What do you want?", session: session)
         _ = Question(statement: "Explain more please", session: session)
         _ = Question(statement: "I'm confused", session: session)
         inactiveSessions.append(session)
         
-        let session2 = Session(title: "Test", identifier: UUID().uuidString, code: randomCodeGenerator(), questions: [], timeLimit: 60, isActive: false, date: Date(), crowdNumber: 1)
+        let session2 = Session(title: "Test", identifier: UUID().uuidString, code: "123ABC", questions: [], timeLimit: 60, isActive: false, date: Date(), crowdNumber: 1)
         _ = Question(statement: "What do you want?", session: session2)
         _ = Question(statement: "Explain more please", session: session2)
         _ = Question(statement: "I'm confused", session: session2)
