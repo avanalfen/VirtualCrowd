@@ -65,12 +65,18 @@
                                                         <nil key="textColor"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                         <textInputTraits key="textInputTraits"/>
+                                                        <connections>
+                                                            <action selector="createTitleTextChanged:" destination="372-Tk-dse" eventType="editingChanged" id="njq-gF-7Sf"/>
+                                                        </connections>
                                                     </textField>
                                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Time Limit: (Minutes)" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Rqb-oG-iwQ">
                                                         <color key="backgroundColor" red="0.74702561899818831" green="0.85166532918780646" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                         <nil key="textColor"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                         <textInputTraits key="textInputTraits"/>
+                                                        <connections>
+                                                            <action selector="createTimeTextChanged:" destination="372-Tk-dse" eventType="editingChanged" id="Br3-RE-UGC"/>
+                                                        </connections>
                                                     </textField>
                                                 </subviews>
                                             </stackView>

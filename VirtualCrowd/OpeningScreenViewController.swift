@@ -21,6 +21,8 @@ class OpeningScreenViewController: UIViewController, UIPickerViewDelegate, UITex
     // MARK: Properties
     
     var crowdCreatedUUID: String = ""
+    var isThereATitle: Bool = false
+    var isThereATime: Bool = false
     
     // MARK: View Setup
     
@@ -34,6 +36,8 @@ class OpeningScreenViewController: UIViewController, UIPickerViewDelegate, UITex
     
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.navigationBar.isHidden = true
+        joinButton.isEnabled = false
+        createButton.isEnabled = false
     }
     
     // MARK: Textfields
@@ -45,7 +49,7 @@ class OpeningScreenViewController: UIViewController, UIPickerViewDelegate, UITex
             joinButton.isEnabled = false
         }
     }
-
+    
     
     func setupTextfields() {
         
@@ -54,10 +58,42 @@ class OpeningScreenViewController: UIViewController, UIPickerViewDelegate, UITex
         
         self.joinCrowdCodeEntryTextField.autocapitalizationType = .allCharacters
         
+        createButton.isEnabled = false
+        joinButton.isEnabled = false
+        
         doNothing()
     }
     
     // MARK: Button Functions
+    
+    @IBAction func createTitleTextChanged(_ sender: UITextField) {
+        if sender.text != "" {
+            isThereATitle = true
+        } else {
+            isThereATitle = false
+        }
+        enableCreateButton()
+        print(sender.text)
+    }
+    
+    @IBAction func createTimeTextChanged(_ sender: UITextField) {
+        if sender.text != "" {
+            isThereATime = true
+        } else {
+            isThereATime = false
+        }
+        enableCreateButton()
+        print(sender.text)
+    }
+    
+    func enableCreateButton() {
+        if isThereATime && isThereATitle {
+            createButton.isEnabled = true
+        } else {
+            createButton.isEnabled = false
+        }
+    }
+    
     
     @IBAction func JoinSessionPressed(_ sender: UIButton) {
         
@@ -87,6 +123,10 @@ class OpeningScreenViewController: UIViewController, UIPickerViewDelegate, UITex
         createCrowdTitleTextEntry.resignFirstResponder()
     }
     
+    func resetTextfields() {
+        resignKeyboard()
+        clearTextFields()
+    }
     
     // MARK: - Navigation
     
@@ -95,25 +135,21 @@ class OpeningScreenViewController: UIViewController, UIPickerViewDelegate, UITex
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
         
-        if joinCrowdCodeEntryTextField.text != nil { joinButton.isEnabled = true }
-        
         if segue.identifier == "createSession" {
             let destinationVC = segue.destination as? SessionViewController
             let sessionArray = SessionController.sharedController.activeSessions.filter({ $0.identifier == self.crowdCreatedUUID })
             let sessionToSend = sessionArray[0]
             destinationVC?.session = sessionToSend
-            clearTextFields()
-            resignKeyboard()
+            resetTextfields()
         }
         
         if segue.identifier == "joinSegue" {
-                guard let text = self.joinCrowdCodeEntryTextField.text else { return }
-                let destinationVC = segue.destination as? SessionViewController
-                let sessionArray = SessionController.sharedController.activeSessions.filter({ $0.code == text })
-                let sessionToSend = sessionArray[0]
-                destinationVC?.session = sessionToSend
-                clearTextFields()
-                resignKeyboard()
+            guard let text = self.joinCrowdCodeEntryTextField.text else { return }
+            let destinationVC = segue.destination as? SessionViewController
+            let sessionArray = SessionController.sharedController.activeSessions.filter({ $0.code == text })
+            let sessionToSend = sessionArray[0]
+            destinationVC?.session = sessionToSend
+            resetTextfields()
         }
     }
     
