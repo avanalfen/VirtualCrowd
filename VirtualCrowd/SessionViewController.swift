@@ -21,13 +21,24 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
     @IBOutlet var addQuestionView: UIView!
     @IBOutlet weak var addQuestionTextField: UITextField!
     @IBOutlet weak var sessionQuestionsTableView: UITableView!
+    @IBOutlet weak var sessionCodeLabel: UILabel!
+    @IBOutlet weak var sessionTimerLabel: UILabel!
     
     // MARK: View Setup
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = session?.title
+        let session = SessionController.sharedController.activeSessions.filter({ $0.identifier == self.session?.identifier })[0]
+        self.title = session.title
+        sessionCodeLabel.text = "Code: \(session.code)"
+        sessionTimerLabel.text = "\(session.timeLimit)"
         sessionQuestionsTableView.estimatedRowHeight = 100
+        sessionQuestionsTableView.tableHeaderView?.frame = CGRect(x: 0, y: 0, width: sessionQuestionsTableView.frame.width, height: 20)
+        sessionCodeLabel.backgroundColor = UIColor(displayP3Red: 247, green: 248, blue: 192, alpha: 1)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.navigationBar.isHidden = false
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -39,27 +50,35 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let session = self.session else { return 0 }
+        return 1
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        let session = SessionController.sharedController.activeSessions.filter({ $0.identifier == self.session?.identifier })[0]
         return session.questions.count
+    }
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 5
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "questionCell") as? QuestionTableViewCell else { return QuestionTableViewCell() }
-        guard let session = self.session else { return QuestionTableViewCell() }
-        let question = session.questions[indexPath.row]
+        let session = SessionController.sharedController.activeSessions.filter({ $0.identifier == self.session?.identifier })[0]
+        let indexOfQustion = indexPath.section + indexPath.row
+        let question = session.questions[indexOfQustion]
         
         cell.layer.cornerRadius = 10
         cell.contentView.layer.cornerRadius = 10
+        cell.layer.borderWidth = 2
+        cell.layer.borderColor = UIColor.black.cgColor
         
         cell.questionTextLabel.text = question.statement
         cell.upVoteButton.setTitle("\(question.upVotes)", for: .normal)
         
         if question.votedOn == true {
             cell.layer.borderColor = UIColor.green.cgColor
-            cell.layer.borderWidth = 2
         } else {
-            cell.layer.borderColor = UIColor.white.cgColor
-            cell.layer.borderWidth = 0
+            cell.layer.borderColor = UIColor.black.cgColor
         }
         
         return cell
@@ -78,8 +97,8 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     @IBAction func addQuestionSubmitButtonTapped(_ sender: UIButton) {
         guard let text = addQuestionTextField.text else { return }
-        let question = Question(statement: text, session: self.session)
-        session?.questions.append(question)
+        let session = SessionController.sharedController.activeSessions.filter({ $0.identifier == self.session?.identifier })[0]
+        SessionController.sharedController.addQuestionToSession(statement: text, session: session)
         addQuestionTextField.text = ""
         visualEffectAddQuestionView.removeFromSuperview()
         sessionQuestionsTableView.reloadData()
@@ -88,7 +107,7 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
     @IBAction func upVoteButtonPressed(_ sender: UIButton) {
         guard let session = self.session else { return }
         guard let index = sessionQuestionsTableView.indexPathForRowContaining(view: sender) else { return }
-        let question = session.questions[index.row]
+        let question = session.questions[index.section - index.row]
             SessionController.sharedController.addVoteToQuestion(question: question)
             sessionQuestionsTableView.reloadData()
     }

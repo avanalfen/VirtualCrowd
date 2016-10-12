@@ -22,21 +22,15 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Line" translatesAutoresizingMaskIntoConstraints="NO" id="aE2-YT-N33">
                                 <constraints>
                                     <constraint firstAttribute="height" constant="128" id="fdI-Ln-XO3"/>
-                                    <constraint firstAttribute="width" constant="325" id="l2q-ye-XFe"/>
+                                    <constraint firstAttribute="width" constant="343" id="l2q-ye-XFe"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Virtual Crowd" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OPl-5F-Cy8">
-                                <fontDescription key="fontDescription" type="system" pointSize="40"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="55"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Line" translatesAutoresizingMaskIntoConstraints="NO" id="hWj-Km-J2W">
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="128" id="3fp-LC-lIL"/>
-                                    <constraint firstAttribute="width" constant="325" id="VR1-yo-hru"/>
-                                </constraints>
-                            </imageView>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="43" translatesAutoresizingMaskIntoConstraints="NO" id="s7r-FK-99g">
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="100" translatesAutoresizingMaskIntoConstraints="NO" id="s7r-FK-99g">
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="lqW-lA-JFO">
                                         <subviews>
@@ -45,6 +39,9 @@
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
+                                                <connections>
+                                                    <action selector="joinCodeTextChanged:" destination="372-Tk-dse" eventType="editingChanged" id="duW-nL-btO"/>
+                                                </connections>
                                             </textField>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cgd-4I-00L">
                                                 <constraints>
@@ -54,7 +51,7 @@
                                                 <state key="normal" title="Join" backgroundImage="Rectangle"/>
                                                 <connections>
                                                     <action selector="JoinSessionPressed:" destination="372-Tk-dse" eventType="touchUpInside" id="Xs8-xT-nkf"/>
-                                                    <segue destination="l4v-dS-HXL" kind="show" id="fzP-UN-xLI"/>
+                                                    <segue destination="l4v-dS-HXL" kind="show" identifier="joinSegue" id="fzP-UN-xLI"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -136,31 +133,39 @@
                                     </stackView>
                                 </subviews>
                             </stackView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Crowd.png" translatesAutoresizingMaskIntoConstraints="NO" id="2hl-ld-fIy">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="TheCrowd" translatesAutoresizingMaskIntoConstraints="NO" id="2hl-ld-fIy">
                                 <constraints>
                                     <constraint firstAttribute="width" constant="375" id="CCJ-lT-tq7"/>
                                     <constraint firstAttribute="height" constant="128" id="Sfz-Gl-716"/>
+                                </constraints>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Line" translatesAutoresizingMaskIntoConstraints="NO" id="hWj-Km-J2W">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="128" id="3fp-LC-lIL"/>
+                                    <constraint firstAttribute="width" constant="343" id="VR1-yo-hru"/>
                                 </constraints>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="2hl-ld-fIy" firstAttribute="centerX" secondItem="aJV-vg-yXW" secondAttribute="centerX" id="0xD-aL-vck"/>
-                            <constraint firstItem="hWj-Km-J2W" firstAttribute="top" secondItem="lqW-lA-JFO" secondAttribute="bottom" constant="-40" id="DjG-eY-n5I"/>
+                            <constraint firstItem="hWj-Km-J2W" firstAttribute="top" secondItem="lqW-lA-JFO" secondAttribute="bottom" constant="-10" id="DjG-eY-n5I"/>
                             <constraint firstItem="s7r-FK-99g" firstAttribute="centerX" secondItem="aJV-vg-yXW" secondAttribute="centerX" id="INo-RR-25V"/>
-                            <constraint firstItem="aE2-YT-N33" firstAttribute="top" secondItem="OPl-5F-Cy8" secondAttribute="bottom" constant="-39" id="KUe-WP-Sb3"/>
+                            <constraint firstItem="aE2-YT-N33" firstAttribute="top" secondItem="OPl-5F-Cy8" secondAttribute="bottom" constant="-57" id="KUe-WP-Sb3"/>
                             <constraint firstItem="hWj-Km-J2W" firstAttribute="centerX" secondItem="aJV-vg-yXW" secondAttribute="centerX" id="NbE-OR-FWr"/>
                             <constraint firstItem="OPl-5F-Cy8" firstAttribute="centerX" secondItem="aJV-vg-yXW" secondAttribute="centerX" id="alY-gs-wK5"/>
                             <constraint firstAttribute="bottom" secondItem="2hl-ld-fIy" secondAttribute="bottom" constant="-50" id="jt0-0s-XrJ"/>
                             <constraint firstItem="aE2-YT-N33" firstAttribute="centerX" secondItem="aJV-vg-yXW" secondAttribute="centerX" id="pfH-2Y-VyI"/>
-                            <constraint firstItem="OPl-5F-Cy8" firstAttribute="top" secondItem="aJV-vg-yXW" secondAttribute="topMargin" constant="98" id="pkH-ea-X23"/>
-                            <constraint firstItem="b6X-Mt-fQ0" firstAttribute="top" secondItem="s7r-FK-99g" secondAttribute="bottom" constant="242" id="wUb-dX-wjc"/>
+                            <constraint firstItem="OPl-5F-Cy8" firstAttribute="top" secondItem="aJV-vg-yXW" secondAttribute="topMargin" constant="44" id="pkH-ea-X23"/>
+                            <constraint firstItem="b6X-Mt-fQ0" firstAttribute="top" secondItem="s7r-FK-99g" secondAttribute="bottom" constant="110" id="wUb-dX-wjc"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="YBM-bx-TSq"/>
                     <connections>
+                        <outlet property="createButton" destination="auG-mj-2y7" id="Q3B-fq-pv1"/>
                         <outlet property="createCrowdTimeLimitEntry" destination="Rqb-oG-iwQ" id="tiy-hr-omy"/>
                         <outlet property="createCrowdTitleTextEntry" destination="msi-oF-Bmb" id="AaP-US-UaY"/>
+                        <outlet property="joinButton" destination="cgd-4I-00L" id="IfD-wj-XT4"/>
                         <outlet property="joinCrowdCodeEntryTextField" destination="sF6-3D-vQO" id="K1T-47-Y33"/>
                     </connections>
                 </viewController>
@@ -180,7 +185,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Crowd.png" translatesAutoresizingMaskIntoConstraints="NO" id="kby-Da-n2r">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="TheCrowd" translatesAutoresizingMaskIntoConstraints="NO" id="kby-Da-n2r">
                                 <constraints>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="128" id="DOC-IV-wTa"/>
                                     <constraint firstAttribute="height" constant="128" id="Ffx-8P-iMf"/>
@@ -224,7 +229,24 @@
                                 <view key="tableHeaderView" contentMode="scaleToFill" id="cGn-jx-jba">
                                     <rect key="frame" x="0.0" y="64" width="343" height="150"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <color key="backgroundColor" red="1" green="0.99285826690000001" blue="0.83225266649999996" alpha="1" colorSpace="calibratedRGB"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kx3-1Q-AMF">
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XKb-53-R45">
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="XKb-53-R45" firstAttribute="top" secondItem="cGn-jx-jba" secondAttribute="top" id="doZ-12-bmN"/>
+                                        <constraint firstItem="Kx3-1Q-AMF" firstAttribute="top" secondItem="cGn-jx-jba" secondAttribute="top" id="faP-ui-MiJ"/>
+                                        <constraint firstItem="XKb-53-R45" firstAttribute="centerX" secondItem="cGn-jx-jba" secondAttribute="centerX" constant="75" id="on4-pw-hf3"/>
+                                        <constraint firstItem="Kx3-1Q-AMF" firstAttribute="centerX" secondItem="cGn-jx-jba" secondAttribute="centerX" constant="-75" id="stO-Tj-P6m"/>
+                                    </constraints>
                                 </view>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="questionCell" rowHeight="60" id="7HX-wE-Ke7" customClass="QuestionTableViewCell" customModule="VirtualCrowd" customModuleProvider="target">
@@ -236,11 +258,11 @@
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BW0-cl-1oP">
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="59" id="Mav-H7-3Jk"/>
-                                                        <constraint firstAttribute="width" constant="59" id="rJr-oi-Lel"/>
+                                                        <constraint firstAttribute="width" constant="50" id="rJr-oi-Lel"/>
+                                                        <constraint firstAttribute="height" constant="50" id="zJf-RT-gPc"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="15"/>
-                                                    <state key="normal" title="0" backgroundImage="Arrow"/>
+                                                    <state key="normal" title="0" backgroundImage="VotingArrow"/>
                                                     <connections>
                                                         <action selector="questionCellButtonTapped:" destination="7HX-wE-Ke7" eventType="touchUpInside" id="A0p-wl-zu1"/>
                                                         <action selector="upVoteButtonPressed:" destination="l4v-dS-HXL" eventType="touchUpInside" id="zht-wb-3IB"/>
@@ -275,7 +297,7 @@
                                     <outlet property="delegate" destination="l4v-dS-HXL" id="Dwf-4p-fjT"/>
                                 </connections>
                             </tableView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Crowd.png" translatesAutoresizingMaskIntoConstraints="NO" id="TUu-rk-eJy">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="TheCrowd" translatesAutoresizingMaskIntoConstraints="NO" id="TUu-rk-eJy">
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="375" id="7cO-9g-QKy"/>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="128" id="mhm-7K-2Pk"/>
@@ -299,7 +321,10 @@
                     </navigationItem>
                     <connections>
                         <outlet property="addQuestionTextField" destination="O08-f0-E2K" id="ZfR-Ow-w0x"/>
+                        <outlet property="addQuestionView" destination="PEo-1s-FJ8" id="6Dc-hZ-EXV"/>
+                        <outlet property="sessionCodeLabel" destination="Kx3-1Q-AMF" id="8ON-qM-fKl"/>
                         <outlet property="sessionQuestionsTableView" destination="ymb-wt-3TD" id="P6x-FM-8ZN"/>
+                        <outlet property="sessionTimerLabel" destination="XKb-53-R45" id="7JJ-7R-ec2"/>
                         <outlet property="visualEffectAddQuestionView" destination="TZP-XK-FSq" id="3gp-bn-1Kr"/>
                     </connections>
                 </viewController>
@@ -328,14 +353,12 @@
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zHK-wW-irl">
                                 <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="O08-f0-E2K">
-                                        <frame key="frameInset" width="181" height="30"/>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="O08-f0-E2K">
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cbk-vm-1xn">
-                                        <frame key="frameInset" minX="181" width="49" height="30"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cbk-vm-1xn">
                                         <state key="normal" title="Submit"/>
                                         <connections>
                                             <action selector="addQuestionSubmitButtonTapped:" destination="l4v-dS-HXL" eventType="touchUpInside" id="PUO-Os-N6Q"/>
@@ -396,12 +419,12 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Arrow" width="406" height="404"/>
-        <image name="Crowd.png" width="512" height="288"/>
-        <image name="Line" width="256" height="1"/>
+        <image name="Line" width="512" height="1"/>
         <image name="Rectangle" width="512" height="96"/>
+        <image name="TheCrowd" width="256" height="78"/>
+        <image name="VotingArrow" width="512" height="512"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="m8E-IX-j98"/>
+        <segue reference="fzP-UN-xLI"/>
     </inferredMetricsTieBreakers>
 </document>

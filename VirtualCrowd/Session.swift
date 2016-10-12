@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Session: Equatable {
+class Session: Equatable {
     
     let title: String
     let identifier: String
@@ -24,6 +24,18 @@ struct Session: Equatable {
         let fireDateFromThisMorning = NSDate(timeInterval: timeLimit, since: thisMorningAtMidnight as Date)
         return fireDateFromThisMorning
     }
+    
+    init(title: String, identifier: String, code: String, questions: [Question], timeLimit: TimeInterval, isActive: Bool,  date: Date, crowdNumber: Int) {
+        self.title = title
+        self.identifier = identifier
+        self.code = code
+        self.questions = questions
+        self.timeLimit = timeLimit
+        self.isActive = isActive
+        self.date = date
+        self.crowdNumber = crowdNumber
+    }
+    
 }
 
 func ==(lhs: Session, rhs: Session) -> Bool {

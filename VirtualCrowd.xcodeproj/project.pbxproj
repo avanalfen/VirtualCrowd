@@ -13,7 +13,6 @@
 		654F03FF1DA84C2100622268 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654F03FE1DA84C2100622268 /* AppDelegate.swift */; };
 		654F04041DA84C2100622268 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 654F04021DA84C2100622268 /* Main.storyboard */; };
 		654F04071DA84C2100622268 /* VirtualCrowd.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 654F04051DA84C2100622268 /* VirtualCrowd.xcdatamodeld */; };
-		654F04091DA84C2100622268 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 654F04081DA84C2100622268 /* Assets.xcassets */; };
 		654F040C1DA84C2100622268 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 654F040A1DA84C2100622268 /* LaunchScreen.storyboard */; };
 		654F04171DA84C2200622268 /* VirtualCrowdTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654F04161DA84C2200622268 /* VirtualCrowdTests.swift */; };
 		654F04221DA84C2200622268 /* VirtualCrowdUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654F04211DA84C2200622268 /* VirtualCrowdUITests.swift */; };
@@ -22,7 +21,8 @@
 		654F04371DA84DF400622268 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654F04361DA84DF400622268 /* Session.swift */; };
 		654F043B1DA84E2900622268 /* SessionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654F043A1DA84E2900622268 /* SessionController.swift */; };
 		654F043E1DA84E5C00622268 /* PublicFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654F043D1DA84E5C00622268 /* PublicFunctions.swift */; };
-		659C6C7B1DAD2F8B00572019 /* Crowd.png in Resources */ = {isa = PBXBuildFile; fileRef = 659C6C7A1DAD2F8B00572019 /* Crowd.png */; };
+		65954C6C1DAE717C0070F50C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 65954C6B1DAE717C0070F50C /* Assets.xcassets */; };
+		65954C951DAEE6EC0070F50C /* PastSessionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65954C941DAEE6EC0070F50C /* PastSessionViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,7 +50,6 @@
 		654F03FE1DA84C2100622268 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		654F04031DA84C2100622268 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		654F04061DA84C2100622268 /* VirtualCrowd.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = VirtualCrowd.xcdatamodel; sourceTree = "<group>"; };
-		654F04081DA84C2100622268 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		654F040B1DA84C2100622268 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		654F040D1DA84C2100622268 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		654F04121DA84C2200622268 /* VirtualCrowdTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VirtualCrowdTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -64,7 +63,8 @@
 		654F04361DA84DF400622268 /* Session.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
 		654F043A1DA84E2900622268 /* SessionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionController.swift; sourceTree = "<group>"; };
 		654F043D1DA84E5C00622268 /* PublicFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublicFunctions.swift; sourceTree = "<group>"; };
-		659C6C7A1DAD2F8B00572019 /* Crowd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Crowd.png; path = ../Crowd.png; sourceTree = "<group>"; };
+		65954C6B1DAE717C0070F50C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		65954C941DAEE6EC0070F50C /* PastSessionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PastSessionViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -167,6 +167,7 @@
 			children = (
 				654F042F1DA84CFA00622268 /* OpeningScreenViewController.swift */,
 				651BFBB01DAC8436004042E8 /* SessionViewController.swift */,
+				65954C941DAEE6EC0070F50C /* PastSessionViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -183,11 +184,10 @@
 			isa = PBXGroup;
 			children = (
 				654F043D1DA84E5C00622268 /* PublicFunctions.swift */,
-				654F04081DA84C2100622268 /* Assets.xcassets */,
-				659C6C7A1DAD2F8B00572019 /* Crowd.png */,
 				654F040A1DA84C2100622268 /* LaunchScreen.storyboard */,
 				654F040D1DA84C2100622268 /* Info.plist */,
 				654F04051DA84C2100622268 /* VirtualCrowd.xcdatamodeld */,
+				65954C6B1DAE717C0070F50C /* Assets.xcassets */,
 			);
 			name = Extras;
 			sourceTree = "<group>";
@@ -303,9 +303,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				654F040C1DA84C2100622268 /* LaunchScreen.storyboard in Resources */,
-				654F04091DA84C2100622268 /* Assets.xcassets in Resources */,
+				65954C6C1DAE717C0070F50C /* Assets.xcassets in Resources */,
 				654F04041DA84C2100622268 /* Main.storyboard in Resources */,
-				659C6C7B1DAD2F8B00572019 /* Crowd.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -330,6 +329,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				65954C951DAEE6EC0070F50C /* PastSessionViewController.swift in Sources */,
 				654F043E1DA84E5C00622268 /* PublicFunctions.swift in Sources */,
 				654F043B1DA84E2900622268 /* SessionController.swift in Sources */,
 				654F04371DA84DF400622268 /* Session.swift in Sources */,
