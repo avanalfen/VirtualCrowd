@@ -126,7 +126,7 @@
                                                 <state key="normal" title="Past Crowds" backgroundImage="Rectangle"/>
                                                 <connections>
                                                     <action selector="pastSessionsButtonTapped:" destination="372-Tk-dse" eventType="touchUpInside" id="Izi-Y0-vZQ"/>
-                                                    <segue destination="04w-cg-BQ8" kind="show" id="vVU-rk-gjZ"/>
+                                                    <segue destination="04w-cg-BQ8" kind="show" identifier="toPastSessions" id="vVU-rk-gjZ"/>
                                                 </connections>
                                             </button>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Oo3-6m-XO3">
@@ -179,10 +179,10 @@
             </objects>
             <point key="canvasLocation" x="519.20000000000005" y="123.68815592203899"/>
         </scene>
-        <!--View Controller-->
+        <!--Past Session View Controller-->
         <scene sceneID="BoK-Ha-bD0">
             <objects>
-                <viewController id="04w-cg-BQ8" sceneMemberID="viewController">
+                <viewController id="04w-cg-BQ8" customClass="PastSessionViewController" customModule="VirtualCrowd" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="HaV-qE-ucO"/>
                         <viewControllerLayoutGuide type="bottom" id="fTG-Hw-4UN"/>
@@ -191,30 +191,60 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="TheCrowd" translatesAutoresizingMaskIntoConstraints="NO" id="kby-Da-n2r">
-                                <constraints>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="128" id="DOC-IV-wTa"/>
-                                    <constraint firstAttribute="height" constant="128" id="Ffx-8P-iMf"/>
-                                    <constraint firstAttribute="width" constant="375" id="NFP-Oe-zNf"/>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="375" id="cwk-Sg-xZw"/>
-                                </constraints>
-                            </imageView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Yyw-BC-0C5">
-                                <frame key="frameInset" minX="16" width="343" height="585"/>
+                                <frame key="frameInset" minX="16" width="343" height="667"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="pastSessionCell" textLabel="QT0-K7-VWY" detailTextLabel="Mel-nn-iwb" style="IBUITableViewCellStyleValue1" id="YbO-QB-HMy">
+                                        <rect key="frame" x="0.0" y="92" width="343" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="YbO-QB-HMy" id="rqK-sj-e9B">
+                                            <frame key="frameInset" width="343" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="QT0-K7-VWY">
+                                                    <frame key="frameInset" minX="15" minY="11" width="34" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Mel-nn-iwb">
+                                                    <frame key="frameInset" minX="284" minY="11" width="44" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="l4v-dS-HXL" kind="show" identifier="pastToDetail" id="by3-Si-6RB"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
                             </tableView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="TheCrowd" translatesAutoresizingMaskIntoConstraints="NO" id="JFF-Qx-rrl">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="128" id="NP1-DZ-pz4"/>
+                                    <constraint firstAttribute="width" constant="375" id="pmw-KL-SUC"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="kby-Da-n2r" secondAttribute="bottom" constant="-50" id="ZxS-dF-YMz"/>
-                            <constraint firstItem="kby-Da-n2r" firstAttribute="centerX" secondItem="HBh-aG-5v8" secondAttribute="centerX" id="jE3-cA-6nl"/>
+                            <constraint firstItem="JFF-Qx-rrl" firstAttribute="centerX" secondItem="HBh-aG-5v8" secondAttribute="centerX" id="RTa-C6-4ae"/>
+                            <constraint firstAttribute="bottom" secondItem="JFF-Qx-rrl" secondAttribute="bottom" constant="-51" id="nlC-S1-DNP"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="pastSessionTableView" destination="Yyw-BC-0C5" id="m5S-b4-6WA"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2Di-Wa-DTH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1520.8" y="457.42128935532236"/>
+            <point key="canvasLocation" x="1490" y="-208"/>
         </scene>
         <!--Title-->
         <scene sceneID="mqi-39-oeC">
@@ -331,6 +361,7 @@
                         <outlet property="sessionCodeLabel" destination="Kx3-1Q-AMF" id="8ON-qM-fKl"/>
                         <outlet property="sessionQuestionsTableView" destination="ymb-wt-3TD" id="P6x-FM-8ZN"/>
                         <outlet property="sessionTimerLabel" destination="XKb-53-R45" id="7JJ-7R-ec2"/>
+                        <outlet property="viewOfSpencer" destination="FVS-nY-HV8" id="PNQ-Nx-sgJ"/>
                         <outlet property="visualEffectAddQuestionView" destination="TZP-XK-FSq" id="3gp-bn-1Kr"/>
                     </connections>
                 </viewController>
@@ -402,8 +433,53 @@
                         <outlet property="delegate" destination="l4v-dS-HXL" id="KM1-Jg-pUi"/>
                     </connections>
                 </tapGestureRecognizer>
+                <visualEffectView opaque="NO" contentMode="scaleToFill" id="FVS-nY-HV8">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="cbg-w8-nCF">
+                        <frame key="frameInset"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <visualEffectView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XDE-m1-isc">
+                                <frame key="frameInset"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" id="A8C-NH-8Hn">
+                                    <frame key="frameInset"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ofb-HB-Z9C">
+                                            <frame key="frameInset" minX="67" minY="213" width="240" height="240"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="Screen Shot 2016-10-12 at 7.15.56 PM" translatesAutoresizingMaskIntoConstraints="NO" id="dzH-Hc-MVc">
+                                                    <frame key="frameInset" width="240" height="240"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="240" id="9xr-Cd-ASB"/>
+                                                        <constraint firstAttribute="width" constant="240" id="pZG-ie-o2T"/>
+                                                    </constraints>
+                                                </imageView>
+                                            </subviews>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstItem="dzH-Hc-MVc" firstAttribute="centerX" secondItem="Ofb-HB-Z9C" secondAttribute="centerX" id="8PY-9C-49t"/>
+                                                <constraint firstAttribute="height" constant="240" id="ChT-X4-ZUF"/>
+                                                <constraint firstItem="dzH-Hc-MVc" firstAttribute="centerY" secondItem="Ofb-HB-Z9C" secondAttribute="centerY" id="g82-zH-3hO"/>
+                                                <constraint firstAttribute="width" constant="240" id="jnZ-9R-IAv"/>
+                                            </constraints>
+                                        </view>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="Ofb-HB-Z9C" firstAttribute="centerY" secondItem="A8C-NH-8Hn" secondAttribute="centerY" id="0NJ-uW-Nuz"/>
+                                        <constraint firstItem="Ofb-HB-Z9C" firstAttribute="centerX" secondItem="A8C-NH-8Hn" secondAttribute="centerX" id="rZG-d8-E8P"/>
+                                    </constraints>
+                                </view>
+                                <blurEffect style="dark"/>
+                            </visualEffectView>
+                        </subviews>
+                    </view>
+                    <blurEffect style="light"/>
+                </visualEffectView>
             </objects>
-            <point key="canvasLocation" x="1520.8" y="-215.44227886056973"/>
+            <point key="canvasLocation" x="2446" y="124"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="vDH-5v-djW">
@@ -421,16 +497,17 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dYv-o2-IQD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-329" y="124"/>
+            <point key="canvasLocation" x="519" y="-529"/>
         </scene>
     </scenes>
     <resources>
         <image name="Line" width="512" height="1"/>
         <image name="Rectangle" width="512" height="96"/>
+        <image name="Screen Shot 2016-10-12 at 7.15.56 PM" width="148" height="149"/>
         <image name="TheCrowd" width="256" height="78"/>
         <image name="VotingArrow" width="512" height="512"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="fzP-UN-xLI"/>
+        <segue reference="by3-Si-6RB"/>
     </inferredMetricsTieBreakers>
 </document>

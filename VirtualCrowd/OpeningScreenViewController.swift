@@ -50,7 +50,6 @@ class OpeningScreenViewController: UIViewController, UIPickerViewDelegate, UITex
         }
     }
     
-    
     func setupTextfields() {
         
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(OpeningScreenViewController.resignKeyboard))
@@ -104,7 +103,7 @@ class OpeningScreenViewController: UIViewController, UIPickerViewDelegate, UITex
         let code = SessionController.sharedController.randomCodeGenerator()
         let session = Session(title: title, identifier: UUID().uuidString, code: code, questions: [], timeLimit: time, isActive: true, date: Date(), crowdNumber: 1)
         self.crowdCreatedUUID = session.identifier
-        SessionController.sharedController.activeSessions.append(session)
+        SessionController.sharedController.sessions.append(session)
     }
     
     @IBAction func pastSessionsButtonTapped(_ sender: UIButton) {
@@ -137,7 +136,7 @@ class OpeningScreenViewController: UIViewController, UIPickerViewDelegate, UITex
         
         if segue.identifier == "createSession" {
             let destinationVC = segue.destination as? SessionViewController
-            let sessionArray = SessionController.sharedController.activeSessions.filter({ $0.identifier == self.crowdCreatedUUID })
+            let sessionArray = SessionController.sharedController.sessions.filter({ $0.identifier == self.crowdCreatedUUID })
             let sessionToSend = sessionArray[0]
             destinationVC?.session = sessionToSend
             resetTextfields()
@@ -146,7 +145,7 @@ class OpeningScreenViewController: UIViewController, UIPickerViewDelegate, UITex
         if segue.identifier == "joinSegue" {
             guard let text = self.joinCrowdCodeEntryTextField.text else { return }
             let destinationVC = segue.destination as? SessionViewController
-            let sessionArray = SessionController.sharedController.activeSessions.filter({ $0.code == text })
+            let sessionArray = SessionController.sharedController.sessions.filter({ $0.code == text })
             let sessionToSend = sessionArray[0]
             destinationVC?.session = sessionToSend
             resetTextfields()

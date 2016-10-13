@@ -14,14 +14,14 @@ class SessionController {
     
     // MARK: properties
     
-    var activeSessions: [Session] = []
+    var sessions: [Session] = []
     var inactiveSessions: [Session] = []
     
     // MARK: functions
     
     func createSession(title: String, code: String, timeLimit: TimeInterval) {
         let session = Session(title: title, identifier: UUID().uuidString, code: code, questions: [], timeLimit: timeLimit, isActive: true, date: Date(), crowdNumber: 1)
-        activeSessions.append(session)
+        sessions.append(session)
     }
     
     func addQuestionToSession(statement: String, session: Session) {
@@ -31,11 +31,7 @@ class SessionController {
     }
     
     func sessionNowInactive(session: Session) {
-        let session = session
-        if let index = activeSessions.index(where: {$0 == session}) {
-            activeSessions.remove(at: index)
-        }
-        inactiveSessions.append(session)
+        
     }
     
     func addVoteToQuestion(question: Question) {
@@ -71,7 +67,7 @@ class SessionController {
         session.questions.append(q1)
         session.questions.append(q2)
         session.questions.append(q3)
-        inactiveSessions.append(session)
+        sessions.append(session)
         
         let session2 = Session(title: "Testing Session", identifier: UUID().uuidString, code: "123ABC", questions: [], timeLimit: 60, isActive: false, date: Date(), crowdNumber: 1)
         let q4 = Question(statement: "What do you want?", session: session2)
@@ -80,11 +76,6 @@ class SessionController {
         session2.questions.append(q4)
         session2.questions.append(q5)
         session2.questions.append(q6)
-        activeSessions.append(session2)
-        doNothing()
-    }
-    
-    func doNothing() {
-        
+        sessions.append(session2)
     }
 }

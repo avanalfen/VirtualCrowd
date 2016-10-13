@@ -17,6 +17,7 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     // MARK: Outlets
     
+    @IBOutlet var viewOfSpencer: UIVisualEffectView!
     @IBOutlet var visualEffectAddQuestionView: UIVisualEffectView!
     @IBOutlet var addQuestionView: UIView!
     @IBOutlet weak var addQuestionTextField: UITextField!
@@ -28,13 +29,18 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let session = SessionController.sharedController.activeSessions.filter({ $0.identifier == self.session?.identifier })[0]
+        let session = SessionController.sharedController.sessions.filter({ $0.identifier == self.session?.identifier })[0]
         self.title = session.title
         sessionCodeLabel.text = "Code: \(session.code)"
         sessionTimerLabel.text = "\(session.timeLimit)"
         sessionQuestionsTableView.estimatedRowHeight = 100
         sessionQuestionsTableView.tableHeaderView?.frame = CGRect(x: 0, y: 0, width: sessionQuestionsTableView.frame.width, height: 20)
         sessionCodeLabel.backgroundColor = UIColor(displayP3Red: 247, green: 248, blue: 192, alpha: 1)
+        
+        let longTap = UILongPressGestureRecognizer(target: self, action: #selector((longPress)))
+        longTap.numberOfTapsRequired = 1
+        longTap.minimumPressDuration = 5
+        view.addGestureRecognizer(longTap)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -54,7 +60,7 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        let session = SessionController.sharedController.activeSessions.filter({ $0.identifier == self.session?.identifier })[0]
+        let session = SessionController.sharedController.sessions.filter({ $0.identifier == self.session?.identifier })[0]
         return session.questions.count
     }
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -63,7 +69,7 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "questionCell") as? QuestionTableViewCell else { return QuestionTableViewCell() }
-        let session = SessionController.sharedController.activeSessions.filter({ $0.identifier == self.session?.identifier })[0]
+        let session = SessionController.sharedController.sessions.filter({ $0.identifier == self.session?.identifier })[0]
         let indexOfQustion = indexPath.section + indexPath.row
         let question = session.questions[indexOfQustion]
         
@@ -97,7 +103,7 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     @IBAction func addQuestionSubmitButtonTapped(_ sender: UIButton) {
         guard let text = addQuestionTextField.text else { return }
-        let session = SessionController.sharedController.activeSessions.filter({ $0.identifier == self.session?.identifier })[0]
+        let session = SessionController.sharedController.sessions.filter({ $0.identifier == self.session?.identifier })[0]
         SessionController.sharedController.addQuestionToSession(statement: text, session: session)
         addQuestionTextField.text = ""
         visualEffectAddQuestionView.removeFromSuperview()
@@ -110,6 +116,10 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
         let question = session.questions[index.section - index.row]
             SessionController.sharedController.addVoteToQuestion(question: question)
             sessionQuestionsTableView.reloadData()
+    }
+    
+    func longPress() {
+        view.addSubview(viewOfSpencer)
     }
 }
 
