@@ -281,7 +281,7 @@
                                         <constraint firstItem="XKb-53-R45" firstAttribute="top" secondItem="cGn-jx-jba" secondAttribute="top" id="doZ-12-bmN"/>
                                         <constraint firstItem="Kx3-1Q-AMF" firstAttribute="top" secondItem="cGn-jx-jba" secondAttribute="top" id="faP-ui-MiJ"/>
                                         <constraint firstItem="XKb-53-R45" firstAttribute="centerX" secondItem="cGn-jx-jba" secondAttribute="centerX" constant="75" id="on4-pw-hf3"/>
-                                        <constraint firstItem="Kx3-1Q-AMF" firstAttribute="centerX" secondItem="cGn-jx-jba" secondAttribute="centerX" constant="-75" id="stO-Tj-P6m"/>
+                                        <constraint firstItem="Kx3-1Q-AMF" firstAttribute="centerX" secondItem="cGn-jx-jba" secondAttribute="centerX" constant="-85" id="stO-Tj-P6m"/>
                                     </constraints>
                                 </view>
                                 <view key="tableFooterView" contentMode="scaleToFill" id="Mw9-dl-G53">
@@ -528,6 +528,6 @@
         <image name="VotingArrow" width="512" height="512"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="by3-Si-6RB"/>
+        <segue reference="m8E-IX-j98"/>
     </inferredMetricsTieBreakers>
 </document>

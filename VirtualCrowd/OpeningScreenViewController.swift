@@ -20,7 +20,7 @@ class OpeningScreenViewController: UIViewController, UIPickerViewDelegate, UITex
     
     // MARK: Properties
     
-    var crowdCreatedUUID: String = ""
+    var session: Session?
     var isThereATitle: Bool = false
     var isThereATime: Bool = false
     
@@ -99,7 +99,8 @@ class OpeningScreenViewController: UIViewController, UIPickerViewDelegate, UITex
     
     @IBAction func createSessionButtonPressed(_ sender: UIButton) {
         guard let title = createCrowdTitleTextEntry.text, let time = Double(createCrowdTimeLimitEntry.text!) else { return }
-        SessionController.sharedController.createSession(title: title, timeLimit: time)
+        self.session = SessionController.sharedController.createSession(title: title, timeLimit: time)
+        
     }
     
     @IBAction func pastSessionsButtonTapped(_ sender: UIButton) {
@@ -132,9 +133,7 @@ class OpeningScreenViewController: UIViewController, UIPickerViewDelegate, UITex
         
         if segue.identifier == "createSession" {
             let destinationVC = segue.destination as? SessionViewController
-            let sessionArray = SessionController.sharedController.sessions.filter({ $0.identifier == self.crowdCreatedUUID })
-            let sessionToSend = sessionArray[0]
-            destinationVC?.session = sessionToSend
+            destinationVC?.session = self.session
             resetTextfields()
         }
         

@@ -21,7 +21,7 @@ class SessionController {
     // MARK: functions
     //----------------------------------------------------------------------------------------------------------------------
 
-    func createSession(title: String, timeLimit: TimeInterval) {
+    @discardableResult func createSession(title: String, timeLimit: TimeInterval) -> Session {
         let formatter = DateFormatter()
         formatter.timeStyle = .short
         let startDate = Date()
@@ -34,6 +34,7 @@ class SessionController {
         let session = Session(title: title, identifier: identifier, code: code, questions: [], timeLimit: timeLimit, isActive: isActive, endDate: endDate, crowdNumber: startingCrowdNumber, startDate: startDate)
         
         sessions.append(session)
+        return session
     }
     
     func addQuestionToSession(statement: String, session: Session) {
@@ -86,7 +87,7 @@ class SessionController {
         session.questions.append(q1)
         session.questions.append(q2)
         session.questions.append(q3)
-        sessions.append(session)
+        inactiveSessions.append(session)
         
         let session2 = Session(title: "Testing Session", identifier: UUID().uuidString, code: "123ABC", questions: [], timeLimit: 60, isActive: false, endDate: Date(), crowdNumber: 1, startDate: Date())
         let q4 = Question(statement: "What do you want?", session: session2)
@@ -95,6 +96,6 @@ class SessionController {
         session2.questions.append(q4)
         session2.questions.append(q5)
         session2.questions.append(q6)
-        sessions.append(session2)
+        inactiveSessions.append(session2)
     }
 }

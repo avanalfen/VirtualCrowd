@@ -42,6 +42,10 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
         super.viewDidLoad()
         setupSessionLabels()
         setupTapGesture()
+        
+        if self.session?.isActive == false {
+            self.navigationItem.rightBarButtonItem?.isEnabled = false
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -98,7 +102,7 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "questionCell") as? QuestionTableViewCell else { return QuestionTableViewCell() }
-        let session = SessionController.sharedController.sessions.filter({ $0.identifier == self.session?.identifier })[0]
+        guard let session = self.session else { return QuestionTableViewCell() }
         let indexOfQustion = indexPath.section + indexPath.row
         let question = session.questions[indexOfQustion]
         
@@ -122,9 +126,9 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         cell.questionTextLabel.text = question.statement
         cell.upVoteButton.setTitle("\(question.upVotes)", for: .normal)
-        cell.notesTextField.delegate = self
-        cell.notesTextField.text = question.notes
-        cell.notesTextField.resignFirstResponder()
+//        cell.notesTextField.delegate = self
+//        cell.notesTextField.text = question.notes
+//        cell.notesTextField.resignFirstResponder()
         
         return cell
     }
@@ -146,7 +150,7 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        let session = SessionController.sharedController.sessions.filter({ $0.identifier == self.session?.identifier })[0]
+        guard let session = self.session else { return 0 }
         return session.questions.count
     }
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -183,12 +187,17 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func setupSessionLabels() {
-        let session = SessionController.sharedController.sessions.filter({ $0.identifier == self.session?.identifier })[0]
+        guard let session = self.session else { return }
         self.title = session.title
-        self.sessionCodeLabel.text = "Code: \(session.code)"
-        
+        let endTime = date(date: session.endDate).timeR
+        self.sessionCodeLabel.text = "Entry code: \(session.code)"
+        self.sessionTimerLabel.text = "Ending time: \(endTime)"
         sessionQuestionsTableView.tableHeaderView?.frame = CGRect(x: 0, y: 0, width: sessionQuestionsTableView.frame.width, height: 20)
         sessionCodeLabel.backgroundColor = UIColor(displayP3Red: 247, green: 248, blue: 192, alpha: 1)
+        
+        if self.session?.isActive == false {
+            sessionQuestionsTableView.tableHeaderView?.isHidden = true
+        }
     }
     
     func setupTapGesture() {

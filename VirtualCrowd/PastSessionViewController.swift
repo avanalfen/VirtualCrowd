@@ -38,7 +38,7 @@ class PastSessionViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return SessionController.sharedController.sessions.filter({ $0.isActive == false }).count
+        return SessionController.sharedController.inactiveSessions.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -47,7 +47,7 @@ class PastSessionViewController: UIViewController, UITableViewDelegate, UITableV
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "pastSessionCell") else { return UITableViewCell() }
-        let sessionsArray = SessionController.sharedController.sessions.filter({ $0.isActive == false })
+        let sessionsArray = SessionController.sharedController.inactiveSessions
         let indexOfArray = indexPath.section + indexPath.row
         let session = sessionsArray[indexOfArray]
         
@@ -70,7 +70,7 @@ class PastSessionViewController: UIViewController, UITableViewDelegate, UITableV
         // Pass the selected object to the new view controller.
         if segue.identifier == "pastToDetail" {
             let destinationVC = segue.destination as? SessionViewController
-            let sessionArray = SessionController.sharedController.sessions.filter({ $0.isActive == false })
+            let sessionArray = SessionController.sharedController.inactiveSessions
             let index = pastSessionTableView.indexPathForSelectedRow
             let session = sessionArray[ (index?.section)! + (index?.row)!]
             destinationVC?.session = session
