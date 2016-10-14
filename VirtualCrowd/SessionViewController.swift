@@ -41,14 +41,7 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
     override func viewDidLoad() {
         super.viewDidLoad()
         setupSessionLabels()
-        
-        sessionQuestionsTableView.tableHeaderView?.frame = CGRect(x: 0, y: 0, width: sessionQuestionsTableView.frame.width, height: 20)
-        sessionCodeLabel.backgroundColor = UIColor(displayP3Red: 247, green: 248, blue: 192, alpha: 1)
-        
-        let longTap = UILongPressGestureRecognizer(target: self, action: #selector((longPress)))
-        longTap.numberOfTapsRequired = 1
-        longTap.minimumPressDuration = 5
-        view.addGestureRecognizer(longTap)
+        setupTapGesture()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -112,6 +105,7 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
         cell.layer.cornerRadius = 10
         cell.contentView.layer.cornerRadius = 10
         cell.layer.borderWidth = 1
+        
         if question.votedOn == true {
             cell.layer.borderColor = UIColor.green.cgColor
         } else {
@@ -131,6 +125,7 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
         cell.notesTextField.delegate = self
         cell.notesTextField.text = question.notes
         cell.notesTextField.resignFirstResponder()
+        
         return cell
     }
     
@@ -192,6 +187,15 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
         self.title = session.title
         self.sessionCodeLabel.text = "Code: \(session.code)"
         
+        sessionQuestionsTableView.tableHeaderView?.frame = CGRect(x: 0, y: 0, width: sessionQuestionsTableView.frame.width, height: 20)
+        sessionCodeLabel.backgroundColor = UIColor(displayP3Red: 247, green: 248, blue: 192, alpha: 1)
+    }
+    
+    func setupTapGesture() {
+        let longTap = UILongPressGestureRecognizer(target: self, action: #selector((longPress)))
+        longTap.numberOfTapsRequired = 1
+        longTap.minimumPressDuration = 5
+        view.addGestureRecognizer(longTap)
     }
     
     func longPress() {
