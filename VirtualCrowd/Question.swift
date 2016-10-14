@@ -11,7 +11,7 @@ import Foundation
 class Question {
     
     let statement: String
-    let notes: String
+    var notes: String
     var upVotes: Int
     let session: Session?
     var votedOn: Bool

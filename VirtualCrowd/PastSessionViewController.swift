@@ -29,12 +29,16 @@ class PastSessionViewController: UIViewController, UITableViewDelegate, UITableV
 
     // MARK: TableView
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 5
+        return 8
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return SessionController.sharedController.sessions.count
+        return SessionController.sharedController.sessions.filter({ $0.isActive == false }).count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -50,9 +54,13 @@ class PastSessionViewController: UIViewController, UITableViewDelegate, UITableV
         cell.textLabel?.text = session.title
         cell.detailTextLabel?.text = String(describing: date(date: session.date).mediumStyle)
         
+        cell.contentView.layer.cornerRadius = 10
+        cell.layer.cornerRadius = 12
+        cell.layer.borderWidth = 1
+        cell.layer.borderColor = UIColor.black.cgColor
+        
         return cell
     }
-
     
     // MARK: - Navigation
 

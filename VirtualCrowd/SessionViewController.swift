@@ -8,24 +8,34 @@
 
 import UIKit
 
-class SessionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate {
+class SessionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate, UITextFieldDelegate, UITextViewDelegate {
     
     // MARK: Properties
+    //----------------------------------------------------------------------------------------------------------------------
     
     var session: Session?
+    var selectedRowIndex = -1
+    var selectedCellIndex = -1
+    var thereIsCellTapped = false
+    var cellIsExpanded: Bool = false
     var addQuestionViewIsShowing = false
+    var notesVisible: Bool = false
+    var selectedIndexPath: IndexPath? = nil
+    var previousCellIndexPath: IndexPath?
     
     // MARK: Outlets
+    //----------------------------------------------------------------------------------------------------------------------
     
-    @IBOutlet var viewOfSpencer: UIVisualEffectView!
-    @IBOutlet var visualEffectAddQuestionView: UIVisualEffectView!
     @IBOutlet var addQuestionView: UIView!
-    @IBOutlet weak var addQuestionTextField: UITextField!
-    @IBOutlet weak var sessionQuestionsTableView: UITableView!
     @IBOutlet weak var sessionCodeLabel: UILabel!
     @IBOutlet weak var sessionTimerLabel: UILabel!
+    @IBOutlet var viewOfSpencer: UIVisualEffectView!
+    @IBOutlet weak var addQuestionTextField: UITextField!
+    @IBOutlet weak var sessionQuestionsTableView: UITableView!
+    @IBOutlet var visualEffectAddQuestionView: UIVisualEffectView!
     
     // MARK: View Setup
+    //----------------------------------------------------------------------------------------------------------------------
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,7 +43,7 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
         self.title = session.title
         sessionCodeLabel.text = "Code: \(session.code)"
         sessionTimerLabel.text = "\(session.timeLimit)"
-        sessionQuestionsTableView.estimatedRowHeight = 100
+        
         sessionQuestionsTableView.tableHeaderView?.frame = CGRect(x: 0, y: 0, width: sessionQuestionsTableView.frame.width, height: 20)
         sessionCodeLabel.backgroundColor = UIColor(displayP3Red: 247, green: 248, blue: 192, alpha: 1)
         
@@ -47,12 +57,104 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
         self.navigationController?.navigationBar.isHidden = false
     }
     
+    // MARK: TableView
+    //----------------------------------------------------------------------------------------------------------------------
+    // .
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        sessionQuestionsTableView.deselectRow(at: indexPath, animated: true)
+        if let previousCellIndexPath = previousCellIndexPath {
+            guard let cell = tableView.cellForRow(at: previousCellIndexPath) as? QuestionTableViewCell else { return }
+            cell.notesLabel.isHidden = true
+            cell.notesTextField.isHidden = true
+        }
+        switch selectedIndexPath {
+        case nil:
+            selectedIndexPath = indexPath
+        default:
+            if selectedIndexPath! == indexPath {
+                selectedIndexPath = nil
+            } else {
+                selectedIndexPath = indexPath
+            }
+        }
+        tableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        self.sessionQuestionsTableView.beginUpdates()
+        self.sessionQuestionsTableView.endUpdates()
+        
+        previousCellIndexPath = indexPath
+        //                if selectedRowIndex != -1 {
+        //                    self.sessionQuestionsTableView.cellForRow(at: IndexPath(row: self.selectedRowIndex, section: indexPath.section))?.backgroundColor = UIColor.white
+        //                }
+        //
+        //                if selectedRowIndex != indexPath.row {
+        //                    self.thereIsCellTapped = true
+        //                    self.selectedRowIndex = indexPath.row
+        //                } else {
+        //                    cellIsExpanded = false
+        //                    thereIsCellTapped = false
+        //                    selectedRowIndex = -1
+        //                }
+        //
+        //                selectedCellIndex = indexPath.section + indexPath.row
+        //
+        //
+        //                sessionQuestionsTableView.deselectRow(at: indexPath, animated: true)
     }
-    
+    // .
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableViewAutomaticDimension
+        
+        let justQuestionHeight: CGFloat = 60.0
+        let questionAndNotesHeight: CGFloat = 190.0
+        let ip = indexPath
+        if selectedIndexPath != nil {
+            if ip == selectedIndexPath {
+                return questionAndNotesHeight
+            } else {
+                return justQuestionHeight
+            }
+        } else {
+            return justQuestionHeight
+        }
+        
+        //        guard let cell = tableView.dequeueReusableCell(withIdentifier: "questionCell") as? QuestionTableViewCell else { return 0 }
+        //
+        //                let cellIndexPath = indexPath.section + indexPath.row
+        //                if selectedCellIndex == cellIndexPath && cellIsExpanded == false {
+        //                    cellIsExpanded = true
+        //                    return 190
+        //                } else {
+        //                    return 60
+        //                }
+    }
+    // .
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "questionCell") as? QuestionTableViewCell else { return QuestionTableViewCell() }
+        let session = SessionController.sharedController.sessions.filter({ $0.identifier == self.session?.identifier })[0]
+        let indexOfQustion = indexPath.section + indexPath.row
+        let question = session.questions[indexOfQustion]
+        
+        cell.layer.cornerRadius = 10
+        cell.contentView.layer.cornerRadius = 10
+        cell.layer.borderWidth = 1
+        if question.votedOn == true {
+            cell.layer.borderColor = UIColor.green.cgColor
+        } else {
+            cell.layer.borderColor = UIColor.black.cgColor
+        }
+        
+        if selectedIndexPath != nil {
+            cell.notesLabel.isHidden = false
+            cell.notesTextField.isHidden = false
+        } else {
+            cell.notesTextField.isHidden = true
+            cell.notesLabel.isHidden = true
+        }
+        
+        cell.questionTextLabel.text = question.statement
+        cell.upVoteButton.setTitle("\(question.upVotes)", for: .normal)
+        return cell
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -67,30 +169,8 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
         return 5
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "questionCell") as? QuestionTableViewCell else { return QuestionTableViewCell() }
-        let session = SessionController.sharedController.sessions.filter({ $0.identifier == self.session?.identifier })[0]
-        let indexOfQustion = indexPath.section + indexPath.row
-        let question = session.questions[indexOfQustion]
-        
-        cell.layer.cornerRadius = 10
-        cell.contentView.layer.cornerRadius = 10
-        cell.layer.borderWidth = 2
-        cell.layer.borderColor = UIColor.black.cgColor
-        
-        cell.questionTextLabel.text = question.statement
-        cell.upVoteButton.setTitle("\(question.upVotes)", for: .normal)
-        
-        if question.votedOn == true {
-            cell.layer.borderColor = UIColor.green.cgColor
-        } else {
-            cell.layer.borderColor = UIColor.black.cgColor
-        }
-        
-        return cell
-    }
-    
     // MARK: Functions
+    //----------------------------------------------------------------------------------------------------------------------
     
     @IBAction func addQuestionButtonTapped(_ sender: UIBarButtonItem) {
         self.view.addSubview(self.visualEffectAddQuestionView)
@@ -114,13 +194,21 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
         guard let session = self.session else { return }
         guard let index = sessionQuestionsTableView.indexPathForRowContaining(view: sender) else { return }
         let question = session.questions[index.section - index.row]
-            SessionController.sharedController.addVoteToQuestion(question: question)
-            sessionQuestionsTableView.reloadData()
+        SessionController.sharedController.addVoteToQuestion(question: question)
+        sessionQuestionsTableView.reloadData()
     }
     
     func longPress() {
         view.addSubview(viewOfSpencer)
     }
+    
+    // MARK: Textfield Functions
+    //----------------------------------------------------------------------------------------------------------------------
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        //        SessionController.sharedController.addNotesToQuestion(text: notes, question: <#T##Question#>)
+    }
+    
 }
 
 extension UITableView {

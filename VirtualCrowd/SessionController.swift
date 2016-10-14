@@ -44,6 +44,10 @@ class SessionController {
         }
     }
     
+    func addNotesToQuestion(text: String, question: Question) {
+        question.notes = text
+    }
+    
     // MARK: random code generator
     
     func randomCodeGenerator() -> String {
