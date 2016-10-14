@@ -111,7 +111,7 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
         cell.layer.borderWidth = 1
         
         if question.votedOn == true {
-            cell.layer.borderColor = UIColor.green.cgColor
+            cell.layer.borderColor = UIColor.blue.cgColor
         } else {
             cell.layer.borderColor = UIColor.black.cgColor
         }

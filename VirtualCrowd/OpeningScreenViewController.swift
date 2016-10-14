@@ -12,6 +12,7 @@ class OpeningScreenViewController: UIViewController, UIPickerViewDelegate, UITex
     
     // MARK: Outlets
     
+    @IBOutlet weak var theInceptionView: UIView!
     @IBOutlet weak var joinCrowdCodeEntryTextField: UITextField!
     @IBOutlet weak var createCrowdTitleTextEntry: UITextField!
     @IBOutlet weak var createCrowdTimeLimitEntry: UITextField!
@@ -21,8 +22,6 @@ class OpeningScreenViewController: UIViewController, UIPickerViewDelegate, UITex
     // MARK: Properties
     
     var session: Session?
-    var isThereATitle: Bool = false
-    var isThereATime: Bool = false
     
     // MARK: View Setup
     
@@ -31,12 +30,14 @@ class OpeningScreenViewController: UIViewController, UIPickerViewDelegate, UITex
         // MARK: deleteThis
         SessionController.sharedController.mockData()
         setupTextfields()
+        theInceptionView.layer.cornerRadius = 5
+        theInceptionView.layer.masksToBounds = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.navigationBar.isHidden = true
-        joinButton.isEnabled = false
         createButton.isEnabled = false
+        joinButton.isEnabled = false
     }
     
     // MARK: Textfields
@@ -55,37 +56,28 @@ class OpeningScreenViewController: UIViewController, UIPickerViewDelegate, UITex
         view.addGestureRecognizer(tap)
         
         self.joinCrowdCodeEntryTextField.autocapitalizationType = .allCharacters
+//        self.joinCrowdCodeEntryTextField.borderStyle = .line
+//        self.createCrowdTitleTextEntry.borderStyle = .line
+//        self.createCrowdTimeLimitEntry.borderStyle = .line
         self.createCrowdTimeLimitEntry.keyboardType = .numberPad
-        
-        createButton.isEnabled = false
-        joinButton.isEnabled = false
+        self.createCrowdTimeLimitEntry.delegate = self
         
     }
     
     // MARK: Button Functions
     
     @IBAction func createTitleTextChanged(_ sender: UITextField) {
-        if sender.text != "" {
-            isThereATitle = true
-        } else {
-            isThereATitle = false
-        }
         enableCreateButton()
         print(sender.text)
     }
     
     @IBAction func createTimeTextChanged(_ sender: UITextField) {
-        if sender.text != "" {
-            isThereATime = true
-        } else {
-            isThereATime = false
-        }
         enableCreateButton()
         print(sender.text)
     }
     
     func enableCreateButton() {
-        if isThereATime && isThereATitle {
+        if createCrowdTimeLimitEntry.text != "" && createCrowdTitleTextEntry.text != "" {
             createButton.isEnabled = true
         } else {
             createButton.isEnabled = false
