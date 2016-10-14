@@ -21,8 +21,18 @@ class SessionController {
     // MARK: functions
     //----------------------------------------------------------------------------------------------------------------------
 
-    func createSession(title: String, code: String, timeLimit: TimeInterval) {
-        let session = Session(title: title, identifier: UUID().uuidString, code: code, questions: [], timeLimit: timeLimit, isActive: true, endDate: Date(), crowdNumber: 1, startDate: Date())
+    func createSession(title: String, timeLimit: TimeInterval) {
+        let formatter = DateFormatter()
+        formatter.timeStyle = .short
+        let startDate = Date()
+        let endDate = startDate.addingTimeInterval(timeLimit * 60)
+        let identifier = UUID().uuidString
+        let code = randomCodeGenerator()
+        let isActive = true
+        let startingCrowdNumber = 1
+        
+        let session = Session(title: title, identifier: identifier, code: code, questions: [], timeLimit: timeLimit, isActive: isActive, endDate: endDate, crowdNumber: startingCrowdNumber, startDate: startDate)
+        
         sessions.append(session)
     }
     

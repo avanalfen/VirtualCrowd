@@ -60,7 +60,6 @@ class OpeningScreenViewController: UIViewController, UIPickerViewDelegate, UITex
         createButton.isEnabled = false
         joinButton.isEnabled = false
         
-        doNothing()
     }
     
     // MARK: Button Functions
@@ -100,10 +99,7 @@ class OpeningScreenViewController: UIViewController, UIPickerViewDelegate, UITex
     
     @IBAction func createSessionButtonPressed(_ sender: UIButton) {
         guard let title = createCrowdTitleTextEntry.text, let time = Double(createCrowdTimeLimitEntry.text!) else { return }
-        let code = SessionController.sharedController.randomCodeGenerator()
-        let session = Session(title: title, identifier: UUID().uuidString, code: code, questions: [], timeLimit: time, isActive: true, endDate: Date(), crowdNumber: 1, startDate: Date())
-        self.crowdCreatedUUID = session.identifier
-        SessionController.sharedController.sessions.append(session)
+        SessionController.sharedController.createSession(title: title, timeLimit: time)
     }
     
     @IBAction func pastSessionsButtonTapped(_ sender: UIButton) {
@@ -150,10 +146,5 @@ class OpeningScreenViewController: UIViewController, UIPickerViewDelegate, UITex
             destinationVC?.session = sessionToSend
             resetTextfields()
         }
-    }
-    
-    // MARK: deleteThis
-    func doNothing() {
-        
     }
 }
