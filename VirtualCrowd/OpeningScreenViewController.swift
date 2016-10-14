@@ -31,7 +31,6 @@ class OpeningScreenViewController: UIViewController, UIPickerViewDelegate, UITex
         // MARK: deleteThis
         SessionController.sharedController.mockData()
         setupTextfields()
-        self.createCrowdTimeLimitEntry.keyboardType = .numberPad
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -56,6 +55,7 @@ class OpeningScreenViewController: UIViewController, UIPickerViewDelegate, UITex
         view.addGestureRecognizer(tap)
         
         self.joinCrowdCodeEntryTextField.autocapitalizationType = .allCharacters
+        self.createCrowdTimeLimitEntry.keyboardType = .numberPad
         
         createButton.isEnabled = false
         joinButton.isEnabled = false
