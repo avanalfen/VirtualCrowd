@@ -16,7 +16,8 @@ class Session: Equatable {
     var questions: [Question]
     let timeLimit: TimeInterval
     let isActive: Bool
-    let date: Date
+    let startDate: Date
+    let endDate: Date
     let crowdNumber: Int
     
     var fireDate: NSDate? {
@@ -25,17 +26,17 @@ class Session: Equatable {
         return fireDateFromThisMorning
     }
     
-    init(title: String, identifier: String, code: String, questions: [Question], timeLimit: TimeInterval, isActive: Bool,  date: Date, crowdNumber: Int) {
+    init(title: String, identifier: String, code: String, questions: [Question], timeLimit: TimeInterval, isActive: Bool,  endDate: Date, crowdNumber: Int, startDate: Date) {
         self.title = title
         self.identifier = identifier
         self.code = code
         self.questions = questions
         self.timeLimit = timeLimit
         self.isActive = isActive
-        self.date = date
+        self.endDate = endDate
         self.crowdNumber = crowdNumber
+        self.startDate = startDate
     }
-    
 }
 
 func ==(lhs: Session, rhs: Session) -> Bool {

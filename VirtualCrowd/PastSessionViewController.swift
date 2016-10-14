@@ -52,7 +52,7 @@ class PastSessionViewController: UIViewController, UITableViewDelegate, UITableV
         let session = sessionsArray[indexOfArray]
         
         cell.textLabel?.text = session.title
-        cell.detailTextLabel?.text = String(describing: date(date: session.date).mediumStyle)
+        cell.detailTextLabel?.text = String(describing: date(date: session.endDate).mediumStyle)
         
         cell.contentView.layer.cornerRadius = 10
         cell.layer.cornerRadius = 12

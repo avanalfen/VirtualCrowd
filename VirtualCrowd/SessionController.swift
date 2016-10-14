@@ -13,14 +13,16 @@ class SessionController {
     static let sharedController = SessionController()
     
     // MARK: properties
+    //----------------------------------------------------------------------------------------------------------------------
     
     var sessions: [Session] = []
     var inactiveSessions: [Session] = []
     
     // MARK: functions
-    
+    //----------------------------------------------------------------------------------------------------------------------
+
     func createSession(title: String, code: String, timeLimit: TimeInterval) {
-        let session = Session(title: title, identifier: UUID().uuidString, code: code, questions: [], timeLimit: timeLimit, isActive: true, date: Date(), crowdNumber: 1)
+        let session = Session(title: title, identifier: UUID().uuidString, code: code, questions: [], timeLimit: timeLimit, isActive: true, endDate: Date(), crowdNumber: 1, startDate: Date())
         sessions.append(session)
     }
     
@@ -49,7 +51,8 @@ class SessionController {
     }
     
     // MARK: random code generator
-    
+    //----------------------------------------------------------------------------------------------------------------------
+
     func randomCodeGenerator() -> String {
         let characters: NSString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
         let randomCodeString: NSMutableString = NSMutableString(capacity: 5)
@@ -63,17 +66,19 @@ class SessionController {
     }
     
     // MARK: deleteThis
+    //----------------------------------------------------------------------------------------------------------------------
+
     func mockData() {
-        let session = Session(title: "Test", identifier: UUID().uuidString, code: "ABC123", questions: [], timeLimit: 60, isActive: false, date: Date(), crowdNumber: 1)
-        let q1 = Question(statement: "What do you want?", session: session)
-        let q2 = Question(statement: "Explain more please", session: session)
-        let q3 = Question(statement: "I'm confused", session: session)
+        let session = Session(title: "Test", identifier: UUID().uuidString, code: "ABC123", questions: [], timeLimit: 60, isActive: false, endDate: Date(), crowdNumber: 1, startDate: Date())
+        let q1 = Question(statement: "Here is a long sentence to see if the text will wrap to another line", session: session)
+        let q2 = Question(statement: "Explain more on that subject please", session: session)
+        let q3 = Question(statement: "I'm confused about *subject*", session: session)
         session.questions.append(q1)
         session.questions.append(q2)
         session.questions.append(q3)
         sessions.append(session)
         
-        let session2 = Session(title: "Testing Session", identifier: UUID().uuidString, code: "123ABC", questions: [], timeLimit: 60, isActive: false, date: Date(), crowdNumber: 1)
+        let session2 = Session(title: "Testing Session", identifier: UUID().uuidString, code: "123ABC", questions: [], timeLimit: 60, isActive: false, endDate: Date(), crowdNumber: 1, startDate: Date())
         let q4 = Question(statement: "What do you want?", session: session2)
         let q5 = Question(statement: "Explain more please", session: session2)
         let q6 = Question(statement: "I'm confused", session: session2)

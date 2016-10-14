@@ -101,7 +101,7 @@ class OpeningScreenViewController: UIViewController, UIPickerViewDelegate, UITex
     @IBAction func createSessionButtonPressed(_ sender: UIButton) {
         guard let title = createCrowdTitleTextEntry.text, let time = Double(createCrowdTimeLimitEntry.text!) else { return }
         let code = SessionController.sharedController.randomCodeGenerator()
-        let session = Session(title: title, identifier: UUID().uuidString, code: code, questions: [], timeLimit: time, isActive: true, date: Date(), crowdNumber: 1)
+        let session = Session(title: title, identifier: UUID().uuidString, code: code, questions: [], timeLimit: time, isActive: true, endDate: Date(), crowdNumber: 1, startDate: Date())
         self.crowdCreatedUUID = session.identifier
         SessionController.sharedController.sessions.append(session)
     }
