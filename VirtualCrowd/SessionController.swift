@@ -20,7 +20,7 @@ class SessionController {
     
     // MARK: functions
     //----------------------------------------------------------------------------------------------------------------------
-
+    
     @discardableResult func createSession(title: String, timeLimit: TimeInterval) -> Session {
         let formatter = DateFormatter()
         formatter.timeStyle = .short
@@ -61,9 +61,14 @@ class SessionController {
         question.notes = text
     }
     
+    func findSession(_ code: String) -> Session? {
+        let session = sessions.filter({ $0.code == code }).first
+        return session
+    }
+    
     // MARK: random code generator
     //----------------------------------------------------------------------------------------------------------------------
-
+    
     func randomCodeGenerator() -> String {
         let characters: NSString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
         let randomCodeString: NSMutableString = NSMutableString(capacity: 5)
@@ -78,16 +83,16 @@ class SessionController {
     
     // MARK: deleteThis
     //----------------------------------------------------------------------------------------------------------------------
-
+    
     func mockData() {
-        let session = Session(title: "Test", identifier: UUID().uuidString, code: "ABC123", questions: [], timeLimit: 60, isActive: false, endDate: Date(), crowdNumber: 1, startDate: Date())
+        let session = Session(title: "Test", identifier: UUID().uuidString, code: "ABC123", questions: [], timeLimit: 60, isActive: true, endDate: Date(), crowdNumber: 1, startDate: Date())
         let q1 = Question(statement: "Here is a long sentence to see if the text will wrap to another line", session: session)
         let q2 = Question(statement: "Explain more on that subject please", session: session)
         let q3 = Question(statement: "I'm confused about *subject*", session: session)
         session.questions.append(q1)
         session.questions.append(q2)
         session.questions.append(q3)
-        inactiveSessions.append(session)
+        sessions.append(session)
         
         let session2 = Session(title: "Testing Session", identifier: UUID().uuidString, code: "123ABC", questions: [], timeLimit: 60, isActive: false, endDate: Date(), crowdNumber: 1, startDate: Date())
         let q4 = Question(statement: "What do you want?", session: session2)

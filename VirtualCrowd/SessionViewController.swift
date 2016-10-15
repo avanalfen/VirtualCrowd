@@ -29,8 +29,8 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
     // MARK: Outlets
     //----------------------------------------------------------------------------------------------------------------------
     
+    @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet private var addQuestionView: UIView!
-    @IBOutlet weak private var sessionCodeLabel: UILabel!
     @IBOutlet weak private var sessionTimerLabel: UILabel!
     @IBOutlet private var viewOfSpencer: UIVisualEffectView!
     @IBOutlet weak private var addQuestionTextField: UITextField!
@@ -42,9 +42,11 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupSessionLabels()
+        setupSessionMisc()
         setupTapGesture()
         setupAddButton()
+        setupBackButton()
+        setupInfoButton()
         
         if self.session?.isActive == false {
             self.navigationItem.rightBarButtonItem?.isEnabled = false
@@ -183,14 +185,23 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
         sessionQuestionsTableView.reloadData()
     }
     
-    func setupSessionLabels() {
+    func goBack() {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    func setupSessionMisc() {
+        // Labels
         guard let session = self.session else { return }
         self.title = session.title
         let endTime = date(date: session.endDate).timeR
-        self.sessionCodeLabel.text = "Entry code: \(session.code)"
-        self.sessionTimerLabel.text = "Ending time: \(endTime)"
+        self.titleLabel.text = session.title
+        self.titleLabel.tintColor = UIColor.white
+        self.sessionTimerLabel.text = "Crowd ID: \(session.code)   Questions End: \(endTime)"
         sessionQuestionsTableView.tableHeaderView?.frame = CGRect(x: 0, y: 0, width: sessionQuestionsTableView.frame.width, height: 20)
-        sessionCodeLabel.backgroundColor = UIColor(displayP3Red: 247, green: 248, blue: 192, alpha: 1)
+        
+        // tableView
+        sessionQuestionsTableView.tableHeaderView?.backgroundColor = UIColor.white
+        self.sessionQuestionsTableView.tableFooterView = UIView()
         
         if self.session?.isActive == false {
             sessionQuestionsTableView.tableHeaderView?.isHidden = true
@@ -212,6 +223,27 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
             self.view.addSubview(view)
             self.view.bringSubview(toFront: view)
         }
+    }
+    
+    func setupBackButton() {
+        let back = UIButton()
+        back.layer.frame = CGRect(x: 15, y: 35, width: 40, height: 20)
+        back.clipsToBounds = true
+        back.setTitle("Back", for: .normal)
+        back.setTitleColor(UIColor.blue, for: .normal)
+        back.addTarget(self, action: #selector(goBack), for: .touchUpInside)
+        view.addSubview(back)
+        view.bringSubview(toFront: back)
+    }
+    
+    func setupInfoButton() {
+        let info = UIButton()
+        info.layer.frame = CGRect(x: 325, y: 35, width: 40, height: 20)
+        info.clipsToBounds = true
+        info.setTitleColor(UIColor.blue, for: .normal)
+        info.setTitle("Info", for: .normal)
+        view.addSubview(info)
+        view.bringSubview(toFront: info)
     }
     
     func setupTapGesture() {

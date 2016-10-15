@@ -13,7 +13,7 @@ class OpeningScreenViewController: UIViewController, UIPickerViewDelegate, UITex
     // MARK: Outlets
     
     @IBOutlet weak var theInceptionView: UIView!
-    @IBOutlet weak var joinCrowdCodeEntryTextField: UITextField!
+    @IBOutlet weak var joinCrowdCodeEntryTextField: JoinCrowdTextField!
     @IBOutlet weak var createCrowdTitleTextEntry: UITextField!
     @IBOutlet weak var createCrowdTimeLimitEntry: UITextField!
     @IBOutlet weak var joinButton: UIButton!
@@ -32,6 +32,7 @@ class OpeningScreenViewController: UIViewController, UIPickerViewDelegate, UITex
         setupTextfields()
         theInceptionView.layer.cornerRadius = 5
         theInceptionView.layer.masksToBounds = true
+        joinCrowdCodeEntryTextField.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -89,8 +90,31 @@ class OpeningScreenViewController: UIViewController, UIPickerViewDelegate, UITex
     
     
     @IBAction func JoinSessionPressed(_ sender: UIButton) {
+        guard let text = self.joinCrowdCodeEntryTextField.text else { return }
         
+        if let session = SessionController.sharedController.findSession(text) {
+            guard let sessionViewController = self.storyboard?.instantiateViewController(withIdentifier: "sessionView") as? SessionViewController else { return }
+            sessionViewController.session = session
+            
+            self.clearTextFields()
+            self.resignKeyboard()
+            
+            present(sessionViewController, animated: true, completion: nil)
+            
+        } else {
+            
+            joinCrowdCodeEntryTextField.shake()
+            
+            let alert = UIAlertController(title: "Wrong Code", message: "Check code and try again!", preferredStyle: .alert)
+            let ok = UIAlertAction(title: "OK", style: .default, handler: nil)
+            alert.addAction(ok)
+            present(alert, animated: true, completion: { 
+                self.resignKeyboard()
+                self.clearTextFields()
+            })
+        }
     }
+    
     
     @IBAction func createSessionButtonPressed(_ sender: UIButton) {
         guard let title = createCrowdTitleTextEntry.text, let time = Double(createCrowdTimeLimitEntry.text!) else { return }
@@ -114,31 +138,17 @@ class OpeningScreenViewController: UIViewController, UIPickerViewDelegate, UITex
         createCrowdTitleTextEntry.resignFirstResponder()
     }
     
-    func resetTextfields() {
-        resignKeyboard()
-        clearTextFields()
-    }
-    
     // MARK: - Navigation
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
-        
         if segue.identifier == "createSession" {
             let destinationVC = segue.destination as? SessionViewController
             destinationVC?.session = self.session
-            resetTextfields()
-        }
-        
-        if segue.identifier == "joinSegue" {
-            guard let text = self.joinCrowdCodeEntryTextField.text else { return }
-            let destinationVC = segue.destination as? SessionViewController
-            let sessionArray = SessionController.sharedController.sessions.filter({ $0.code == text })
-            let sessionToSend = sessionArray[0]
-            destinationVC?.session = sessionToSend
-            resetTextfields()
+            resignKeyboard()
+            clearTextFields()
         }
     }
 }

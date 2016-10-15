@@ -12,13 +12,15 @@ class PastSessionViewController: UIViewController, UITableViewDelegate, UITableV
     
     // MARK: Outlets
     
+    @IBOutlet weak var pastCrowdsTitleTextLabel: UILabel!
     @IBOutlet weak var pastSessionTableView: UITableView!
     
     // MARK: View
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Past Sessions"
+        setupBackButton()
+        pastSessionTableView.tableFooterView = UIView()
         pastSessionTableView.delegate = self
         pastSessionTableView.dataSource = self
     }
@@ -60,6 +62,21 @@ class PastSessionViewController: UIViewController, UITableViewDelegate, UITableV
         cell.layer.borderColor = UIColor.black.cgColor
         
         return cell
+    }
+    
+    func goBack() {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    func setupBackButton() {
+        let back = UIButton()
+        back.layer.frame = CGRect(x: 15, y: 35, width: 40, height: 20)
+        back.clipsToBounds = true
+        back.setTitle("Back", for: .normal)
+        back.setTitleColor(UIColor.blue, for: .normal)
+        back.addTarget(self, action: #selector(goBack), for: .touchUpInside)
+        view.addSubview(back)
+        view.bringSubview(toFront: back)
     }
     
     // MARK: - Navigation
