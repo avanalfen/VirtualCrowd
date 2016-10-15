@@ -25,23 +25,6 @@
                                     <constraint firstAttribute="height" constant="128" id="Sfz-Gl-716"/>
                                 </constraints>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pry-Or-S9n">
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="50N-T5-iwu"/>
-                                    <constraint firstAttribute="width" constant="103" id="IjS-ic-Tqm"/>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="vu2-Wi-Wqb"/>
-                                </constraints>
-                                <state key="normal" title="Past Crowds" backgroundImage="Rectangle"/>
-                                <connections>
-                                    <action selector="pastSessionsButtonTapped:" destination="372-Tk-dse" eventType="touchUpInside" id="Izi-Y0-vZQ"/>
-                                    <segue destination="04w-cg-BQ8" kind="show" identifier="toPastSessions" id="vVU-rk-gjZ"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Virtual Crowd" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OPl-5F-Cy8">
-                                <fontDescription key="fontDescription" type="system" pointSize="41"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U4Z-d2-sNw">
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Group 2" translatesAutoresizingMaskIntoConstraints="NO" id="qh2-kK-h6s"/>
@@ -137,6 +120,23 @@
                                     <constraint firstItem="ztw-VR-w8c" firstAttribute="height" secondItem="msi-oF-Bmb" secondAttribute="height" id="zR3-pE-CuH"/>
                                 </constraints>
                             </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Virtual Crowd" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OPl-5F-Cy8">
+                                <fontDescription key="fontDescription" type="system" pointSize="41"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pry-Or-S9n">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="50N-T5-iwu"/>
+                                    <constraint firstAttribute="width" constant="103" id="IjS-ic-Tqm"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="vu2-Wi-Wqb"/>
+                                </constraints>
+                                <state key="normal" title="Past Crowds" backgroundImage="Rectangle"/>
+                                <connections>
+                                    <action selector="pastSessionsButtonTapped:" destination="372-Tk-dse" eventType="touchUpInside" id="Izi-Y0-vZQ"/>
+                                    <segue destination="04w-cg-BQ8" kind="show" identifier="toPastSessions" id="vVU-rk-gjZ"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -146,7 +146,7 @@
                             <constraint firstItem="U4Z-d2-sNw" firstAttribute="centerX" secondItem="aJV-vg-yXW" secondAttribute="centerX" id="6D4-ze-474"/>
                             <constraint firstItem="U4Z-d2-sNw" firstAttribute="leading" secondItem="aJV-vg-yXW" secondAttribute="leadingMargin" id="Afl-fC-qO4"/>
                             <constraint firstItem="OPl-5F-Cy8" firstAttribute="top" secondItem="aJV-vg-yXW" secondAttribute="topMargin" constant="64" id="NAY-vO-X2o"/>
-                            <constraint firstItem="b6X-Mt-fQ0" firstAttribute="top" secondItem="pry-Or-S9n" secondAttribute="bottom" constant="86" id="Prf-Xe-vbe"/>
+                            <constraint firstItem="b6X-Mt-fQ0" firstAttribute="top" secondItem="pry-Or-S9n" secondAttribute="bottom" constant="127" id="Prf-Xe-vbe"/>
                             <constraint firstItem="OPl-5F-Cy8" firstAttribute="centerX" secondItem="aJV-vg-yXW" secondAttribute="centerX" constant="-0.5" id="Qju-Ia-dv0"/>
                             <constraint firstItem="pry-Or-S9n" firstAttribute="centerX" secondItem="aJV-vg-yXW" secondAttribute="centerX" id="ej5-Fm-b7O"/>
                             <constraint firstAttribute="bottom" secondItem="2hl-ld-fIy" secondAttribute="bottom" constant="-50" id="jt0-0s-XrJ"/>
@@ -357,11 +357,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Title" id="aha-5I-nC7">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="QhQ-Ua-3H0">
-                            <connections>
-                                <action selector="addQuestionButtonTapped:" destination="l4v-dS-HXL" id="Aa6-Ap-Bma"/>
-                            </connections>
-                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Info" id="QhQ-Ua-3H0"/>
                     </navigationItem>
                     <connections>
                         <outlet property="addQuestionTextField" destination="O08-f0-E2K" id="ZfR-Ow-w0x"/>

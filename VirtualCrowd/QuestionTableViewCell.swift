@@ -13,7 +13,8 @@ class QuestionTableViewCell: UITableViewCell {
     // MARK: Properties
     
     @IBOutlet weak var notesLabel: UILabel!
-    @IBOutlet weak var notesTextField: UITextView!
+    @IBOutlet weak var notesTextField: UITextView! {
+    }
     @IBOutlet weak var questionTextLabel: UILabel!
     @IBOutlet weak var upVoteButton: UIButton!
     
@@ -21,6 +22,12 @@ class QuestionTableViewCell: UITableViewCell {
     
     @IBAction func questionCellButtonTapped(_ sender: UIButton) {
         
+    }
+    
+    func updateWith(question: Question) {
+        questionTextLabel.text = question.statement
+        upVoteButton.setTitle("\(question.upVotes)", for: .normal)
+        notesTextField.text = question.notes
     }
     
     // MARK: Provided Functions

@@ -44,7 +44,7 @@ class SessionController {
     }
     
     func sessionNowInactive(session: Session) {
-        
+        session.isActive = false
     }
     
     func addVoteToQuestion(question: Question) {

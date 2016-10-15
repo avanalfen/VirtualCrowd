@@ -15,7 +15,7 @@ class Session: Equatable {
     let code: String
     var questions: [Question]
     let timeLimit: TimeInterval
-    let isActive: Bool
+    var isActive: Bool
     let startDate: Date
     let endDate: Date
     let crowdNumber: Int

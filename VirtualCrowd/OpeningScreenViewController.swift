@@ -56,9 +56,12 @@ class OpeningScreenViewController: UIViewController, UIPickerViewDelegate, UITex
         view.addGestureRecognizer(tap)
         
         self.joinCrowdCodeEntryTextField.autocapitalizationType = .allCharacters
-//        self.joinCrowdCodeEntryTextField.borderStyle = .line
-//        self.createCrowdTitleTextEntry.borderStyle = .line
-//        self.createCrowdTimeLimitEntry.borderStyle = .line
+        self.createCrowdTimeLimitEntry.layer.borderColor = UIColor.blue.cgColor
+        self.createCrowdTitleTextEntry.layer.borderColor = UIColor.blue.cgColor
+        self.joinCrowdCodeEntryTextField.layer.borderColor = UIColor.blue.cgColor
+        self.createCrowdTimeLimitEntry.layer.borderWidth = 1
+        self.createCrowdTitleTextEntry.layer.borderWidth = 1
+        self.joinCrowdCodeEntryTextField.layer.borderWidth = 1
         self.createCrowdTimeLimitEntry.keyboardType = .numberPad
         self.createCrowdTimeLimitEntry.delegate = self
         
