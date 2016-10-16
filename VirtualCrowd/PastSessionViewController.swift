@@ -70,7 +70,7 @@ class PastSessionViewController: UIViewController, UITableViewDelegate, UITableV
     
     func setupBackButton() {
         let back = UIButton()
-        back.layer.frame = CGRect(x: 15, y: 35, width: 40, height: 20)
+        back.layer.frame = CGRect(x: 15, y: 45, width: 40, height: 20)
         back.clipsToBounds = true
         back.setTitle("Back", for: .normal)
         back.setTitleColor(UIColor.blue, for: .normal)

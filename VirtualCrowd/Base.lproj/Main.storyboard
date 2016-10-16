@@ -291,7 +291,6 @@
                                                     <state key="normal" title="0" backgroundImage="VotingArrow"/>
                                                     <connections>
                                                         <action selector="questionCellButtonTapped:" destination="7HX-wE-Ke7" eventType="touchUpInside" id="A0p-wl-zu1"/>
-                                                        <action selector="upVoteButtonPressed:" destination="l4v-dS-HXL" eventType="touchUpInside" id="zht-wb-3IB"/>
                                                     </connections>
                                                 </button>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="9" translatesAutoresizingMaskIntoConstraints="NO" id="ocZ-DK-YaC">

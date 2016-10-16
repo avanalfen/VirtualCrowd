@@ -14,6 +14,9 @@ class Session: Equatable {
     let identifier: String
     let code: String
     var questions: [Question]
+    var sortedQuestion: [Question] {
+        return questions.sorted(by: { $0.0.upVotes > $0.1.upVotes })
+    }
     let timeLimit: TimeInterval
     var isActive: Bool
     let startDate: Date

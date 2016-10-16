@@ -19,5 +19,4 @@ class JoinCrowdTextField: UITextField {
         animation.toValue = NSValue(cgPoint: CGPoint.init(x: self.center.x + 5.0, y: self.center.y))
         layer.add(animation, forKey: "position")
     }
-
 }

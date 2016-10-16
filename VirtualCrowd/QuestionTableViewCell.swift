@@ -8,7 +8,14 @@
 
 import UIKit
 
+protocol QuestionUpvoteDelegate: class {
+    func upVotePressed(cell: QuestionTableViewCell)
+}
+
 class QuestionTableViewCell: UITableViewCell {
+    
+    weak var delegate: QuestionUpvoteDelegate?
+    var question: Question?
     
     // MARK: Properties
     
@@ -20,7 +27,7 @@ class QuestionTableViewCell: UITableViewCell {
     // MARK: Functions
     
     @IBAction func questionCellButtonTapped(_ sender: UIButton) {
-        
+        delegate?.upVotePressed(cell: self)
     }
     
     func updateWith(question: Question) {

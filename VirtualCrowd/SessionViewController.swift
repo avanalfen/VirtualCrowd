@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SessionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate, UITextFieldDelegate, UITextViewDelegate {
+class SessionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate, UITextFieldDelegate, UITextViewDelegate, QuestionUpvoteDelegate {
     
     // MARK: Properties
     //----------------------------------------------------------------------------------------------------------------------
@@ -111,10 +111,11 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
         guard let session = self.session else { return QuestionTableViewCell() }
         let ip = indexPath
         let indexOfQustion = indexPath.section + indexPath.row
-        let question = session.questions[indexOfQustion]
+        let question = session.sortedQuestion[indexOfQustion]
         
+        cell.delegate = self
         cell.updateWith(question: question)
-        
+        cell.question = question
         cell.layer.cornerRadius = 10
         cell.contentView.layer.cornerRadius = 10
         cell.layer.borderWidth = 1
@@ -177,11 +178,10 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
         sessionQuestionsTableView.reloadData()
     }
     
-    @IBAction func upVoteButtonPressed(_ sender: UIButton) {
-        guard let session = self.session else { return }
-        guard let index = sessionQuestionsTableView.indexPathForRowContaining(view: sender) else { return }
-        let question = session.questions[index.section - index.row]
+    func upVotePressed(cell: QuestionTableViewCell) {
+        guard let question = cell.question else { return }
         SessionController.sharedController.addVoteToQuestion(question: question)
+        cell.updateWith(question: question)
         sessionQuestionsTableView.reloadData()
     }
     
