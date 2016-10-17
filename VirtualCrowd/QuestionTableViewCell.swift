@@ -8,20 +8,26 @@
 
 import UIKit
 
+protocol cellVoteWasTappedDelegate: class {
+    func upVoteButtonPressed(cell: QuestionTableViewCell)
+}
+
 class QuestionTableViewCell: UITableViewCell {
     
     // MARK: Properties
     
+    weak var delegate: cellVoteWasTappedDelegate?
+    
+    var question: Question?
     @IBOutlet weak var notesLabel: UILabel!
-    @IBOutlet weak var notesTextField: UITextView! {
-    }
+    @IBOutlet weak var notesTextField: UITextView!
     @IBOutlet weak var questionTextLabel: UILabel!
     @IBOutlet weak var upVoteButton: UIButton!
     
     // MARK: Functions
     
-    @IBAction func questionCellButtonTapped(_ sender: UIButton) {
-        
+    @IBAction func upVoteButtonPressed(_ sender: UIButton) {
+        delegate?.upVoteButtonPressed(cell: self)
     }
     
     func updateWith(question: Question) {

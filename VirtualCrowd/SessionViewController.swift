@@ -8,12 +8,16 @@
 
 import UIKit
 
-class SessionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate, UITextFieldDelegate, UITextViewDelegate {
+class SessionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate, UITextFieldDelegate, UITextViewDelegate, cellVoteWasTappedDelegate {
     
     // MARK: Properties
     //----------------------------------------------------------------------------------------------------------------------
     
     var session: Session?
+    var sortedQuestions: [Question] {
+        guard let session = session else { return [] }
+        return session.questions.sorted(by: { $0.0.upVotes > $0.1.upVotes })
+    }
     var selectedRowIndex = -1
     var selectedCellIndex = -1
     var thereIsCellTapped = false
@@ -109,10 +113,11 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
         guard let session = self.session else { return QuestionTableViewCell() }
         let ip = indexPath
         let indexOfQustion = indexPath.section + indexPath.row
-        let question = session.questions[indexOfQustion]
+        let question = sortedQuestions[indexOfQustion]
         
+        cell.delegate = self
         cell.updateWith(question: question)
-        
+        cell.question = question
         cell.layer.cornerRadius = 10
         cell.contentView.layer.cornerRadius = 10
         cell.layer.borderWidth = 1
@@ -223,6 +228,13 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     func longPress() {
         view.addSubview(viewOfSpencer)
+    }
+    
+    func upVoteButtonPressed(cell: QuestionTableViewCell) {
+        guard let question = cell.question else { return }
+        cell.question?.upVotes += 1
+        cell.updateWith(question: question)
+        sessionQuestionsTableView.reloadData()
     }
     
     // MARK: Textfield Functions
