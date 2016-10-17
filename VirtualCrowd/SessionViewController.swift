@@ -14,10 +14,6 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
     //----------------------------------------------------------------------------------------------------------------------
     
     var session: Session?
-    var sortedQuestions: [Question] {
-        guard let session = session else { return [] }
-        return session.questions.sorted(by: { $0.0.upVotes > $0.1.upVotes })
-    }
     var selectedRowIndex = -1
     var selectedCellIndex = -1
     var thereIsCellTapped = false
@@ -113,11 +109,7 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
         guard let session = self.session else { return QuestionTableViewCell() }
         let ip = indexPath
         let indexOfQustion = indexPath.section + indexPath.row
-        let question = sortedQuestions[indexOfQustion]
-        
-        cell.delegate = self
-        cell.updateWith(question: question)
-        cell.question = question
+        // MARK: fix this
         cell.layer.cornerRadius = 10
         cell.contentView.layer.cornerRadius = 10
         cell.layer.borderWidth = 1
@@ -143,7 +135,7 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {
-        self.session?.questions[(previousCellIndexPath?.section)! + (previousCellIndexPath?.row)!].notes = textView.text
+        // MARK: fix this -- adds notes to question
         print("It Ended")
     }
     
@@ -153,7 +145,7 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     func numberOfSections(in tableView: UITableView) -> Int {
         guard let session = self.session else { return 0 }
-        return session.questions.count
+        return 0 // MARK: fix this 
     }
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 5
@@ -232,7 +224,7 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     func upVoteButtonPressed(cell: QuestionTableViewCell) {
         guard let question = cell.question else { return }
-        cell.question?.upVotes += 1
+        // MARK: fix this!
         cell.updateWith(question: question)
         sessionQuestionsTableView.reloadData()
     }

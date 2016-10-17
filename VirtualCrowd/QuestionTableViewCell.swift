@@ -32,7 +32,7 @@ class QuestionTableViewCell: UITableViewCell {
     
     func updateWith(question: Question) {
         questionTextLabel.text = question.statement
-        upVoteButton.setTitle("\(question.upVotes)", for: .normal)
+        // MARK: fix this!!
         notesTextField.text = question.notes
     }
     

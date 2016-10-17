@@ -7,21 +7,19 @@
 //
 
 import Foundation
+import CloudKit
 
 class Question {
     
     let statement: String
     var notes: String
-    var upVotes: Int
     let session: Session?
-    var votedOn: Bool
+    let recordID: CKRecordID
     
-    init(statement: String, notes: String = "", votes: Int = 0, session: Session?, votedOn: Bool = false) {
+    init(statement: String, notes: String = "", session: Session?) {
         self.statement = statement
         self.notes = notes
-        self.upVotes = votes
         self.session = session
-        self.votedOn = votedOn
     }
 }
 
