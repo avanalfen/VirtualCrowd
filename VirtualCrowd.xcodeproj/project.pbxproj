@@ -21,6 +21,8 @@
 		654F04371DA84DF400622268 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654F04361DA84DF400622268 /* Session.swift */; };
 		654F043B1DA84E2900622268 /* SessionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654F043A1DA84E2900622268 /* SessionController.swift */; };
 		654F043E1DA84E5C00622268 /* PublicFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654F043D1DA84E5C00622268 /* PublicFunctions.swift */; };
+		658B10A71DB665BB0085DEB1 /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658B10A61DB665BB0085DEB1 /* Note.swift */; };
+		658B10A91DB666CB0085DEB1 /* NoteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658B10A81DB666CB0085DEB1 /* NoteController.swift */; };
 		65954C6C1DAE717C0070F50C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 65954C6B1DAE717C0070F50C /* Assets.xcassets */; };
 		65954C951DAEE6EC0070F50C /* PastSessionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65954C941DAEE6EC0070F50C /* PastSessionViewController.swift */; };
 		65B8FCB71DB5436700D14157 /* CloudKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8FCB61DB5436700D14157 /* CloudKitManager.swift */; };
@@ -70,6 +72,8 @@
 		654F04361DA84DF400622268 /* Session.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
 		654F043A1DA84E2900622268 /* SessionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = SessionController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		654F043D1DA84E5C00622268 /* PublicFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublicFunctions.swift; sourceTree = "<group>"; };
+		658B10A61DB665BB0085DEB1 /* Note.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
+		658B10A81DB666CB0085DEB1 /* NoteController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteController.swift; sourceTree = "<group>"; };
 		65954C6B1DAE717C0070F50C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		65954C941DAEE6EC0070F50C /* PastSessionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = PastSessionViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		65B8FCB61DB5436700D14157 /* CloudKitManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudKitManager.swift; sourceTree = "<group>"; };
@@ -177,6 +181,7 @@
 			children = (
 				654F04361DA84DF400622268 /* Session.swift */,
 				654F04341DA84DDB00622268 /* Question.swift */,
+				658B10A61DB665BB0085DEB1 /* Note.swift */,
 				65B8FCBC1DB579A800D14157 /* Vote.swift */,
 			);
 			name = Models;
@@ -197,6 +202,7 @@
 			children = (
 				654F043A1DA84E2900622268 /* SessionController.swift */,
 				65B8FCBA1DB5799B00D14157 /* QuestionController.swift */,
+				658B10A81DB666CB0085DEB1 /* NoteController.swift */,
 				65B8FCC41DB5885B00D14157 /* VoteController.swift */,
 			);
 			name = ModelControllers;
@@ -382,12 +388,14 @@
 				654F043E1DA84E5C00622268 /* PublicFunctions.swift in Sources */,
 				65B8FCB71DB5436700D14157 /* CloudKitManager.swift in Sources */,
 				654F043B1DA84E2900622268 /* SessionController.swift in Sources */,
+				658B10A71DB665BB0085DEB1 /* Note.swift in Sources */,
 				65B8FCB91DB543C300D14157 /* CloudKitSyncable.swift in Sources */,
 				654F04371DA84DF400622268 /* Session.swift in Sources */,
 				651BFBB11DAC8436004042E8 /* SessionViewController.swift in Sources */,
 				65B8FCBD1DB579A800D14157 /* Vote.swift in Sources */,
 				65B8FCBB1DB5799B00D14157 /* QuestionController.swift in Sources */,
 				65B8FCC71DB58FFB00D14157 /* ToDo.swift in Sources */,
+				658B10A91DB666CB0085DEB1 /* NoteController.swift in Sources */,
 				654F04301DA84CFA00622268 /* OpeningScreenViewController.swift in Sources */,
 				654F04351DA84DDB00622268 /* Question.swift in Sources */,
 				654F04071DA84C2100622268 /* VirtualCrowd.xcdatamodeld in Sources */,

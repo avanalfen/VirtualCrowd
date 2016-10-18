@@ -32,8 +32,6 @@ class QuestionTableViewCell: UITableViewCell {
     
     func updateWith(question: Question) {
         questionTextLabel.text = question.statement
-        // MARK: fix this!!
-        notesTextField.text = question.notes
     }
     
     // MARK: Provided Functions

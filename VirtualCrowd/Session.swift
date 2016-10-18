@@ -11,7 +11,15 @@ import CloudKit
 
 class Session: Equatable {
     
-    // MARK: keys
+    static let kStart = "startKey"
+    static let kEnd = "endKey"
+    static let kIdentifier = "identifierKey"
+    static let kCode = "codeKey"
+    static let kActive = "isActiveKey"
+    static let kUser = "userKey"
+    static let kTitle = "titleKey"
+    
+    static let recordType = "Session"
     
     let title: String
     let identifier: String
@@ -21,7 +29,7 @@ class Session: Equatable {
     let startDate: Date
     let endDate: Date
     let crowdNumber: Int
-    let recordID: CKRecordID
+    let recordID: CKRecordID?
     
     var fireDate: NSDate? {
         guard let thisMorningAtMidnight = DateHelper.thisMorningAtMidnight else { return nil }
@@ -29,16 +37,16 @@ class Session: Equatable {
         return fireDateFromThisMorning
     }
     
-    init(title: String, identifier: String, code: String, timeLimit: TimeInterval, isActive: Bool,  endDate: Date, crowdNumber: Int, startDate: Date) {
+    init(title: String, identifier: String, code: String, timeLimit: TimeInterval, isActive: Bool,  endDate: Date, crowdNumber: Int, startDate: Date, recordID: CKRecordID) {
         self.title = title
         self.identifier = identifier
         self.code = code
-        // MARK: fix this
         self.timeLimit = timeLimit
         self.isActive = isActive
         self.endDate = endDate
         self.crowdNumber = crowdNumber
         self.startDate = startDate
+        self.recordID = recordID
     }
 }
 

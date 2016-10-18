@@ -11,13 +11,6 @@ import CloudKit
 
 class SessionController {
     
-    let kStart = "startKey"
-    let kEnd = "endKey"
-    let kIdentifier = "identifierKey"
-    let kCode = "codeKey"
-    let kActive = "isActiveKey"
-    let kUser = "userKey"
-    
     static let sharedController = SessionController()
     
     // MARK: properties
@@ -38,29 +31,30 @@ class SessionController {
         let code = randomCodeGenerator()
         let isActive = true
         let startingCrowdNumber = 1
+        let recordID = CKRecordID(recordName: UUID().uuidString)
         
-        let session = Session(title: title, identifier: identifier, code: code, timeLimit: timeLimit, isActive: isActive, endDate: endDate, crowdNumber: startingCrowdNumber, startDate: startDate)
+        let session = Session(title: title, identifier: identifier, code: code, timeLimit: timeLimit, isActive: isActive, endDate: endDate, crowdNumber: startingCrowdNumber, startDate: startDate, recordID: recordID)
+        
+        createRecordWith(session: session, sessionRecordID: recordID)
         
         sessions.append(session)
         return session
     }
     
     func addQuestionToSession(statement: String, session: Session) {
-        let session = session
-        let newQuestion = Question(statement: statement, session: session)
-        // MARK: fix this
+        QuestionController.sharedController.createQuestionRecordFrom(statement: statement, session: session)
     }
     
     func sessionNowInactive(session: Session) {
-        session.isActive = false
+        
     }
     
     func addVoteToQuestion(question: Question) {
-       // MARK: fix this
+       
     }
     
     func addNotesToQuestion(text: String, question: Question) {
-        question.notes = text
+        // MARK: fix this
     }
     
     // MARK: random code generator
@@ -80,42 +74,36 @@ class SessionController {
     
     // MARK: cloudKit
     
-    func createRecordWith(session: Session) -> CKRecordID {
+    func createRecordWith(session: Session, sessionRecordID: CKRecordID) {
         
         let cloudKitManager = CloudKitManager()
         
-        let ID = UUID().uuidString
+        let record = CKRecord(recordType: "Session", recordID: sessionRecordID)
         
-        let recordID = CKRecordID(recordName: ID)
-        
-        let record = CKRecord(recordType: "Session", recordID: recordID)
-        
-        record.setObject(session.startDate as CKRecordValue?, forKey: kStart)
-        record.setObject(session.endDate as CKRecordValue?, forKey: kEnd)
-        record.setObject(session.identifier as CKRecordValue?, forKey: kIdentifier)
-        record.setObject(session.code as CKRecordValue?, forKey: kCode)
-        record.setObject(session.isActive as CKRecordValue?, forKey: kActive)
+        record.setObject(session.title as CKRecordValue?, forKey: Session.kTitle)
+        record.setObject(session.startDate as CKRecordValue?, forKey: Session.kStart)
+        record.setObject(session.endDate as CKRecordValue?, forKey: Session.kEnd)
+        record.setObject(session.identifier as CKRecordValue?, forKey: Session.kIdentifier)
+        record.setObject(session.code as CKRecordValue?, forKey: Session.kCode)
+        record.setObject(session.isActive as CKRecordValue?, forKey: Session.kActive)
         
         cloudKitManager.saveRecord(record) { (record, error) in
             if error != nil {
-                print("SessionController.createRecordWith.saveRecord. \(error?.localizedDescription)")
+                print("SessionController.createRecordWith.saveRecord.\n \(error?.localizedDescription)")
             }
         }
-        return recordID
     }
     
-    func createRecordForUserWhoEnters(session: Session) {
+    func createRecordForUserWhoEnters(session: Session, recordID: CKRecordID) {
+        
+        guard let identifier = session.recordID else { return }
         let cloudKitManager = CloudKitManager()
-        
-        let id = UUID().uuidString
-        
-        let recordID = CKRecordID(recordName: id)
         
         let record = CKRecord(recordType: "User", recordID: recordID)
         
-        let reference = CKReference(recordID: session.recordID, action: .deleteSelf)
+        let reference = CKReference(recordID: identifier, action: .deleteSelf)
         
-        record.setObject(reference, forKey: kUser)
+        record.setObject(reference, forKey: Session.kUser)
         
         cloudKitManager.saveRecord(record) { (record, error) in
             if error != nil {

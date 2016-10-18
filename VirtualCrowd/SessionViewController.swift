@@ -7,13 +7,16 @@
 //
 
 import UIKit
+import CloudKit
 
 class SessionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate, UITextFieldDelegate, UITextViewDelegate, cellVoteWasTappedDelegate {
     
     // MARK: Properties
     //----------------------------------------------------------------------------------------------------------------------
     
+    
     var session: Session?
+    var questionsArray: [Question] = []
     var selectedRowIndex = -1
     var selectedCellIndex = -1
     var thereIsCellTapped = false
@@ -25,6 +28,7 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
     let formatter = DateFormatter()
     var lastNoteTaken: String = ""
     var lastQuestionViewed: Question? = nil
+    let cloudKitManager = CloudKitManager()
     
     // MARK: Outlets
     //----------------------------------------------------------------------------------------------------------------------
@@ -45,6 +49,8 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
         setupSessionLabels()
         setupTapGesture()
         setupAddButton()
+        guard let session = self.session else { return }
+        getQuestionsFor(session: session)
         
         if self.session?.isActive == false {
             self.navigationItem.rightBarButtonItem?.isEnabled = false
@@ -108,17 +114,13 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "questionCell") as? QuestionTableViewCell else { return QuestionTableViewCell() }
         guard let session = self.session else { return QuestionTableViewCell() }
         let ip = indexPath
-        let indexOfQustion = indexPath.section + indexPath.row
-        // MARK: fix this
+        let indexOfQuestion = indexPath.section + indexPath.row
+        let question = self.questionsArray[indexOfQuestion]
         cell.layer.cornerRadius = 10
         cell.contentView.layer.cornerRadius = 10
         cell.layer.borderWidth = 1
         
-        if question.votedOn == true {
-            cell.layer.borderColor = UIColor.blue.cgColor
-        } else {
-            cell.layer.borderColor = UIColor.black.cgColor
-        }
+        cell.updateWith(question: question)
         
         if selectedIndexPath == ip {
             cell.notesLabel.isHidden = false
@@ -145,7 +147,7 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     func numberOfSections(in tableView: UITableView) -> Int {
         guard let session = self.session else { return 0 }
-        return 0 // MARK: fix this 
+        return 0 // MARK: fix this
     }
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 5
@@ -153,6 +155,26 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     // MARK: Functions
     //----------------------------------------------------------------------------------------------------------------------
+    
+    func getQuestionsFor(session: Session) {
+        
+        guard let sessionID = session.recordID else { return }
+        
+        let record = CKRecord(recordType: Session.recordType, recordID: sessionID)
+        
+        let reference = CKReference(record: record, action: .none)
+        
+        let predicate = NSPredicate(format: "referenceKey == %@", reference)
+        
+        cloudKitManager.fetchRecordsWithType(Question.recordType, predicate: predicate, recordFetchedBlock: nil) { (records, error) in
+            
+            if let records = records {
+                
+                self.questionsArray = records.flatMap { Question(record: $0) }
+            }
+        }
+        
+    }
     
     @IBAction func addQuestionButtonTapped(_ sender: UIBarButtonItem) {
         self.view.addSubview(self.visualEffectAddQuestionView)
@@ -173,11 +195,11 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     @IBAction func upVoteButtonPressed(_ sender: UIButton) {
-        guard let session = self.session else { return }
-        guard let index = sessionQuestionsTableView.indexPathForRowContaining(view: sender) else { return }
-        let question = session.questions[index.section - index.row]
-        SessionController.sharedController.addVoteToQuestion(question: question)
-        sessionQuestionsTableView.reloadData()
+        //        guard let session = self.session else { return }
+        //        guard let index = sessionQuestionsTableView.indexPathForRowContaining(view: sender) else { return }
+        //        let question = session.questions[index.section - index.row]
+        //        SessionController.sharedController.addVoteToQuestion(question: question)
+        //        sessionQuestionsTableView.reloadData()
     }
     
     func setupSessionLabels() {

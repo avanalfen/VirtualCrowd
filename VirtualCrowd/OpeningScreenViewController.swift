@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CloudKit
 
 class OpeningScreenViewController: UIViewController, UIPickerViewDelegate, UITextFieldDelegate {
     
@@ -28,7 +29,6 @@ class OpeningScreenViewController: UIViewController, UIPickerViewDelegate, UITex
     override func viewDidLoad() {
         super.viewDidLoad()
         // MARK: deleteThis
-        SessionController.sharedController.mockData()
         setupTextfields()
         theInceptionView.layer.cornerRadius = 5
         theInceptionView.layer.masksToBounds = true
@@ -141,4 +141,39 @@ class OpeningScreenViewController: UIViewController, UIPickerViewDelegate, UITex
             resetTextfields()
         }
     }
+    
+    func mockData() {
+        let id = CKRecordID(recordName: "Session")
+        let session = Session(title: "This is a test", identifier: UUID().uuidString, code: "XDD3K8", timeLimit: 45, isActive: true, endDate: Date(), crowdNumber: 55, startDate: Date(), recordID: id)
+        
+        let note = Note(note: "This is a note")
+        
+        let vote = Vote(vote: true)
+        
+        SessionController.sharedController.createRecordWith(session: session, sessionRecordID: session.recordID!)
+        let question = QuestionController.sharedController.createQuestionRecordFrom(statement: "This is a test question", session: session)
+        guard let question2 = question else { return }
+        VoteController.sharedController.createVoteRecordWith(question: question2, vote: vote)
+        NoteController.sharedController.createNoteRecordFor(question: question2, note: note)
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -11,7 +11,11 @@ import CloudKit
 
 class VoteController {
     
-    func createRecordWith(question: Question) -> CKRecordID {
+    static let sharedController = VoteController()
+    
+    func createVoteRecordWith(question: Question, vote: Vote) {
+        
+        guard let identifier = question.recordID else { return }
         
         let kReference = "referenceKey"
         
@@ -22,15 +26,15 @@ class VoteController {
         let recordID = CKRecordID(recordName: recordNameID)
         
         let record = CKRecord(recordType: "Vote", recordID: recordID)
-        let reference = CKReference(recordID: question.recordID, action: .deleteSelf)
+        let reference = CKReference(recordID: identifier, action: .deleteSelf)
         
+        record.setObject(vote.vote as CKRecordValue?, forKey: Vote.kVote)
         record.setObject(reference, forKey: kReference)
         
         cloudKitManager.saveRecord(record) { (record, error) in
             if error != nil {
-                print("VoteController.createRecordWith.saveRecord. /n \(error?.localizedDescription)")
+                print("VoteController.createRecordWith.saveRecord. \n \(error?.localizedDescription)")
             }
         }
-        return recordID
     }
 }
