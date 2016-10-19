@@ -71,6 +71,7 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
             cell.notesLabel.isHidden = true
             cell.notesTextField.isHidden = true
             cell.notesTextField.resignFirstResponder()
+            cell.delegate = self
         }
         switch selectedIndexPath {
         case nil:
@@ -109,6 +110,7 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     // .
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "questionCell") as? QuestionTableViewCell else { return QuestionTableViewCell() }
@@ -142,14 +144,11 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let session = self.session else { return 0 }
-        getQuestionsFor(session: session)
-        return self.questionsArray.count
+        return 1
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        guard let session = self.session else { return 0 }
-        return 0 // MARK: fix this
+        return self.questionsArray.count
     }
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 5
@@ -171,8 +170,10 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
         cloudKitManager.fetchRecordsWithType(Question.recordType, predicate: predicate, recordFetchedBlock: nil) { (records, error) in
             
             if let records = records {
-                
-                self.questionsArray = records.flatMap { Question(record: $0) }
+                DispatchQueue.main.async {
+                    let questionsArray1 = records.flatMap { Question(record: $0) }
+                    self.questionsArray = questionsArray1
+                }
             }
         }
     }
@@ -191,17 +192,17 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         QuestionController.sharedController.createQuestionRecordFrom(statement: text, session: session)
         
+        getQuestionsFor(session: self.session!)
+        
         addQuestionTextField.text = ""
         visualEffectAddQuestionView.removeFromSuperview()
         sessionQuestionsTableView.reloadData()
     }
     
-    @IBAction func upVoteButtonPressed(_ sender: UIButton) {
-        //        guard let session = self.session else { return }
-        //        guard let index = sessionQuestionsTableView.indexPathForRowContaining(view: sender) else { return }
-        //        let question = session.questions[index.section - index.row]
-        //        SessionController.sharedController.addVoteToQuestion(question: question)
-        //        sessionQuestionsTableView.reloadData()
+    @IBAction func refreshButtonPressed(_ sender: AnyObject) {
+        guard let session = self.session else { return }
+        getQuestionsFor(session: session)
+        self.sessionQuestionsTableView.reloadData()
     }
     
     func setupSessionLabels() {
@@ -248,7 +249,7 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     func upVoteButtonPressed(cell: QuestionTableViewCell) {
         guard let question = cell.question else { return }
-        // MARK: fix this!
+        question.votes += 1
         cell.updateWith(question: question)
         sessionQuestionsTableView.reloadData()
     }

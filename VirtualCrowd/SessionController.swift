@@ -18,6 +18,7 @@ class SessionController {
     
     var sessions: [Session] = []
     var inactiveSessions: [Session] = []
+    var sessionReference: CKReference?
     
     // MARK: functions
     //----------------------------------------------------------------------------------------------------------------------
@@ -94,6 +95,7 @@ class SessionController {
             if error != nil {
                 print("SessionController.createRecordWith.saveRecord.\n \(error?.localizedDescription)")
             }
+            
         }
     }
     

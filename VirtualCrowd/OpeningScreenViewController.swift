@@ -33,6 +33,9 @@ class OpeningScreenViewController: UIViewController, UIPickerViewDelegate, UITex
         setupTextfields()
         theInceptionView.layer.cornerRadius = 5
         theInceptionView.layer.masksToBounds = true
+        
+        self.view.transform = CGAffineTransform(translationX: 0, y: //Keyboard height)
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {

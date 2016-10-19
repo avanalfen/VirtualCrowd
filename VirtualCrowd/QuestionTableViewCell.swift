@@ -26,12 +26,13 @@ class QuestionTableViewCell: UITableViewCell {
     
     // MARK: Functions
     
-    @IBAction func upVoteButtonPressed(_ sender: UIButton) {
+    @IBAction func VoteButtonPressed(_ sender: UIButton) {
         delegate?.upVoteButtonPressed(cell: self)
     }
     
     func updateWith(question: Question) {
         questionTextLabel.text = question.statement
+        upVoteButton.setTitle("\(question.votes)", for: .normal)
     }
     
     // MARK: Provided Functions

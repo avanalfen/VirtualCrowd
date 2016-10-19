@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CloudKit
 
 /*
  
@@ -15,13 +16,19 @@ import Foundation
  
  *** assign CKRecordID to both question and session modals
  
- *** implement function to add a record for every person that enters the session. 
+ *** implement function to add a record for every person that enters the session.
  
  *** create functions to fetch records down from the cloud
  
  *** clean up pre-cloud code
  
  -----------------------------------
-
+ 
  
  */
+
+
+
+
+
+
