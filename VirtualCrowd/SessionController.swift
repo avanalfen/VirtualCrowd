@@ -86,6 +86,9 @@ class SessionController {
         record.setObject(session.identifier as CKRecordValue?, forKey: Session.kIdentifier)
         record.setObject(session.code as CKRecordValue?, forKey: Session.kCode)
         record.setObject(session.isActive as CKRecordValue?, forKey: Session.kActive)
+        record.setObject(session.timeLimit as CKRecordValue?, forKey: Session.kTimeLimit)
+        record.setObject(session.crowdNumber as CKRecordValue?, forKey: Session.kCrowdNumber)
+        record.setObject(session.recordID.recordName as CKRecordValue?, forKey: Session.kRecordID)
         
         cloudKitManager.saveRecord(record) { (record, error) in
             if error != nil {
@@ -96,7 +99,7 @@ class SessionController {
     
     func createRecordForUserWhoEnters(session: Session, recordID: CKRecordID) {
         
-        guard let identifier = session.recordID else { return }
+        let identifier = session.recordID
         let cloudKitManager = CloudKitManager()
         
         let record = CKRecord(recordType: "User", recordID: recordID)

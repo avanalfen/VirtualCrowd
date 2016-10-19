@@ -28,7 +28,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U4Z-d2-sNw">
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Group 2" translatesAutoresizingMaskIntoConstraints="NO" id="qh2-kK-h6s"/>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Code" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sF6-3D-vQO">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Code" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sF6-3D-vQO" customClass="JoinCrowdTextField" customModule="VirtualCrowd" customModuleProvider="target">
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -47,7 +47,6 @@
                                         </state>
                                         <connections>
                                             <action selector="JoinSessionPressed:" destination="372-Tk-dse" eventType="touchUpInside" id="Xs8-xT-nkf"/>
-                                            <segue destination="l4v-dS-HXL" kind="show" identifier="joinSegue" id="fzP-UN-xLI"/>
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Join" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GKT-bV-wcP">
@@ -232,12 +231,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2Di-Wa-DTH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2319" y="152"/>
+            <point key="canvasLocation" x="2415" y="573"/>
         </scene>
         <!--Title-->
         <scene sceneID="mqi-39-oeC">
             <objects>
-                <viewController modalTransitionStyle="crossDissolve" modalPresentationStyle="overCurrentContext" id="l4v-dS-HXL" customClass="SessionViewController" customModule="VirtualCrowd" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="sessionView" modalTransitionStyle="crossDissolve" modalPresentationStyle="overCurrentContext" id="l4v-dS-HXL" customClass="SessionViewController" customModule="VirtualCrowd" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="scd-IZ-VRR"/>
                         <viewControllerLayoutGuide type="bottom" id="R7y-EW-V48"/>
@@ -282,7 +281,7 @@
                                         <rect key="frame" x="0.0" y="113" width="343" height="190"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="7HX-wE-Ke7" id="HJb-Ul-uAD">
-                                            <frame key="frameInset" width="343" height="190"/>
+                                            <frame key="frameInset" width="343" height="189"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BW0-cl-1oP">
@@ -482,7 +481,7 @@
                     <blurEffect style="light"/>
                 </visualEffectView>
             </objects>
-            <point key="canvasLocation" x="2935" y="153"/>
+            <point key="canvasLocation" x="3231" y="152"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="vDH-5v-djW">

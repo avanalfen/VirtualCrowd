@@ -158,7 +158,7 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     func getQuestionsFor(session: Session) {
         
-        guard let sessionID = session.recordID else { return }
+        let sessionID = session.recordID
         
         let record = CKRecord(recordType: Session.recordType, recordID: sessionID)
         

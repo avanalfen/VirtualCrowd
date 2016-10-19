@@ -15,7 +15,7 @@ class QuestionController {
     
     @discardableResult func createQuestionRecordFrom(statement: String, session: Session) -> Question? {
         
-        guard let sessionID = session.recordID else { return nil }
+        let sessionID = session.recordID 
         
         let ckManager = CloudKitManager()
         

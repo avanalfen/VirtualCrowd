@@ -14,7 +14,7 @@ class OpeningScreenViewController: UIViewController, UIPickerViewDelegate, UITex
     // MARK: Outlets
     
     @IBOutlet weak var theInceptionView: UIView!
-    @IBOutlet weak var joinCrowdCodeEntryTextField: UITextField!
+    @IBOutlet weak var joinCrowdCodeEntryTextField: JoinCrowdTextField!
     @IBOutlet weak var createCrowdTitleTextEntry: UITextField!
     @IBOutlet weak var createCrowdTimeLimitEntry: UITextField!
     @IBOutlet weak var joinButton: UIButton!
@@ -23,6 +23,7 @@ class OpeningScreenViewController: UIViewController, UIPickerViewDelegate, UITex
     // MARK: Properties
     
     var session: Session?
+    let cloudKitManager = CloudKitManager()
     
     // MARK: View Setup
     
@@ -89,7 +90,36 @@ class OpeningScreenViewController: UIViewController, UIPickerViewDelegate, UITex
     
     
     @IBAction func JoinSessionPressed(_ sender: UIButton) {
-        
+        guard let enteredCode = self.joinCrowdCodeEntryTextField.text else { return }
+        if enteredCode != "" {
+            let predicate = NSPredicate(format: "codeKey == %@", enteredCode)
+            cloudKitManager.fetchRecordsWithType(Session.recordType, predicate: predicate, recordFetchedBlock: nil, completion: { (records, error) in
+                
+                if error != nil {
+                    print("Problem finding correct session when join button was pressed \n \(error?.localizedDescription)")
+                }
+                
+                if let records = records {
+                    let newSession = records.flatMap { Session(record: $0) }.first
+                    
+                    if newSession != nil {
+                        guard let sessionViewController = self.storyboard?.instantiateViewController(withIdentifier: "sessionView") as? SessionViewController else { return }
+                        sessionViewController.session = self.session
+                        self.clearTextFields()
+                        self.resignKeyboard()
+                        self.present(sessionViewController, animated: true, completion: nil)
+                    }
+                }
+            })
+        }
+        let alert = UIAlertController(title: "Wrong Code", message: "Check code and try again!", preferredStyle: .alert)
+        let ok = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alert.addAction(ok)
+        present(alert, animated: true, completion: {
+            self.resignKeyboard()
+            self.clearTextFields()
+        })
+        self.joinCrowdCodeEntryTextField.shake()
     }
     
     @IBAction func createSessionButtonPressed(_ sender: UIButton) {
@@ -132,14 +162,14 @@ class OpeningScreenViewController: UIViewController, UIPickerViewDelegate, UITex
             resetTextfields()
         }
         
-        if segue.identifier == "joinSegue" {
-            guard let text = self.joinCrowdCodeEntryTextField.text else { return }
-            let destinationVC = segue.destination as? SessionViewController
-            let sessionArray = SessionController.sharedController.sessions.filter({ $0.code == text })
-            let sessionToSend = sessionArray[0]
-            destinationVC?.session = sessionToSend
-            resetTextfields()
-        }
+        //        if segue.identifier == "joinSegue" {
+        //            guard let text = self.joinCrowdCodeEntryTextField.text else { return }
+        //            let destinationVC = segue.destination as? SessionViewController
+        //            let sessionArray = SessionController.sharedController.sessions.filter({ $0.code == text })
+        //            let sessionToSend = sessionArray[0]
+        //            destinationVC?.session = sessionToSend
+        //            resetTextfields()
+        //        }
     }
     
     func mockData() {
@@ -150,7 +180,7 @@ class OpeningScreenViewController: UIViewController, UIPickerViewDelegate, UITex
         
         let vote = Vote(vote: true)
         
-        SessionController.sharedController.createRecordWith(session: session, sessionRecordID: session.recordID!)
+        SessionController.sharedController.createRecordWith(session: session, sessionRecordID: session.recordID)
         let question = QuestionController.sharedController.createQuestionRecordFrom(statement: "This is a test question", session: session)
         guard let question2 = question else { return }
         VoteController.sharedController.createVoteRecordWith(question: question2, vote: vote)

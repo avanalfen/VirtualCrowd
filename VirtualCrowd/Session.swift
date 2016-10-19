@@ -18,6 +18,9 @@ class Session: Equatable {
     static let kActive = "isActiveKey"
     static let kUser = "userKey"
     static let kTitle = "titleKey"
+    static let kTimeLimit = "timeLimitKey"
+    static let kCrowdNumber = "crowdNumberKey"
+    static let kRecordID = "recordIDKey"
     
     static let recordType = "Session"
     
@@ -29,7 +32,7 @@ class Session: Equatable {
     let startDate: Date
     let endDate: Date
     let crowdNumber: Int
-    let recordID: CKRecordID?
+    let recordID: CKRecordID
     
     var fireDate: NSDate? {
         guard let thisMorningAtMidnight = DateHelper.thisMorningAtMidnight else { return nil }
@@ -47,6 +50,20 @@ class Session: Equatable {
         self.crowdNumber = crowdNumber
         self.startDate = startDate
         self.recordID = recordID
+    }
+    
+    convenience init?(record: CKRecord) {
+        guard let title = record[Session.kTitle] as? String,
+        let identifier = record[Session.kIdentifier] as? String,
+        let code = record[Session.kCode] as? String,
+        let timeLimit = record[Session.kTimeLimit] as? TimeInterval,
+        let isActive = record[Session.kActive] as? Bool,
+        let startDate = record[Session.kStart] as? Date,
+        let endDate = record[Session.kEnd] as? Date,
+        let crowdNumber = record[Session.kCrowdNumber] as? Int,
+        let recordID = record[Session.kRecordID] as? CKRecordID
+            else { return nil }
+        self.init(title: title, identifier: identifier, code: code, timeLimit: timeLimit, isActive: isActive, endDate: endDate, crowdNumber: crowdNumber, startDate: startDate, recordID: recordID)
     }
 }
 
