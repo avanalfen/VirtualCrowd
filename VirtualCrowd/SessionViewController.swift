@@ -142,7 +142,9 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        guard let session = self.session else { return 0 }
+        getQuestionsFor(session: session)
+        return self.questionsArray.count
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -173,7 +175,6 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
                 self.questionsArray = records.flatMap { Question(record: $0) }
             }
         }
-        
     }
     
     @IBAction func addQuestionButtonTapped(_ sender: UIBarButtonItem) {
@@ -186,9 +187,10 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     @IBAction func addQuestionSubmitButtonTapped(_ sender: UIButton) {
-        guard let text = addQuestionTextField.text else { return }
-        let session = SessionController.sharedController.sessions.filter({ $0.identifier == self.session?.identifier })[0]
-        SessionController.sharedController.addQuestionToSession(statement: text, session: session)
+        guard let text = addQuestionTextField.text, let session = self.session else { return }
+        
+        QuestionController.sharedController.createQuestionRecordFrom(statement: text, session: session)
+        
         addQuestionTextField.text = ""
         visualEffectAddQuestionView.removeFromSuperview()
         sessionQuestionsTableView.reloadData()
