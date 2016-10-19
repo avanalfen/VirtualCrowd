@@ -20,7 +20,7 @@ class Session: Equatable {
     static let kTitle = "titleKey"
     static let kTimeLimit = "timeLimitKey"
     static let kCrowdNumber = "crowdNumberKey"
-    static let kRecordID = "recordIDKey"
+    static let kReference = "referenceKey"
     
     static let recordType = "Session"
     
@@ -54,16 +54,16 @@ class Session: Equatable {
     
     convenience init?(record: CKRecord) {
         guard let title = record[Session.kTitle] as? String,
-        let identifier = record[Session.kIdentifier] as? String,
-        let code = record[Session.kCode] as? String,
-        let timeLimit = record[Session.kTimeLimit] as? TimeInterval,
-        let isActive = record[Session.kActive] as? Bool,
-        let startDate = record[Session.kStart] as? Date,
-        let endDate = record[Session.kEnd] as? Date,
-        let crowdNumber = record[Session.kCrowdNumber] as? Int,
-        let recordID = record[Session.kRecordID] as? CKRecordID
+            let identifier = record[Session.kIdentifier] as? String,
+            let code = record[Session.kCode] as? String,
+            let timeLimit = record[Session.kTimeLimit] as? TimeInterval,
+            let isActive = record[Session.kActive] as? Bool,
+            let recordID = record[Session.kReference] as? CKReference,
+            let startDate = record[Session.kStart] as? Date,
+            let endDate = record[Session.kEnd] as? Date,
+            let crowdNumber = record[Session.kCrowdNumber] as? Int
             else { return nil }
-        self.init(title: title, identifier: identifier, code: code, timeLimit: timeLimit, isActive: isActive, endDate: endDate, crowdNumber: crowdNumber, startDate: startDate, recordID: recordID)
+        self.init(title: title, identifier: identifier, code: code, timeLimit: timeLimit, isActive: isActive, endDate: endDate, crowdNumber: crowdNumber, startDate: startDate, recordID: recordID.recordID)
     }
 }
 

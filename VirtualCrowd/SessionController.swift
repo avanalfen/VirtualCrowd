@@ -81,6 +81,8 @@ class SessionController {
         
         let record = CKRecord(recordType: "Session", recordID: sessionRecordID)
         
+        let reference = CKReference(record: record, action: .none)
+        
         record.setObject(session.title as CKRecordValue?, forKey: Session.kTitle)
         record.setObject(session.startDate as CKRecordValue?, forKey: Session.kStart)
         record.setObject(session.endDate as CKRecordValue?, forKey: Session.kEnd)
@@ -89,7 +91,7 @@ class SessionController {
         record.setObject(session.isActive as CKRecordValue?, forKey: Session.kActive)
         record.setObject(session.timeLimit as CKRecordValue?, forKey: Session.kTimeLimit)
         record.setObject(session.crowdNumber as CKRecordValue?, forKey: Session.kCrowdNumber)
-        record.setObject(session.recordID.recordName as CKRecordValue?, forKey: Session.kRecordID)
+        record.setObject(reference, forKey: Session.kReference)
         
         cloudKitManager.saveRecord(record) { (record, error) in
             if error != nil {

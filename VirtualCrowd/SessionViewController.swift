@@ -33,9 +33,11 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
     // MARK: Outlets
     //----------------------------------------------------------------------------------------------------------------------
     
+    @IBOutlet weak var sessionEndTimeLabel: UILabel!
+    @IBOutlet weak var detailView: UIView!
+    @IBOutlet weak var topTableViewContstraint: NSLayoutConstraint!
     @IBOutlet private var addQuestionView: UIView!
     @IBOutlet weak private var sessionCodeLabel: UILabel!
-    @IBOutlet weak private var sessionTimerLabel: UILabel!
     @IBOutlet private var viewOfSpencer: UIVisualEffectView!
     @IBOutlet weak private var addQuestionTextField: UITextField!
     @IBOutlet weak private var sessionQuestionsTableView: UITableView!
@@ -49,8 +51,9 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
         setupSessionLabels()
         setupTapGesture()
         setupAddButton()
-        guard let session = self.session else { return }
-        getQuestionsFor(session: session)
+        topTableViewContstraint.constant = 0
+        
+        detailView.isHidden = true
         
         if self.session?.isActive == false {
             self.navigationItem.rightBarButtonItem?.isEnabled = false
@@ -59,6 +62,12 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.navigationBar.isHidden = false
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        guard let session = self.session else { return }
+        getQuestionsFor(session: session)
+        sessionQuestionsTableView.reloadData()
     }
     
     // MARK: TableView
@@ -114,7 +123,6 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "questionCell") as? QuestionTableViewCell else { return QuestionTableViewCell() }
-        guard let session = self.session else { return QuestionTableViewCell() }
         let ip = indexPath
         let indexOfQuestion = indexPath.section + indexPath.row
         let question = self.questionsArray[indexOfQuestion]
@@ -136,11 +144,6 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
         cell.notesTextField.resignFirstResponder()
         
         return cell
-    }
-    
-    func textViewDidEndEditing(_ textView: UITextView) {
-        // MARK: fix this -- adds notes to question
-        print("It Ended")
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -173,24 +176,35 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
                 DispatchQueue.main.async {
                     let questionsArray1 = records.flatMap { Question(record: $0) }
                     self.questionsArray = questionsArray1
+                    self.sessionQuestionsTableView.reloadData()
                 }
             }
         }
+       
     }
     
     @IBAction func addQuestionButtonTapped(_ sender: UIBarButtonItem) {
-        self.view.addSubview(self.visualEffectAddQuestionView)
-        visualEffectAddQuestionView.center = view.center
-    }
-    
-    @IBAction func nevermindButtonPressed(_ sender: UIButton) {
-        visualEffectAddQuestionView.removeFromSuperview()
-    }
-    
-    @IBAction func addQuestionSubmitButtonTapped(_ sender: UIButton) {
-        guard let text = addQuestionTextField.text, let session = self.session else { return }
+        let alert = UIAlertController(title: "Enter Question", message: nil, preferredStyle: .alert)
+        alert.title = "Enter Question"
         
-        QuestionController.sharedController.createQuestionRecordFrom(statement: text, session: session)
+        var submitTextField: UITextField?
+        alert.addTextField { (textField) in
+            submitTextField = textField
+        }
+        let submit = UIAlertAction(title: "Submit", style: .default) { (_) in
+            guard let question = submitTextField?.text else { return }
+             self.addQuestionSubmitButtonTapped(question: question)
+        }
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alert.addAction(submit)
+        alert.addAction(cancel)
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func addQuestionSubmitButtonTapped(question: String) {
+        guard let session = self.session else { return }
+        
+        QuestionController.sharedController.createQuestionRecordFrom(statement: question, session: session)
         
         getQuestionsFor(session: self.session!)
         
@@ -202,17 +216,22 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
     @IBAction func refreshButtonPressed(_ sender: AnyObject) {
         guard let session = self.session else { return }
         getQuestionsFor(session: session)
-        self.sessionQuestionsTableView.reloadData()
     }
     
     func setupSessionLabels() {
         guard let session = self.session else { return }
-        self.title = session.title
         let endTime = date(date: session.endDate).timeR
-        self.sessionCodeLabel.text = "Entry code: \(session.code)"
-        self.sessionTimerLabel.text = "Ending time: \(endTime)"
+        self.sessionCodeLabel.text = "Code: \(session.code)"
+        self.sessionEndTimeLabel.text = "\(endTime)"
         sessionQuestionsTableView.tableHeaderView?.frame = CGRect(x: 0, y: 0, width: sessionQuestionsTableView.frame.width, height: 20)
-        sessionCodeLabel.backgroundColor = UIColor(displayP3Red: 247, green: 248, blue: 192, alpha: 1)
+
+        let button = UIButton(type: .custom)
+        button.frame = CGRect(x: 0, y: 0, width: 100, height: 40)
+        button.backgroundColor = UIColor.clear
+        button.setTitleColor(UIColor.black, for: .normal)
+        button.setTitle("\(session.title)", for: .normal)
+        button.addTarget(self, action: #selector(showInfo), for: .touchUpInside)
+        self.navigationItem.titleView = button
         
         if self.session?.isActive == false {
             sessionQuestionsTableView.tableHeaderView?.isHidden = true
@@ -223,7 +242,7 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
         guard let session = self.session else { return }
         if session.isActive {
             let view = UIButton()
-            view.layer.frame = CGRect(x: 300, y: 525, width: 60, height: 60)
+            view.layer.frame = CGRect(x: 260, y: 500, width: 60, height: 60)
             view.layer.cornerRadius = 0.5 * view.bounds.size.width
             view.clipsToBounds = true
             view.layer.backgroundColor = UIColor.blue.cgColor
@@ -252,6 +271,12 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
         question.votes += 1
         cell.updateWith(question: question)
         sessionQuestionsTableView.reloadData()
+    }
+    
+    func showInfo() {
+        UIView.animate(withDuration: 0.3) { 
+            self.detailView.isHidden = false
+        }
     }
     
     // MARK: Textfield Functions

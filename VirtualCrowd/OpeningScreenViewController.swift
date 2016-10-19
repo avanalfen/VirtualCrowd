@@ -34,8 +34,15 @@ class OpeningScreenViewController: UIViewController, UIPickerViewDelegate, UITex
         theInceptionView.layer.cornerRadius = 5
         theInceptionView.layer.masksToBounds = true
         
-        self.view.transform = CGAffineTransform(translationX: 0, y: //Keyboard height)
         
+        
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+//        UIView.animate(withDuration: 1) { 
+//            self.view.transform = CGAffineTransform(translationX: 0, y: -200)
+//        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -53,6 +60,14 @@ class OpeningScreenViewController: UIViewController, UIPickerViewDelegate, UITex
             joinButton.isEnabled = false
         }
     }
+    
+//    func textFieldDidBeginEditing(_ textField: UITextField) {
+//        UIView.animate(withDuration: 0.4) { 
+//            self.view.transform = CGAffineTransform(translationX: 0, y: -200)
+//        }
+//    }
+    
+    
     
     func setupTextfields() {
         
@@ -106,23 +121,29 @@ class OpeningScreenViewController: UIViewController, UIPickerViewDelegate, UITex
                     let newSession = records.flatMap { Session(record: $0) }.first
                     
                     if newSession != nil {
-                        guard let sessionViewController = self.storyboard?.instantiateViewController(withIdentifier: "sessionView") as? SessionViewController else { return }
-                        sessionViewController.session = self.session
-                        self.clearTextFields()
-                        self.resignKeyboard()
-                        self.present(sessionViewController, animated: true, completion: nil)
+                        DispatchQueue.main.async {
+                            let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                            guard let sessionViewController = storyboard.instantiateViewController(withIdentifier: "sessionView") as? SessionViewController else { return }
+                            sessionViewController.session = newSession
+                            self.navigationController?.pushViewController(sessionViewController, animated: true)
+                            self.clearTextFields()
+                            self.resignKeyboard()
+                        }
+                    } else {
+                        DispatchQueue.main.async {
+                            let alert = UIAlertController(title: "Wrong Code", message: "Check code and try again!", preferredStyle: .alert)
+                            let ok = UIAlertAction(title: "OK", style: .default, handler: nil)
+                            alert.addAction(ok)
+                            self.present(alert, animated: true, completion: {
+                                self.resignKeyboard()
+                                self.clearTextFields()
+                            })
+                            self.joinCrowdCodeEntryTextField.shake()
+                        }
                     }
                 }
             })
         }
-        let alert = UIAlertController(title: "Wrong Code", message: "Check code and try again!", preferredStyle: .alert)
-        let ok = UIAlertAction(title: "OK", style: .default, handler: nil)
-        alert.addAction(ok)
-        present(alert, animated: true, completion: {
-            self.resignKeyboard()
-            self.clearTextFields()
-        })
-        self.joinCrowdCodeEntryTextField.shake()
     }
     
     @IBAction func createSessionButtonPressed(_ sender: UIButton) {
