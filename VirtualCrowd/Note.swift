@@ -11,19 +11,11 @@ import CloudKit
 
 class Note {
     
-    static let kNote = "noteKey"
-    static let kReference = "referenceKey"
-    static let recordType = "Note"
-    
     var note: String
+    let question: Question?
     
-    init(note: String) {
+    init(note: String, question: Question?) {
         self.note = note
+        self.question = question
     }
-    
-    convenience init?(record: CKRecord) {
-        guard let note = record[Note.kNote] as? String else { return nil }
-        self.init(note: note)
-    }
-    
 }

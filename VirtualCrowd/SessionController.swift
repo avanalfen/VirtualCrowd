@@ -16,8 +16,14 @@ class SessionController {
     // MARK: properties
     //----------------------------------------------------------------------------------------------------------------------
     
+    var previousSession: Session?
+    var viewIsBeingShownComingFromSession: Bool?
     var sessions: [Session] = []
     var inactiveSessions: [Session] = []
+    var joinedSessions: [Session] = []
+    var sortedJoinedSessions: [Session] {
+        return joinedSessions.sorted(by: { $0.0.endDate > $0.1.endDate })
+    }
     var sessionReference: CKReference?
     
     // MARK: functions

@@ -53,25 +53,6 @@ class QuestionTableViewCell: UITableViewCell {
                 }
             }
         }
-        
-        let notePredicate = NSPredicate(format: "referenceKey == %@", questionID)
-        
-        cloudKitManager.fetchRecordsWithType(Note.recordType, predicate: notePredicate, recordFetchedBlock: nil) { (records, error) in
-            if error != nil {
-                print("Error fetching notes for question. \n \(error?.localizedDescription)")
-            } else {
-                if let records = records {
-                    DispatchQueue.main.async {
-                        let note = records.flatMap { Note(record: $0) }.first
-                        if note != nil {
-                            self.notesTextField.text = note?.note
-                        } else {
-                            self.notesTextField.text = ""
-                        }
-                    }
-                }
-            }
-        }
     }
     
     // MARK: Provided Functions

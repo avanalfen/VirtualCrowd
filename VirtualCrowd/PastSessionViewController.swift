@@ -14,6 +14,11 @@ class PastSessionViewController: UIViewController, UITableViewDelegate, UITableV
     
     @IBOutlet weak var pastSessionTableView: UITableView!
     
+    // MARK: Properties
+    
+    let cloudKitManager = CloudKitManager()
+    var detailText: String?
+    
     // MARK: View
 
     override func viewDidLoad() {
@@ -21,10 +26,12 @@ class PastSessionViewController: UIViewController, UITableViewDelegate, UITableV
         self.title = "Past Sessions"
         pastSessionTableView.delegate = self
         pastSessionTableView.dataSource = self
+        pastSessionTableView.tableFooterView = UIView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.navigationBar.isHidden = false
+        
     }
 
     // MARK: TableView
@@ -34,11 +41,11 @@ class PastSessionViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 8
+        return 3
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return SessionController.sharedController.inactiveSessions.count
+        return SessionController.sharedController.sortedJoinedSessions.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -47,13 +54,17 @@ class PastSessionViewController: UIViewController, UITableViewDelegate, UITableV
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "pastSessionCell") else { return UITableViewCell() }
-        let sessionsArray = SessionController.sharedController.inactiveSessions
         let indexOfArray = indexPath.section + indexPath.row
-        let session = sessionsArray[indexOfArray]
+        let session = SessionController.sharedController.sortedJoinedSessions[indexOfArray]
+        
+        if session.endDate < Date() {
+            detailText = "\(date(date: session.endDate).mediumStyle)"
+        } else {
+            detailText = "Still Crowded"
+        }
         
         cell.textLabel?.text = session.title
-        cell.detailTextLabel?.text = String(describing: date(date: session.endDate).mediumStyle)
-        
+        cell.detailTextLabel?.text = detailText
         cell.contentView.layer.cornerRadius = 10
         cell.layer.cornerRadius = 12
         cell.layer.borderWidth = 1
@@ -61,6 +72,9 @@ class PastSessionViewController: UIViewController, UITableViewDelegate, UITableV
         
         return cell
     }
+    
+    // MARK: Functions
+    
     
     // MARK: - Navigation
 
@@ -70,9 +84,8 @@ class PastSessionViewController: UIViewController, UITableViewDelegate, UITableV
         // Pass the selected object to the new view controller.
         if segue.identifier == "pastToDetail" {
             let destinationVC = segue.destination as? SessionViewController
-            let sessionArray = SessionController.sharedController.inactiveSessions
-            let index = pastSessionTableView.indexPathForSelectedRow
-            let session = sessionArray[ (index?.section)! + (index?.row)!]
+            let index = ((pastSessionTableView.indexPathForSelectedRow?.section)! + (pastSessionTableView.indexPathForSelectedRow?.row)!)
+            let session = SessionController.sharedController.sortedJoinedSessions[index]
             destinationVC?.session = session
         }
     }

@@ -13,6 +13,7 @@ class OpeningScreenViewController: UIViewController, UIPickerViewDelegate, UITex
     
     // MARK: Outlets
     
+    @IBOutlet weak var currentCrowdButton: UIButton!
     @IBOutlet weak var theInceptionView: UIView!
     @IBOutlet weak var joinCrowdCodeEntryTextField: JoinCrowdTextField!
     @IBOutlet weak var createCrowdTitleTextEntry: UITextField!
@@ -33,22 +34,27 @@ class OpeningScreenViewController: UIViewController, UIPickerViewDelegate, UITex
         setupTextfields()
         theInceptionView.layer.cornerRadius = 5
         theInceptionView.layer.masksToBounds = true
-        
-        
-        
-        
+        SessionController.sharedController.viewIsBeingShownComingFromSession = false
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        //        UIView.animate(withDuration: 1) {
-        //            self.view.transform = CGAffineTransform(translationX: 0, y: -200)
-        //        }
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.navigationBar.isHidden = true
         createButton.isEnabled = false
         joinButton.isEnabled = false
+        
+        if SessionController.sharedController.viewIsBeingShownComingFromSession! {
+            currentCrowdButton.isHidden = false
+        } else {
+            currentCrowdButton.isHidden = true
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        SessionController.sharedController.viewIsBeingShownComingFromSession = false
     }
     
     // MARK: Textfields
@@ -61,11 +67,12 @@ class OpeningScreenViewController: UIViewController, UIPickerViewDelegate, UITex
         }
     }
     
-    //    func textFieldDidBeginEditing(_ textField: UITextField) {
-    //        UIView.animate(withDuration: 0.4) {
-    //            self.view.transform = CGAffineTransform(translationX: 0, y: -200)
-    //        }
-    //    }
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == joinCrowdCodeEntryTextField {
+            joinSession()
+        }
+        return true
+    }
     
     
     
@@ -108,6 +115,10 @@ class OpeningScreenViewController: UIViewController, UIPickerViewDelegate, UITex
     
     
     @IBAction func JoinSessionPressed(_ sender: UIButton) {
+        joinSession()
+    }
+    
+    func joinSession() {
         guard let enteredCode = self.joinCrowdCodeEntryTextField.text else { return }
         if enteredCode != "" {
             let predicate = NSPredicate(format: "codeKey == %@", enteredCode)
@@ -129,10 +140,15 @@ class OpeningScreenViewController: UIViewController, UIPickerViewDelegate, UITex
                                 alert.addAction(ok)
                                 self.present(alert, animated: true, completion: nil)
                             } else {
-                                
                                 let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
                                 guard let sessionViewController = storyboard.instantiateViewController(withIdentifier: "sessionView") as? SessionViewController else { return }
                                 sessionViewController.session = newSession
+                                guard let newSession = newSession else { return }
+                                if SessionController.sharedController.joinedSessions.contains(newSession) {
+                                    
+                                } else {
+                                    SessionController.sharedController.joinedSessions.insert(newSession, at: 0)
+                                }
                                 self.navigationController?.pushViewController(sessionViewController, animated: true)
                                 self.clearTextFields()
                                 self.resignKeyboard()
@@ -158,7 +174,15 @@ class OpeningScreenViewController: UIViewController, UIPickerViewDelegate, UITex
     @IBAction func createSessionButtonPressed(_ sender: UIButton) {
         guard let title = createCrowdTitleTextEntry.text, let time = Double(createCrowdTimeLimitEntry.text!) else { return }
         self.session = SessionController.sharedController.createSession(title: title, timeLimit: time)
+        guard let session = self.session else { return }
+        SessionController.sharedController.joinedSessions.insert(session, at: 0)
         
+    }
+    
+    @IBAction func currentCrowdButtonTapped() {
+        guard let nextSessionViewController = storyboard?.instantiateViewController(withIdentifier: "sessionView") as? SessionViewController else { return }
+        nextSessionViewController.session = SessionController.sharedController.previousSession
+        self.navigationController?.pushViewController(nextSessionViewController, animated: true)
     }
     
     @IBAction func pastSessionsButtonTapped(_ sender: UIButton) {
@@ -184,59 +208,12 @@ class OpeningScreenViewController: UIViewController, UIPickerViewDelegate, UITex
     
     // MARK: - Navigation
     
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
         
         if segue.identifier == "createSession" {
             let destinationVC = segue.destination as? SessionViewController
             destinationVC?.session = self.session
             resetTextfields()
         }
-        
-        //        if segue.identifier == "joinSegue" {
-        //            guard let text = self.joinCrowdCodeEntryTextField.text else { return }
-        //            let destinationVC = segue.destination as? SessionViewController
-        //            let sessionArray = SessionController.sharedController.sessions.filter({ $0.code == text })
-        //            let sessionToSend = sessionArray[0]
-        //            destinationVC?.session = sessionToSend
-        //            resetTextfields()
-        //        }
-    }
-    
-    func mockData() {
-        let id = CKRecordID(recordName: "Session")
-        let session = Session(title: "This is a test", identifier: UUID().uuidString, code: "XDD3K8", timeLimit: 45, isActive: true, endDate: Date(), crowdNumber: 55, startDate: Date(), recordID: id)
-        
-        let note = Note(note: "This is a note")
-        
-        let vote = Vote(vote: true)
-        
-        SessionController.sharedController.createRecordWith(session: session, sessionRecordID: session.recordID)
-        let question = QuestionController.sharedController.createQuestionRecordFrom(statement: "This is a test question", session: session)
-        guard let question2 = question else { return }
-        VoteController.sharedController.createVoteRecordWith(question: question2, vote: vote)
-        NoteController.sharedController.createNoteRecordFor(question: question2, note: note)
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

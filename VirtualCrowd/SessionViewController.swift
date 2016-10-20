@@ -55,8 +55,9 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
         getQuestions()
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
-        
+    override func viewWillDisappear(_ animated: Bool) {
+        SessionController.sharedController.viewIsBeingShownComingFromSession = true
+        SessionController.sharedController.previousSession = self.session
     }
     
     // MARK: TableView
@@ -88,7 +89,7 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
         self.sessionQuestionsTableView.beginUpdates()
         self.sessionQuestionsTableView.endUpdates()
         
-        previousCellIndexPath = indexPath
+        self.previousCellIndexPath = indexPath
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -172,7 +173,6 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
                 }
             }
         }
-       
     }
     
     @IBAction func addQuestionButtonTapped(_ sender: UIBarButtonItem) {
@@ -187,6 +187,10 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
         let submit = UIAlertAction(title: "Submit", style: .default) { (_) in
             guard let question = submitTextField?.text else { return }
              self.addQuestionSubmitButtonTapped(question: question)
+            let alert2 = UIAlertController(title: "You've added a question!", message: "Your question should appear shortly", preferredStyle: .alert)
+            let ok = UIAlertAction(title: "OK", style: .default, handler: nil)
+            alert2.addAction(ok)
+            self.present(alert2, animated: true, completion: nil)
         }
         let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         alert.addAction(submit)
@@ -245,10 +249,40 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
     //----------------------------------------------------------------------------------------------------------------------
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        //        SessionController.sharedController.addNotesToQuestion(text: notes, question: <#T##Question#>)
+        print("DidEndEditing")
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        print("DidBeginEditing")
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField, reason: UITextFieldDidEndEditingReason) {
+        print("DidEndEditingWithReason")
+    }
+    
+    func textFieldShouldClear(_ textField: UITextField) -> Bool {
+        print("shouldClear")
+        return true
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        print("shouldReturn")
+        return true
+    }
+    
+    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
+        print("shouldEndEditing")
+        return true
+    }
+    
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        print("shouldBeginEditing")
+        return true
     }
     
 }
+
+// MARK: cool thing to pick tableview cell
 
 extension UITableView {
     func indexPathForRowContaining(view:UIView) -> IndexPath? {
