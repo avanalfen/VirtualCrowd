@@ -48,7 +48,6 @@ class QuestionTableViewCell: UITableViewCell {
             if let records = records {
                 DispatchQueue.main.async {
                     let arrayOfVotes = records.flatMap { Vote(record: $0) }
-                    print(arrayOfVotes.count)
                     self.votes = arrayOfVotes
                     self.upVoteButton.setTitle("\(self.votes.count)", for: .normal)
                 }

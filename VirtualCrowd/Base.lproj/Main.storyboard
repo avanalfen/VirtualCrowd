@@ -324,27 +324,49 @@
                                     <constraint firstAttribute="height" constant="128" id="yL3-3q-Tcs"/>
                                 </constraints>
                             </imageView>
+                            <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KRD-px-Mwl">
+                                <frame key="frameInset" minX="16" minY="64" width="343" height="21"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="66Y-gH-bg7">
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tcb-tC-iVz">
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="Tcb-tC-iVz" firstAttribute="width" secondItem="66Y-gH-bg7" secondAttribute="width" id="h10-Fx-oBk"/>
+                                </constraints>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="ymb-wt-3TD" firstAttribute="trailing" secondItem="tG6-4o-Hl1" secondAttribute="trailingMargin" constant="8" id="4NA-d2-wFD"/>
-                            <constraint firstItem="ymb-wt-3TD" firstAttribute="leading" secondItem="tG6-4o-Hl1" secondAttribute="leadingMargin" constant="-8" id="LBK-jO-xMc"/>
-                            <constraint firstItem="ymb-wt-3TD" firstAttribute="top" secondItem="tG6-4o-Hl1" secondAttribute="topMargin" constant="64" id="Rkm-Ey-ZtO"/>
+                            <constraint firstAttribute="trailing" secondItem="ymb-wt-3TD" secondAttribute="trailing" constant="8" id="6ym-Uz-1Y8"/>
+                            <constraint firstItem="66Y-gH-bg7" firstAttribute="top" secondItem="scd-IZ-VRR" secondAttribute="bottom" id="RoT-ev-cMn"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="KRD-px-Mwl" secondAttribute="trailing" id="VOg-H4-TDs"/>
                             <constraint firstAttribute="bottom" secondItem="TUu-rk-eJy" secondAttribute="bottom" constant="-50" id="Xk7-IE-V3s"/>
-                            <constraint firstItem="R7y-EW-V48" firstAttribute="top" secondItem="ymb-wt-3TD" secondAttribute="bottom" id="etg-0H-qkb"/>
+                            <constraint firstItem="KRD-px-Mwl" firstAttribute="leading" secondItem="tG6-4o-Hl1" secondAttribute="leadingMargin" id="jvL-R9-SUg"/>
+                            <constraint firstItem="R7y-EW-V48" firstAttribute="top" secondItem="ymb-wt-3TD" secondAttribute="bottom" id="kfc-Cq-qOU"/>
+                            <constraint firstItem="ymb-wt-3TD" firstAttribute="leading" secondItem="tG6-4o-Hl1" secondAttribute="leading" constant="8" id="pNS-mq-hXn"/>
                             <constraint firstItem="TUu-rk-eJy" firstAttribute="centerX" secondItem="tG6-4o-Hl1" secondAttribute="centerX" id="vZF-5g-7sD"/>
+                            <constraint firstItem="ymb-wt-3TD" firstAttribute="top" secondItem="KRD-px-Mwl" secondAttribute="bottom" constant="-69" id="yjr-ej-afg"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Title" id="aha-5I-nC7">
-                        <barButtonItem key="rightBarButtonItem" title="Refresh" id="QhQ-Ua-3H0">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="QhQ-Ua-3H0">
                             <connections>
-                                <action selector="refreshButtonPressed:" destination="l4v-dS-HXL" id="hAf-mc-Pei"/>
+                                <action selector="addQuestionButtonTapped:" destination="l4v-dS-HXL" id="9u9-kt-a7Y"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="sessionCodeLabel" destination="66Y-gH-bg7" id="s8j-lb-pMG"/>
+                        <outlet property="sessionEndTimeLabel" destination="Tcb-tC-iVz" id="kWm-xN-v36"/>
                         <outlet property="sessionQuestionsTableView" destination="ymb-wt-3TD" id="P6x-FM-8ZN"/>
-                        <outlet property="topTableViewContstraint" destination="Rkm-Ey-ZtO" id="KYP-09-GEC"/>
                         <outlet property="viewOfSpencer" destination="FVS-nY-HV8" id="PNQ-Nx-sgJ"/>
                     </connections>
                 </viewController>

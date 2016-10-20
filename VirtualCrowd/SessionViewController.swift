@@ -34,14 +34,9 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
     //----------------------------------------------------------------------------------------------------------------------
     
     @IBOutlet weak var sessionEndTimeLabel: UILabel!
-    @IBOutlet weak var detailView: UIView!
-    @IBOutlet weak var topTableViewContstraint: NSLayoutConstraint!
-    @IBOutlet private var addQuestionView: UIView!
     @IBOutlet weak private var sessionCodeLabel: UILabel!
     @IBOutlet private var viewOfSpencer: UIVisualEffectView!
-    @IBOutlet weak private var addQuestionTextField: UITextField!
     @IBOutlet weak private var sessionQuestionsTableView: UITableView!
-    @IBOutlet private var visualEffectAddQuestionView: UIVisualEffectView!
     
     // MARK: View Setup
     //----------------------------------------------------------------------------------------------------------------------
@@ -50,12 +45,6 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
         super.viewDidLoad()
         setupSessionLabels()
         setupTapGesture()
-        setupAddButton()
-        topTableViewContstraint.constant = 0
-        
-        if self.session?.isActive == false {
-            self.navigationItem.rightBarButtonItem?.isEnabled = false
-        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -63,14 +52,16 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        guard let session = self.session else { return }
-        getQuestionsFor(session: session)
-        sessionQuestionsTableView.reloadData()
+        getQuestions()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        
     }
     
     // MARK: TableView
     //----------------------------------------------------------------------------------------------------------------------
-    // .
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         if let previousCellIndexPath = previousCellIndexPath {
@@ -99,7 +90,7 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         previousCellIndexPath = indexPath
     }
-    // .
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
         let justQuestionHeight: CGFloat = 60
@@ -116,7 +107,7 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
         }
     }
     
-    // .
+    
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
@@ -151,6 +142,7 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
     func numberOfSections(in tableView: UITableView) -> Int {
         return self.questionsArray.count
     }
+    
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 5
     }
@@ -158,7 +150,9 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
     // MARK: Functions
     //----------------------------------------------------------------------------------------------------------------------
     
-    func getQuestionsFor(session: Session) {
+    func getQuestions() {
+        
+        guard let session = self.session else { return }
         
         let sessionID = session.recordID
         
@@ -182,6 +176,7 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     @IBAction func addQuestionButtonTapped(_ sender: UIBarButtonItem) {
+        getQuestions()
         let alert = UIAlertController(title: "Enter Question", message: nil, preferredStyle: .alert)
         alert.title = "Enter Question"
         
@@ -202,19 +197,14 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
     func addQuestionSubmitButtonTapped(question: String) {
         guard let session = self.session else { return }
         QuestionController.sharedController.createQuestionRecordFrom(statement: question, session: session)
-        getQuestionsFor(session: self.session!)
-    }
-    
-    @IBAction func refreshButtonPressed(_ sender: AnyObject) {
-        guard let session = self.session else { return }
-        getQuestionsFor(session: session)
+        getQuestions()
     }
     
     func setupSessionLabels() {
         guard let session = self.session else { return }
         let endTime = date(date: session.endDate).timeR
-//        self.sessionCodeLabel.text = "Code: \(session.code)"
-//        self.sessionEndTimeLabel.text = "\(endTime)"
+        self.sessionCodeLabel.text = "Code: \(session.code)"
+        self.sessionEndTimeLabel.text = "\(endTime)"
         sessionQuestionsTableView.tableHeaderView?.frame = CGRect(x: 0, y: 0, width: sessionQuestionsTableView.frame.width, height: 20)
 
         let button = UIButton(type: .custom)
@@ -222,28 +212,13 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
         button.backgroundColor = UIColor.clear
         button.setTitleColor(UIColor.black, for: .normal)
         button.setTitle("\(session.title)", for: .normal)
-        button.addTarget(self, action: #selector(showInfo), for: .touchUpInside)
+//        button.addTarget(self, action: #selector(showInfo), for: .touchUpInside)
         self.navigationItem.titleView = button
+        
+        _ = Timer.scheduledTimer(timeInterval: 15, target: self, selector: #selector(getQuestions), userInfo: nil, repeats: true)
         
         if self.session?.isActive == false {
             sessionQuestionsTableView.tableHeaderView?.isHidden = true
-        }
-    }
-    
-    func setupAddButton() {
-        guard let session = self.session else { return }
-        if session.isActive {
-            let view = UIButton()
-            view.layer.frame = CGRect(x: 260, y: 500, width: 60, height: 60)
-            view.layer.cornerRadius = 0.5 * view.bounds.size.width
-            view.clipsToBounds = true
-            view.layer.backgroundColor = UIColor.blue.cgColor
-            view.titleLabel?.font = UIFont.systemFont(ofSize: 18)
-            view.setTitle("+", for: .normal)
-            view.tintColor = UIColor.white
-            view.addTarget(self, action: #selector(addQuestionButtonTapped), for: .touchUpInside)
-            self.view.addSubview(view)
-            self.view.bringSubview(toFront: view)
         }
     }
     
@@ -264,12 +239,6 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
         VoteController.sharedController.createVoteRecordWith(question: question, vote: vote)
         cell.updateWith(question: question)
         sessionQuestionsTableView.reloadData()
-    }
-    
-    func showInfo() {
-        UIView.animate(withDuration: 0.3) { 
-            self.detailView.isHidden = false
-        }
     }
     
     // MARK: Textfield Functions
