@@ -53,8 +53,6 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
         setupAddButton()
         topTableViewContstraint.constant = 0
         
-        detailView.isHidden = true
-        
         if self.session?.isActive == false {
             self.navigationItem.rightBarButtonItem?.isEnabled = false
         }
@@ -203,14 +201,8 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     func addQuestionSubmitButtonTapped(question: String) {
         guard let session = self.session else { return }
-        
         QuestionController.sharedController.createQuestionRecordFrom(statement: question, session: session)
-        
         getQuestionsFor(session: self.session!)
-        
-        addQuestionTextField.text = ""
-        visualEffectAddQuestionView.removeFromSuperview()
-        sessionQuestionsTableView.reloadData()
     }
     
     @IBAction func refreshButtonPressed(_ sender: AnyObject) {
@@ -221,8 +213,8 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
     func setupSessionLabels() {
         guard let session = self.session else { return }
         let endTime = date(date: session.endDate).timeR
-        self.sessionCodeLabel.text = "Code: \(session.code)"
-        self.sessionEndTimeLabel.text = "\(endTime)"
+//        self.sessionCodeLabel.text = "Code: \(session.code)"
+//        self.sessionEndTimeLabel.text = "\(endTime)"
         sessionQuestionsTableView.tableHeaderView?.frame = CGRect(x: 0, y: 0, width: sessionQuestionsTableView.frame.width, height: 20)
 
         let button = UIButton(type: .custom)
@@ -268,7 +260,8 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     func upVoteButtonPressed(cell: QuestionTableViewCell) {
         guard let question = cell.question else { return }
-        question.votes += 1
+        let vote = Vote(vote: true)
+        VoteController.sharedController.createVoteRecordWith(question: question, vote: vote)
         cell.updateWith(question: question)
         sessionQuestionsTableView.reloadData()
     }

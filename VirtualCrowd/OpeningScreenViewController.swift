@@ -40,9 +40,9 @@ class OpeningScreenViewController: UIViewController, UIPickerViewDelegate, UITex
     }
     
     override func viewDidAppear(_ animated: Bool) {
-//        UIView.animate(withDuration: 1) { 
-//            self.view.transform = CGAffineTransform(translationX: 0, y: -200)
-//        }
+        //        UIView.animate(withDuration: 1) {
+        //            self.view.transform = CGAffineTransform(translationX: 0, y: -200)
+        //        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -61,11 +61,11 @@ class OpeningScreenViewController: UIViewController, UIPickerViewDelegate, UITex
         }
     }
     
-//    func textFieldDidBeginEditing(_ textField: UITextField) {
-//        UIView.animate(withDuration: 0.4) { 
-//            self.view.transform = CGAffineTransform(translationX: 0, y: -200)
-//        }
-//    }
+    //    func textFieldDidBeginEditing(_ textField: UITextField) {
+    //        UIView.animate(withDuration: 0.4) {
+    //            self.view.transform = CGAffineTransform(translationX: 0, y: -200)
+    //        }
+    //    }
     
     
     
@@ -122,12 +122,21 @@ class OpeningScreenViewController: UIViewController, UIPickerViewDelegate, UITex
                     
                     if newSession != nil {
                         DispatchQueue.main.async {
-                            let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-                            guard let sessionViewController = storyboard.instantiateViewController(withIdentifier: "sessionView") as? SessionViewController else { return }
-                            sessionViewController.session = newSession
-                            self.navigationController?.pushViewController(sessionViewController, animated: true)
-                            self.clearTextFields()
-                            self.resignKeyboard()
+                            
+                            if (newSession?.endDate)! < Date() {
+                                let alert = UIAlertController(title: "Your Crowd has expired!", message: "Create a new one!", preferredStyle: .alert)
+                                let ok = UIAlertAction(title: "OK", style: .default, handler: nil)
+                                alert.addAction(ok)
+                                self.present(alert, animated: true, completion: nil)
+                            } else {
+                                
+                                let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                                guard let sessionViewController = storyboard.instantiateViewController(withIdentifier: "sessionView") as? SessionViewController else { return }
+                                sessionViewController.session = newSession
+                                self.navigationController?.pushViewController(sessionViewController, animated: true)
+                                self.clearTextFields()
+                                self.resignKeyboard()
+                            }
                         }
                     } else {
                         DispatchQueue.main.async {
