@@ -17,13 +17,13 @@ class NoteController {
     
     // MARK: Properties
     
-    var notes: [Note] = []
+    var notes: [Question] = []
     
     // MARK: Functions
     
     func createNote(note: String, question: Question) {
-        let newNote = Note(note: note, question: question)
-        self.notes.insert(newNote, at: 0)
+        question.notes = note
+        NoteController.sharedController.notes.insert(question, at: 0)
     }
     
 }

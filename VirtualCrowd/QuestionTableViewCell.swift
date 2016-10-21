@@ -9,17 +9,14 @@
 import UIKit
 import CloudKit
 
-protocol cellVoteWasTappedDelegate: class {
-    func upVoteButtonPressed(cell: QuestionTableViewCell)
-}
-
 class QuestionTableViewCell: UITableViewCell {
+    
+    
     
     // MARK: Properties
     
     var votes: [Vote] = []
     let cloudKitManager = CloudKitManager()
-    weak var delegate: cellVoteWasTappedDelegate?
     
     var question: Question?
     @IBOutlet weak var notesLabel: UILabel!
@@ -30,29 +27,15 @@ class QuestionTableViewCell: UITableViewCell {
     // MARK: Functions
     
     @IBAction func VoteButtonPressed(_ sender: UIButton) {
-        delegate?.upVoteButtonPressed(cell: self)
+        
     }
     
     func updateWith(question: Question) {
-        guard let questionID = question.recordID else { return }
+        
         questionTextLabel.text = question.statement
         upVoteButton.setTitle("\(question.votes)", for: .normal)
+        notesTextField.text = question.notes
         
-        let predicate = NSPredicate(format: "referenceKey == %@", questionID)
-        
-        cloudKitManager.fetchRecordsWithType(Vote.recordType, predicate: predicate, recordFetchedBlock: nil) { (records, error) in
-            if error != nil {
-                print("Error fetching votes for a question. \n \(error?.localizedDescription)")
-            }
-            
-            if let records = records {
-                DispatchQueue.main.async {
-                    let arrayOfVotes = records.flatMap { Vote(record: $0) }
-                    self.votes = arrayOfVotes
-                    self.upVoteButton.setTitle("\(self.votes.count)", for: .normal)
-                }
-            }
-        }
     }
     
     // MARK: Provided Functions

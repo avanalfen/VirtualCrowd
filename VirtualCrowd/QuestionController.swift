@@ -35,6 +35,7 @@ class QuestionController {
         record.setObject(recordIDReference, forKey: Question.kRecordID)
         record.setObject(referenceToSession, forKey: Question.kReference)
         record.setObject(question.votes as CKRecordValue?, forKey: Question.kVotes)
+        record.setObject(question.notes as CKRecordValue?, forKey: Question.kNotes)
         
         cloudKitManager.saveRecord(record) { (record, error) in
             if error != nil {

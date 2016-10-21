@@ -9,26 +9,28 @@
 import UIKit
 import CloudKit
 
-class SessionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate, UITextFieldDelegate, UITextViewDelegate, cellVoteWasTappedDelegate {
+protocol textfieldChangedDelegate: class {
+    func updateQuestionWith(text: String)
+}
+
+class SessionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate, UITextFieldDelegate, UITextViewDelegate {
     
     // MARK: Properties
     //----------------------------------------------------------------------------------------------------------------------
     
-    
+    weak var delegate: textfieldChangedDelegate?
     var session: Session?
     var questionsArray: [Question] = []
-    var selectedRowIndex = -1
-    var selectedCellIndex = -1
-    var thereIsCellTapped = false
-    var cellIsExpanded: Bool = false
-    var addQuestionViewIsShowing = false
-    var notesVisible: Bool = false
     var selectedIndexPath: IndexPath? = nil
     var previousCellIndexPath: IndexPath?
-    let formatter = DateFormatter()
     var lastNoteTaken: String = ""
     var lastQuestionViewed: Question? = nil
     let cloudKitManager = CloudKitManager()
+    
+    var previousNote = ""
+    var previousQuestion: Question?
+    var previousCellIndex: IndexPath?
+    var canSaveNote: Bool = false
     
     // MARK: Outlets
     //----------------------------------------------------------------------------------------------------------------------
@@ -51,10 +53,6 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
         self.navigationController?.navigationBar.isHidden = false
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        getQuestions()
-    }
-    
     override func viewWillDisappear(_ animated: Bool) {
         SessionController.sharedController.viewIsBeingShownComingFromSession = true
         SessionController.sharedController.previousSession = self.session
@@ -70,8 +68,8 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
             cell.notesLabel.isHidden = true
             cell.notesTextField.isHidden = true
             cell.notesTextField.resignFirstResponder()
-            cell.delegate = self
         }
+        
         switch selectedIndexPath {
         case nil:
             selectedIndexPath = indexPath
@@ -90,8 +88,9 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
         self.sessionQuestionsTableView.endUpdates()
         
         self.previousCellIndexPath = indexPath
+        
     }
-    
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
         let justQuestionHeight: CGFloat = 60
@@ -132,6 +131,8 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         cell.notesTextField.delegate = self
         cell.notesTextField.resignFirstResponder()
+        
+        
         
         return cell
     }
@@ -176,7 +177,6 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     @IBAction func addQuestionButtonTapped(_ sender: UIBarButtonItem) {
-        getQuestions()
         let alert = UIAlertController(title: "Enter Question", message: nil, preferredStyle: .alert)
         alert.title = "Enter Question"
         
@@ -186,7 +186,7 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
         }
         let submit = UIAlertAction(title: "Submit", style: .default) { (_) in
             guard let question = submitTextField?.text else { return }
-             self.addQuestionSubmitButtonTapped(question: question)
+            self.addQuestionSubmitButtonTapped(question: question)
             let alert2 = UIAlertController(title: "You've added a question!", message: "Your question should appear shortly", preferredStyle: .alert)
             let ok = UIAlertAction(title: "OK", style: .default, handler: nil)
             alert2.addAction(ok)
@@ -201,30 +201,27 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
     func addQuestionSubmitButtonTapped(question: String) {
         guard let session = self.session else { return }
         QuestionController.sharedController.createQuestionRecordFrom(statement: question, session: session)
-        getQuestions()
     }
     
     func setupSessionLabels() {
         guard let session = self.session else { return }
+        self.title = session.title
         let endTime = date(date: session.endDate).timeR
         self.sessionCodeLabel.text = "Code: \(session.code)"
-        self.sessionEndTimeLabel.text = "\(endTime)"
+        self.sessionEndTimeLabel.text = "Ends: \(endTime)"
         sessionQuestionsTableView.tableHeaderView?.frame = CGRect(x: 0, y: 0, width: sessionQuestionsTableView.frame.width, height: 20)
-
-        let button = UIButton(type: .custom)
-        button.frame = CGRect(x: 0, y: 0, width: 100, height: 40)
-        button.backgroundColor = UIColor.clear
-        button.setTitleColor(UIColor.black, for: .normal)
-        button.setTitle("\(session.title)", for: .normal)
-//        button.addTarget(self, action: #selector(showInfo), for: .touchUpInside)
-        self.navigationItem.titleView = button
-        
-        _ = Timer.scheduledTimer(timeInterval: 15, target: self, selector: #selector(getQuestions), userInfo: nil, repeats: true)
         
         if self.session?.isActive == false {
             sessionQuestionsTableView.tableHeaderView?.isHidden = true
         }
     }
+    
+    // MARK: Textfield Functions
+    //----------------------------------------------------------------------------------------------------------------------
+    
+    
+    
+    // MARK: Tap Gesture Easter Egg
     
     func setupTapGesture() {
         let longTap = UILongPressGestureRecognizer(target: self, action: #selector((longPress)))
@@ -235,61 +232,5 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     func longPress() {
         view.addSubview(viewOfSpencer)
-    }
-    
-    func upVoteButtonPressed(cell: QuestionTableViewCell) {
-        guard let question = cell.question else { return }
-        let vote = Vote(vote: true)
-        VoteController.sharedController.createVoteRecordWith(question: question, vote: vote)
-        cell.updateWith(question: question)
-        sessionQuestionsTableView.reloadData()
-    }
-    
-    // MARK: Textfield Functions
-    //----------------------------------------------------------------------------------------------------------------------
-    
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        print("DidEndEditing")
-    }
-    
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        print("DidBeginEditing")
-    }
-    
-    func textFieldDidEndEditing(_ textField: UITextField, reason: UITextFieldDidEndEditingReason) {
-        print("DidEndEditingWithReason")
-    }
-    
-    func textFieldShouldClear(_ textField: UITextField) -> Bool {
-        print("shouldClear")
-        return true
-    }
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        print("shouldReturn")
-        return true
-    }
-    
-    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
-        print("shouldEndEditing")
-        return true
-    }
-    
-    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-        print("shouldBeginEditing")
-        return true
-    }
-    
-}
-
-// MARK: cool thing to pick tableview cell
-
-extension UITableView {
-    func indexPathForRowContaining(view:UIView) -> IndexPath? {
-        if view.superview == nil {
-            return nil
-        }
-        let point = self.convert(view.center, from: view.superview)
-        return self.indexPathForRow(at: point)
     }
 }
