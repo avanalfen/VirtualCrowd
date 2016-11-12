@@ -41,7 +41,7 @@ class PastSessionViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 3
+        return 5
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {

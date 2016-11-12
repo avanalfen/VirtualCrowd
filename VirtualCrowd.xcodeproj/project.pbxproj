@@ -21,17 +21,13 @@
 		654F04371DA84DF400622268 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654F04361DA84DF400622268 /* Session.swift */; };
 		654F043B1DA84E2900622268 /* SessionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654F043A1DA84E2900622268 /* SessionController.swift */; };
 		654F043E1DA84E5C00622268 /* PublicFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654F043D1DA84E5C00622268 /* PublicFunctions.swift */; };
-		658B10A71DB665BB0085DEB1 /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658B10A61DB665BB0085DEB1 /* Note.swift */; };
-		658B10A91DB666CB0085DEB1 /* NoteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658B10A81DB666CB0085DEB1 /* NoteController.swift */; };
 		658B10F01DB6F55C0085DEB1 /* JoinCrowdTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658B10EF1DB6F55C0085DEB1 /* JoinCrowdTextField.swift */; };
 		65954C6C1DAE717C0070F50C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 65954C6B1DAE717C0070F50C /* Assets.xcassets */; };
 		65954C951DAEE6EC0070F50C /* PastSessionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65954C941DAEE6EC0070F50C /* PastSessionViewController.swift */; };
 		65B8FCB71DB5436700D14157 /* CloudKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8FCB61DB5436700D14157 /* CloudKitManager.swift */; };
 		65B8FCB91DB543C300D14157 /* CloudKitSyncable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8FCB81DB543C300D14157 /* CloudKitSyncable.swift */; };
 		65B8FCBB1DB5799B00D14157 /* QuestionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8FCBA1DB5799B00D14157 /* QuestionController.swift */; };
-		65B8FCBD1DB579A800D14157 /* Vote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8FCBC1DB579A800D14157 /* Vote.swift */; };
 		65B8FCC31DB5850600D14157 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65B8FCC21DB5850600D14157 /* CloudKit.framework */; };
-		65B8FCC51DB5885B00D14157 /* VoteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8FCC41DB5885B00D14157 /* VoteController.swift */; };
 		65B8FCC71DB58FFB00D14157 /* ToDo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8FCC61DB58FFB00D14157 /* ToDo.swift */; };
 /* End PBXBuildFile section */
 
@@ -73,18 +69,14 @@
 		654F04361DA84DF400622268 /* Session.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
 		654F043A1DA84E2900622268 /* SessionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = SessionController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		654F043D1DA84E5C00622268 /* PublicFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublicFunctions.swift; sourceTree = "<group>"; };
-		658B10A61DB665BB0085DEB1 /* Note.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
-		658B10A81DB666CB0085DEB1 /* NoteController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteController.swift; sourceTree = "<group>"; };
 		658B10EF1DB6F55C0085DEB1 /* JoinCrowdTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JoinCrowdTextField.swift; sourceTree = "<group>"; };
 		65954C6B1DAE717C0070F50C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		65954C941DAEE6EC0070F50C /* PastSessionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = PastSessionViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		65B8FCB61DB5436700D14157 /* CloudKitManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudKitManager.swift; sourceTree = "<group>"; };
 		65B8FCB81DB543C300D14157 /* CloudKitSyncable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudKitSyncable.swift; sourceTree = "<group>"; };
 		65B8FCBA1DB5799B00D14157 /* QuestionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuestionController.swift; sourceTree = "<group>"; };
-		65B8FCBC1DB579A800D14157 /* Vote.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vote.swift; sourceTree = "<group>"; };
 		65B8FCC01DB5842200D14157 /* VirtualCrowd.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = VirtualCrowd.entitlements; sourceTree = "<group>"; };
 		65B8FCC21DB5850600D14157 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
-		65B8FCC41DB5885B00D14157 /* VoteController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VoteController.swift; sourceTree = "<group>"; };
 		65B8FCC61DB58FFB00D14157 /* ToDo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToDo.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -150,7 +142,6 @@
 				65B8FCC01DB5842200D14157 /* VirtualCrowd.entitlements */,
 				654F03FE1DA84C2100622268 /* AppDelegate.swift */,
 				654F04021DA84C2100622268 /* Main.storyboard */,
-				651BFBAB1DAC2E1F004042E8 /* DateHelper.swift */,
 				654F04311DA84D9000622268 /* Models */,
 				65B8FCB51DB5435400D14157 /* CloudKit */,
 				654F04331DA84DA700622268 /* ModelControllers */,
@@ -184,8 +175,6 @@
 			children = (
 				654F04361DA84DF400622268 /* Session.swift */,
 				654F04341DA84DDB00622268 /* Question.swift */,
-				658B10A61DB665BB0085DEB1 /* Note.swift */,
-				65B8FCBC1DB579A800D14157 /* Vote.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -205,8 +194,6 @@
 			children = (
 				654F043A1DA84E2900622268 /* SessionController.swift */,
 				65B8FCBA1DB5799B00D14157 /* QuestionController.swift */,
-				658B10A81DB666CB0085DEB1 /* NoteController.swift */,
-				65B8FCC41DB5885B00D14157 /* VoteController.swift */,
 			);
 			name = ModelControllers;
 			sourceTree = "<group>";
@@ -214,6 +201,7 @@
 		654F043C1DA84E4200622268 /* Extras */ = {
 			isa = PBXGroup;
 			children = (
+				651BFBAB1DAC2E1F004042E8 /* DateHelper.swift */,
 				654F043D1DA84E5C00622268 /* PublicFunctions.swift */,
 				65B8FCC61DB58FFB00D14157 /* ToDo.swift */,
 				654F040A1DA84C2100622268 /* LaunchScreen.storyboard */,
@@ -387,19 +375,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				65954C951DAEE6EC0070F50C /* PastSessionViewController.swift in Sources */,
-				65B8FCC51DB5885B00D14157 /* VoteController.swift in Sources */,
 				654F043E1DA84E5C00622268 /* PublicFunctions.swift in Sources */,
 				65B8FCB71DB5436700D14157 /* CloudKitManager.swift in Sources */,
 				654F043B1DA84E2900622268 /* SessionController.swift in Sources */,
-				658B10A71DB665BB0085DEB1 /* Note.swift in Sources */,
 				65B8FCB91DB543C300D14157 /* CloudKitSyncable.swift in Sources */,
 				654F04371DA84DF400622268 /* Session.swift in Sources */,
 				651BFBB11DAC8436004042E8 /* SessionViewController.swift in Sources */,
-				65B8FCBD1DB579A800D14157 /* Vote.swift in Sources */,
 				65B8FCBB1DB5799B00D14157 /* QuestionController.swift in Sources */,
 				658B10F01DB6F55C0085DEB1 /* JoinCrowdTextField.swift in Sources */,
 				65B8FCC71DB58FFB00D14157 /* ToDo.swift in Sources */,
-				658B10A91DB666CB0085DEB1 /* NoteController.swift in Sources */,
 				654F04301DA84CFA00622268 /* OpeningScreenViewController.swift in Sources */,
 				654F04351DA84DDB00622268 /* Question.swift in Sources */,
 				654F04071DA84C2100622268 /* VirtualCrowd.xcdatamodeld in Sources */,
@@ -637,6 +621,91 @@
 			};
 			name = Release;
 		};
+		65926B701DD6879400FE11B2 /* Release copy */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = "Release copy";
+		};
+		65926B711DD6879400FE11B2 /* Release copy */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = VirtualCrowd/VirtualCrowd.entitlements;
+				DEVELOPMENT_TEAM = 9BT5L85AT6;
+				INFOPLIST_FILE = VirtualCrowd/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.VanRoyal.VirtualCrowd;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = "Release copy";
+		};
+		65926B721DD6879400FE11B2 /* Release copy */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = 9BT5L85AT6;
+				INFOPLIST_FILE = VirtualCrowdTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.VanRoyal.VirtualCrowdTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/VirtualCrowd.app/VirtualCrowd";
+			};
+			name = "Release copy";
+		};
+		65926B731DD6879400FE11B2 /* Release copy */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				DEVELOPMENT_TEAM = 9BT5L85AT6;
+				INFOPLIST_FILE = VirtualCrowdUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.VanRoyal.VirtualCrowdUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_TARGET_NAME = VirtualCrowd;
+			};
+			name = "Release copy";
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -645,6 +714,7 @@
 			buildConfigurations = (
 				654F04241DA84C2200622268 /* Debug */,
 				654F04251DA84C2200622268 /* Release */,
+				65926B701DD6879400FE11B2 /* Release copy */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -654,6 +724,7 @@
 			buildConfigurations = (
 				654F04271DA84C2200622268 /* Debug */,
 				654F04281DA84C2200622268 /* Release */,
+				65926B711DD6879400FE11B2 /* Release copy */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -663,6 +734,7 @@
 			buildConfigurations = (
 				654F042A1DA84C2200622268 /* Debug */,
 				654F042B1DA84C2200622268 /* Release */,
+				65926B721DD6879400FE11B2 /* Release copy */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -672,6 +744,7 @@
 			buildConfigurations = (
 				654F042D1DA84C2200622268 /* Debug */,
 				654F042E1DA84C2200622268 /* Release */,
+				65926B731DD6879400FE11B2 /* Release copy */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -97,12 +97,10 @@ class OpeningScreenViewController: UIViewController, UIPickerViewDelegate, UITex
     
     @IBAction func createTitleTextChanged(_ sender: UITextField) {
         enableCreateButton()
-        print(sender.text)
     }
     
     @IBAction func createTimeTextChanged(_ sender: UITextField) {
         enableCreateButton()
-        print(sender.text)
     }
     
     func enableCreateButton() {
@@ -119,6 +117,7 @@ class OpeningScreenViewController: UIViewController, UIPickerViewDelegate, UITex
     }
     
     func joinSession() {
+        joinButton.isEnabled = false
         guard let enteredCode = self.joinCrowdCodeEntryTextField.text else { return }
         if enteredCode != "" {
             let predicate = NSPredicate(format: "codeKey == %@", enteredCode)
@@ -169,6 +168,7 @@ class OpeningScreenViewController: UIViewController, UIPickerViewDelegate, UITex
                 }
             })
         }
+        joinButton.isEnabled = true
     }
     
     @IBAction func createSessionButtonPressed(_ sender: UIButton) {

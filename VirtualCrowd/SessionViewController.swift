@@ -18,19 +18,13 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
     // MARK: Properties
     //----------------------------------------------------------------------------------------------------------------------
     
-    weak var delegate: textfieldChangedDelegate?
     var session: Session?
     var questionsArray: [Question] = []
     var selectedIndexPath: IndexPath? = nil
     var previousCellIndexPath: IndexPath?
-    var lastNoteTaken: String = ""
     var lastQuestionViewed: Question? = nil
     let cloudKitManager = CloudKitManager()
-    
-    var previousNote = ""
-    var previousQuestion: Question?
     var previousCellIndex: IndexPath?
-    var canSaveNote: Bool = false
     
     // MARK: Outlets
     //----------------------------------------------------------------------------------------------------------------------
@@ -47,6 +41,8 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
         super.viewDidLoad()
         setupSessionLabels()
         setupTapGesture()
+        getQuestions()
+        sessionQuestionsTableView.allowsSelection = false
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -61,58 +57,10 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
     // MARK: TableView
     //----------------------------------------------------------------------------------------------------------------------
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        if let previousCellIndexPath = previousCellIndexPath {
-            guard let cell = tableView.cellForRow(at: previousCellIndexPath) as? QuestionTableViewCell else { return }
-            cell.notesLabel.isHidden = true
-            cell.notesTextField.isHidden = true
-            cell.notesTextField.resignFirstResponder()
-        }
-        
-        switch selectedIndexPath {
-        case nil:
-            selectedIndexPath = indexPath
-        default:
-            if selectedIndexPath! == indexPath {
-                selectedIndexPath = nil
-            } else {
-                selectedIndexPath = indexPath
-            }
-        }
-        
-        tableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
-        tableView.deselectRow(at: indexPath, animated: true)
-        
-        self.sessionQuestionsTableView.beginUpdates()
-        self.sessionQuestionsTableView.endUpdates()
-        
-        self.previousCellIndexPath = indexPath
-        
-    }
-
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        
-        let justQuestionHeight: CGFloat = 60
-        let questionAndNotesHeight: CGFloat = 190.0
-        let ip = indexPath
-        if selectedIndexPath != nil {
-            if ip == selectedIndexPath {
-                return questionAndNotesHeight
-            } else {
-                return justQuestionHeight
-            }
-        } else {
-            return justQuestionHeight
-        }
-    }
-    
-    
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "questionCell") as? QuestionTableViewCell else { return QuestionTableViewCell() }
-        let ip = indexPath
         let indexOfQuestion = indexPath.section + indexPath.row
         let question = self.questionsArray[indexOfQuestion]
         cell.layer.cornerRadius = 10
@@ -120,19 +68,6 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
         cell.layer.borderWidth = 1
         
         cell.updateWith(question: question)
-        
-        if selectedIndexPath == ip {
-            cell.notesLabel.isHidden = false
-            cell.notesTextField.isHidden = false
-        } else {
-            cell.notesTextField.isHidden = true
-            cell.notesLabel.isHidden = true
-        }
-        
-        cell.notesTextField.delegate = self
-        cell.notesTextField.resignFirstResponder()
-        
-        
         
         return cell
     }
@@ -176,26 +111,33 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
         }
     }
     
-    @IBAction func addQuestionButtonTapped(_ sender: UIBarButtonItem) {
-        let alert = UIAlertController(title: "Enter Question", message: nil, preferredStyle: .alert)
-        alert.title = "Enter Question"
-        
-        var submitTextField: UITextField?
-        alert.addTextField { (textField) in
-            submitTextField = textField
+    @IBAction func menuTapped(_ sender: UIBarButtonItem) {
+        let endTime = date(date: session?.endDate).timeR
+        guard let code = self.session?.code else { return }
+        let menu = UIAlertController(title: "Entry code:\(code) \n Ends at: \(endTime)", message: nil, preferredStyle: .alert)
+        let close = UIAlertAction(title: "Close", style: .default, handler: nil)
+        let question = UIAlertAction(title: "Submit Question", style: .default) { (_) in
+            let alert = UIAlertController(title: "Enter A Question", message: nil, preferredStyle: .alert)
+            var submitTextField: UITextField?
+            alert.addTextField { (textField) in
+                submitTextField = textField
+            }
+            let submit = UIAlertAction(title: "Submit", style: .default) { (_) in
+                guard let question = submitTextField?.text else { return }
+                self.addQuestionSubmitButtonTapped(question: question)
+                let alert2 = UIAlertController(title: "You've added a question!", message: "Your question should appear shortly", preferredStyle: .alert)
+                let ok = UIAlertAction(title: "OK", style: .default, handler: nil)
+                alert2.addAction(ok)
+                self.present(alert2, animated: true, completion: nil)
+            }
+            let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+            alert.addAction(submit)
+            alert.addAction(cancel)
+            self.present(alert, animated: true, completion: nil)
         }
-        let submit = UIAlertAction(title: "Submit", style: .default) { (_) in
-            guard let question = submitTextField?.text else { return }
-            self.addQuestionSubmitButtonTapped(question: question)
-            let alert2 = UIAlertController(title: "You've added a question!", message: "Your question should appear shortly", preferredStyle: .alert)
-            let ok = UIAlertAction(title: "OK", style: .default, handler: nil)
-            alert2.addAction(ok)
-            self.present(alert2, animated: true, completion: nil)
-        }
-        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        alert.addAction(submit)
-        alert.addAction(cancel)
-        self.present(alert, animated: true, completion: nil)
+        menu.addAction(question)
+        menu.addAction(close)
+        self.present(menu, animated: true, completion: nil)
     }
     
     func addQuestionSubmitButtonTapped(question: String) {
@@ -212,14 +154,9 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
         sessionQuestionsTableView.tableHeaderView?.frame = CGRect(x: 0, y: 0, width: sessionQuestionsTableView.frame.width, height: 20)
         
         if self.session?.isActive == false {
-            sessionQuestionsTableView.tableHeaderView?.isHidden = true
+//            sessionQuestionsTableView.tableHeaderView?.isHidden = true
         }
     }
-    
-    // MARK: Textfield Functions
-    //----------------------------------------------------------------------------------------------------------------------
-    
-    
     
     // MARK: Tap Gesture Easter Egg
     
