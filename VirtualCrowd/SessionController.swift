@@ -16,15 +16,17 @@ class SessionController {
     // MARK: properties
     //----------------------------------------------------------------------------------------------------------------------
     
+    var activeSession: Session?
     var previousSession: Session?
     var viewIsBeingShownComingFromSession: Bool?
-    var sessions: [Session] = []
     var inactiveSessions: [Session] = []
     var joinedSessions: [Session] = []
     var sortedJoinedSessions: [Session] {
         return joinedSessions.sorted(by: { $0.0.endDate > $0.1.endDate })
     }
     var sessionReference: CKReference?
+    var questionsArray: [Question] = []
+    let cloudKitManager = CloudKitManager()
     
     // MARK: functions
     //----------------------------------------------------------------------------------------------------------------------
@@ -44,8 +46,33 @@ class SessionController {
         
         createRecordWith(session: session, sessionRecordID: recordID)
         
-        sessions.append(session)
+        joinedSessions.append(session)
         return session
+    }
+    
+    func fullSync() {
+        
+        guard let session = self.activeSession else { return }
+        
+        let sessionID = session.recordID
+        
+        let record = CKRecord(recordType: Session.recordType, recordID: sessionID)
+        
+        let reference = CKReference(record: record, action: .none)
+        
+        let predicate = NSPredicate(format: "referenceKey == %@", reference)
+        
+        cloudKitManager.fetchRecordsWithType(Question.recordType, predicate: predicate, recordFetchedBlock: nil) { (records, error) in
+            
+            if let records = records {
+                DispatchQueue.main.async {
+                    let questionsArray1 = records.flatMap { Question(record: $0) }
+                    SessionController.sharedController.questionsArray = questionsArray1
+                    let gotRecords = Notification(name: Notification.Name(rawValue: "gotRecords"))
+                    NotificationCenter.default.post(gotRecords)
+                }
+            }
+        }
     }
     
     func addQuestionToSession(statement: String, session: Session) {

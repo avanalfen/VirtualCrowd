@@ -8,9 +8,13 @@
 
 import UIKit
 import CoreData
+import UserNotifications
+import CloudKit
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
+    
+    let cloudKitManager = CloudKitManager()
 
     var window: UIWindow?
 
@@ -18,8 +22,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
+        let center = UNUserNotificationCenter.current()
+        
+        center.requestAuthorization(options: []) { (granted, error) in
+            
+            if granted {
+                print("Successfully registered for notifications")
+            } else {
+                print("Permission denied for notifications")
+            }
+        }
+        
+        application.registerForRemoteNotifications()
                 
         return true
+    }
+    
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        
+        
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        
+        
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

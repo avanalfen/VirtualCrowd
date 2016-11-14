@@ -83,10 +83,9 @@ class PastSessionViewController: UIViewController, UITableViewDelegate, UITableV
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
         if segue.identifier == "pastToDetail" {
-            let destinationVC = segue.destination as? SessionViewController
             let index = ((pastSessionTableView.indexPathForSelectedRow?.section)! + (pastSessionTableView.indexPathForSelectedRow?.row)!)
             let session = SessionController.sharedController.sortedJoinedSessions[index]
-            destinationVC?.session = session
+            SessionController.sharedController.activeSession = session
         }
     }
 }

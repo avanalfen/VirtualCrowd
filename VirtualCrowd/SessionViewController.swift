@@ -18,8 +18,7 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
     // MARK: Properties
     //----------------------------------------------------------------------------------------------------------------------
     
-    var session: Session?
-    var questionsArray: [Question] = []
+    let session = SessionController.sharedController.activeSession
     var selectedIndexPath: IndexPath? = nil
     var previousCellIndexPath: IndexPath?
     var lastQuestionViewed: Question? = nil
@@ -29,8 +28,6 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
     // MARK: Outlets
     //----------------------------------------------------------------------------------------------------------------------
     
-    @IBOutlet weak var sessionEndTimeLabel: UILabel!
-    @IBOutlet weak private var sessionCodeLabel: UILabel!
     @IBOutlet private var viewOfSpencer: UIVisualEffectView!
     @IBOutlet weak private var sessionQuestionsTableView: UITableView!
     
@@ -41,8 +38,9 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
         super.viewDidLoad()
         setupSessionLabels()
         setupTapGesture()
-        getQuestions()
+        subscribeToQuestionsForSession()
         sessionQuestionsTableView.allowsSelection = false
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadTable), name: Notification.Name(rawValue: "gotRecords"), object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -62,11 +60,10 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "questionCell") as? QuestionTableViewCell else { return QuestionTableViewCell() }
         let indexOfQuestion = indexPath.section + indexPath.row
-        let question = self.questionsArray[indexOfQuestion]
+        let question = SessionController.sharedController.questionsArray[indexOfQuestion]
         cell.layer.cornerRadius = 10
         cell.contentView.layer.cornerRadius = 10
         cell.layer.borderWidth = 1
-        
         cell.updateWith(question: question)
         
         return cell
@@ -77,7 +74,7 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return self.questionsArray.count
+        return SessionController.sharedController.questionsArray.count
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -87,7 +84,7 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
     // MARK: Functions
     //----------------------------------------------------------------------------------------------------------------------
     
-    func getQuestions() {
+    func subscribeToQuestionsForSession() {
         
         guard let session = self.session else { return }
         
@@ -99,21 +96,19 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         let predicate = NSPredicate(format: "referenceKey == %@", reference)
         
-        cloudKitManager.fetchRecordsWithType(Question.recordType, predicate: predicate, recordFetchedBlock: nil) { (records, error) in
-            
-            if let records = records {
-                DispatchQueue.main.async {
-                    let questionsArray1 = records.flatMap { Question(record: $0) }
-                    self.questionsArray = questionsArray1
-                    self.sessionQuestionsTableView.reloadData()
-                }
+        let subscription = CKQuerySubscription(recordType: Session.recordType, predicate: predicate, options: [.firesOnRecordCreation, .firesOnRecordUpdate])
+        
+        cloudKitManager.publicDatabase.save(subscription) { (subscription, error) in
+            if error != nil {
+                print(error?.localizedDescription)
             }
         }
     }
     
     @IBAction func menuTapped(_ sender: UIBarButtonItem) {
-        let endTime = date(date: session?.endDate).timeR
-        guard let code = self.session?.code else { return }
+        guard let session = SessionController.sharedController.activeSession else { return }
+        let endTime = date(date: session.endDate).timeR
+        let code = session.code
         let menu = UIAlertController(title: "Entry code:\(code) \n Ends at: \(endTime)", message: nil, preferredStyle: .alert)
         let close = UIAlertAction(title: "Close", style: .default, handler: nil)
         let question = UIAlertAction(title: "Submit Question", style: .default) { (_) in
@@ -148,14 +143,10 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
     func setupSessionLabels() {
         guard let session = self.session else { return }
         self.title = session.title
-        let endTime = date(date: session.endDate).timeR
-        self.sessionCodeLabel.text = "Code: \(session.code)"
-        self.sessionEndTimeLabel.text = "Ends: \(endTime)"
-        sessionQuestionsTableView.tableHeaderView?.frame = CGRect(x: 0, y: 0, width: sessionQuestionsTableView.frame.width, height: 20)
-        
-        if self.session?.isActive == false {
-//            sessionQuestionsTableView.tableHeaderView?.isHidden = true
-        }
+    }
+    
+    func reloadTable() {
+        self.sessionQuestionsTableView.reloadData()
     }
     
     // MARK: Tap Gesture Easter Egg

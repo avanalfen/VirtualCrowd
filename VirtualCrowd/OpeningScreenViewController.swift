@@ -141,13 +141,7 @@ class OpeningScreenViewController: UIViewController, UIPickerViewDelegate, UITex
                             } else {
                                 let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
                                 guard let sessionViewController = storyboard.instantiateViewController(withIdentifier: "sessionView") as? SessionViewController else { return }
-                                sessionViewController.session = newSession
-                                guard let newSession = newSession else { return }
-                                if SessionController.sharedController.joinedSessions.contains(newSession) {
-                                    
-                                } else {
-                                    SessionController.sharedController.joinedSessions.insert(newSession, at: 0)
-                                }
+                                SessionController.sharedController.activeSession = newSession
                                 self.navigationController?.pushViewController(sessionViewController, animated: true)
                                 self.clearTextFields()
                                 self.resignKeyboard()
@@ -173,15 +167,12 @@ class OpeningScreenViewController: UIViewController, UIPickerViewDelegate, UITex
     
     @IBAction func createSessionButtonPressed(_ sender: UIButton) {
         guard let title = createCrowdTitleTextEntry.text, let time = Double(createCrowdTimeLimitEntry.text!) else { return }
-        self.session = SessionController.sharedController.createSession(title: title, timeLimit: time)
-        guard let session = self.session else { return }
-        SessionController.sharedController.joinedSessions.insert(session, at: 0)
-        
+        SessionController.sharedController.activeSession = SessionController.sharedController.createSession(title: title, timeLimit: time)
     }
     
     @IBAction func currentCrowdButtonTapped() {
         guard let nextSessionViewController = storyboard?.instantiateViewController(withIdentifier: "sessionView") as? SessionViewController else { return }
-        nextSessionViewController.session = SessionController.sharedController.previousSession
+        SessionController.sharedController.activeSession = SessionController.sharedController.previousSession
         self.navigationController?.pushViewController(nextSessionViewController, animated: true)
     }
     
@@ -211,8 +202,7 @@ class OpeningScreenViewController: UIViewController, UIPickerViewDelegate, UITex
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if segue.identifier == "createSession" {
-            let destinationVC = segue.destination as? SessionViewController
-            destinationVC?.session = self.session
+            
             resetTextfields()
         }
     }
