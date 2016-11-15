@@ -91,21 +91,6 @@
                                             <segue destination="l4v-dS-HXL" kind="show" identifier="createSession" id="m8E-IX-j98"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NNS-S7-rU1">
-                                        <constraints>
-                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="5Ah-rN-KxI"/>
-                                            <constraint firstAttribute="height" constant="30" id="fAx-Vq-SYv"/>
-                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="103" id="gox-dO-wqn"/>
-                                            <constraint firstAttribute="width" constant="112" id="p2f-Cb-Km0"/>
-                                        </constraints>
-                                        <state key="normal" title="Current Crowd" backgroundImage="Rectangle">
-                                            <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="JoinSessionPressed:" destination="372-Tk-dse" eventType="touchUpInside" id="sUP-qE-0A3"/>
-                                            <action selector="currentCrowdButtonTapped" destination="372-Tk-dse" eventType="touchUpInside" id="psd-CV-Ncq"/>
-                                        </connections>
-                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.52027907599177381" green="0.78842089404377336" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -117,7 +102,6 @@
                                     <constraint firstItem="Tew-TV-REB" firstAttribute="leading" secondItem="U4Z-d2-sNw" secondAttribute="leading" constant="8" id="EmA-bo-WuE"/>
                                     <constraint firstItem="msi-oF-Bmb" firstAttribute="leading" secondItem="U4Z-d2-sNw" secondAttribute="leading" constant="8" id="FQW-DV-dWR"/>
                                     <constraint firstItem="msi-oF-Bmb" firstAttribute="top" secondItem="Tew-TV-REB" secondAttribute="bottom" constant="8" id="FYF-vr-ddb"/>
-                                    <constraint firstItem="NNS-S7-rU1" firstAttribute="top" secondItem="cgd-4I-00L" secondAttribute="bottom" constant="4" id="Krs-jr-r6m"/>
                                     <constraint firstItem="GKT-bV-wcP" firstAttribute="top" secondItem="U4Z-d2-sNw" secondAttribute="top" constant="8" id="LzM-KK-13i"/>
                                     <constraint firstItem="GKT-bV-wcP" firstAttribute="leading" secondItem="U4Z-d2-sNw" secondAttribute="leading" constant="8" id="MhG-uH-TIy"/>
                                     <constraint firstItem="ztw-VR-w8c" firstAttribute="top" secondItem="qh2-kK-h6s" secondAttribute="bottom" constant="59" id="NGl-AP-lNe"/>
@@ -164,7 +148,6 @@
                             <constraint firstItem="U4Z-d2-sNw" firstAttribute="centerX" secondItem="aJV-vg-yXW" secondAttribute="centerX" id="6D4-ze-474"/>
                             <constraint firstItem="U4Z-d2-sNw" firstAttribute="leading" secondItem="aJV-vg-yXW" secondAttribute="leadingMargin" id="Afl-fC-qO4"/>
                             <constraint firstItem="2hl-ld-fIy" firstAttribute="top" secondItem="pry-Or-S9n" secondAttribute="bottom" constant="51" id="HFh-so-FNI"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="NNS-S7-rU1" secondAttribute="trailing" constant="4" id="ITf-0t-Hga"/>
                             <constraint firstItem="pry-Or-S9n" firstAttribute="centerX" secondItem="aJV-vg-yXW" secondAttribute="centerX" id="UXu-Sc-ghm"/>
                             <constraint firstItem="OPl-5F-Cy8" firstAttribute="leading" secondItem="aJV-vg-yXW" secondAttribute="leadingMargin" id="Umk-07-Fwk"/>
                             <constraint firstItem="U4Z-d2-sNw" firstAttribute="top" secondItem="OPl-5F-Cy8" secondAttribute="bottom" constant="18" id="UvD-XT-raD"/>
@@ -177,7 +160,6 @@
                         <outlet property="createButton" destination="auG-mj-2y7" id="Q3B-fq-pv1"/>
                         <outlet property="createCrowdTimeLimitEntry" destination="ztw-VR-w8c" id="e5y-Qg-6VG"/>
                         <outlet property="createCrowdTitleTextEntry" destination="msi-oF-Bmb" id="AaP-US-UaY"/>
-                        <outlet property="currentCrowdButton" destination="NNS-S7-rU1" id="IsL-WJ-vfl"/>
                         <outlet property="joinButton" destination="cgd-4I-00L" id="IfD-wj-XT4"/>
                         <outlet property="joinCrowdCodeEntryTextField" destination="sF6-3D-vQO" id="K1T-47-Y33"/>
                         <outlet property="theInceptionView" destination="U4Z-d2-sNw" id="dc3-2u-Def"/>
@@ -206,18 +188,18 @@
                                         <rect key="frame" x="0.0" y="92" width="343" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="YbO-QB-HMy" id="rqK-sj-e9B">
-                                            <frame key="frameInset" width="343" height="43"/>
+                                            <frame key="frameInset" width="343" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="QT0-K7-VWY">
-                                                    <frame key="frameInset" minX="15" minY="11" width="34" height="21"/>
+                                                    <frame key="frameInset" minX="15" minY="12" width="33.5" height="20.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Mel-nn-iwb">
-                                                    <frame key="frameInset" minX="284" minY="11" width="44" height="21"/>
+                                                    <frame key="frameInset" minX="284" minY="12" width="44" height="20.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>

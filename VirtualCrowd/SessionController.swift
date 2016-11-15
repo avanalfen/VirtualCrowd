@@ -26,7 +26,7 @@ class SessionController {
     }
     var sessionReference: CKReference?
     var questionsArray: [Question] = []
-    let cloudKitManager = CloudKitManager()
+    let cloudKitManager = CloudKitManager.sharedController
     
     // MARK: functions
     //----------------------------------------------------------------------------------------------------------------------
@@ -58,7 +58,7 @@ class SessionController {
         
         let record = CKRecord(recordType: Session.recordType, recordID: sessionID)
         
-        let reference = CKReference(record: record, action: .none)
+        let reference = CKReference(record: record, action: .deleteSelf)
         
         let predicate = NSPredicate(format: "referenceKey == %@", reference)
         
@@ -75,8 +75,31 @@ class SessionController {
         }
     }
     
-    func addQuestionToSession(statement: String, session: Session) {
-        QuestionController.sharedController.createQuestionRecordFrom(statement: statement, session: session)
+    func subscribeToQuestionsForSession() {
+        
+        guard let session = self.activeSession else { return }
+        
+        let sessionID = session.recordID
+        
+        let record = CKRecord(recordType: Question.recordType, recordID: sessionID)
+        
+        let reference = CKReference(record: record, action: .deleteSelf)
+        
+        let predicate = NSPredicate(format: "referenceKey == %@", reference)
+        
+        let subscription = CKQuerySubscription(recordType: Question.recordType, predicate: predicate, options: .firesOnRecordCreation)
+        
+        let notificationInfo = CKNotificationInfo()
+        
+        notificationInfo.alertBody = "New Question!"
+        
+        subscription.notificationInfo = notificationInfo
+        
+        cloudKitManager.publicDatabase.save(subscription) { (subscription, error) in
+            if error != nil {
+                print(error?.localizedDescription)
+            }
+        }
     }
     
     func sessionNowInactive(session: Session) {
@@ -110,9 +133,9 @@ class SessionController {
     
     func createRecordWith(session: Session, sessionRecordID: CKRecordID) {
         
-        let cloudKitManager = CloudKitManager()
+        let cloudKitManager = CloudKitManager.sharedController
         
-        let record = CKRecord(recordType: "Session", recordID: sessionRecordID)
+        let record = CKRecord(recordType: Session.recordType, recordID: sessionRecordID)
         
         let reference = CKReference(record: record, action: .none)
         

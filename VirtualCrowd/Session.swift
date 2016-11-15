@@ -34,12 +34,6 @@ class Session: Equatable {
     let crowdNumber: Int
     let recordID: CKRecordID
     
-    var fireDate: NSDate? {
-        guard let thisMorningAtMidnight = DateHelper.thisMorningAtMidnight else { return nil }
-        let fireDateFromThisMorning = NSDate(timeInterval: timeLimit, since: thisMorningAtMidnight as Date)
-        return fireDateFromThisMorning
-    }
-    
     init(title: String, identifier: String, code: String, timeLimit: TimeInterval, isActive: Bool,  endDate: Date, crowdNumber: Int, startDate: Date, recordID: CKRecordID) {
         self.title = title
         self.identifier = identifier

@@ -11,7 +11,7 @@ import CloudKit
 
 class QuestionController {
     
-    let cloudKitManager = CloudKitManager()
+    let cloudKitManager = CloudKitManager.sharedController
     
     static let sharedController = QuestionController()
     

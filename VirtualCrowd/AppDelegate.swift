@@ -12,40 +12,30 @@ import UserNotifications
 import CloudKit
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate {
     
-    let cloudKitManager = CloudKitManager()
+    let cloudKitManager = CloudKitManager.sharedController
 
     var window: UIWindow?
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
         
         let center = UNUserNotificationCenter.current()
-        
-        center.requestAuthorization(options: []) { (granted, error) in
+        center.requestAuthorization(options: [.alert, .badge, .sound]) { (granted, error) in
             
             if granted {
                 print("Successfully registered for notifications")
+                UIApplication.shared.registerForRemoteNotifications()
             } else {
                 print("Permission denied for notifications")
             }
         }
-        
-        application.registerForRemoteNotifications()
-                
         return true
     }
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-        
-        
-    }
-    
-    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        
-        
+        SessionController.sharedController.fullSync()
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

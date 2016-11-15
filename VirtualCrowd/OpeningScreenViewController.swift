@@ -45,12 +45,6 @@ class OpeningScreenViewController: UIViewController, UIPickerViewDelegate, UITex
         self.navigationController?.navigationBar.isHidden = true
         createButton.isEnabled = false
         joinButton.isEnabled = false
-        
-        if SessionController.sharedController.viewIsBeingShownComingFromSession! {
-            currentCrowdButton.isHidden = false
-        } else {
-            currentCrowdButton.isHidden = true
-        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -142,6 +136,7 @@ class OpeningScreenViewController: UIViewController, UIPickerViewDelegate, UITex
                                 let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
                                 guard let sessionViewController = storyboard.instantiateViewController(withIdentifier: "sessionView") as? SessionViewController else { return }
                                 SessionController.sharedController.activeSession = newSession
+                                SessionController.sharedController.subscribeToQuestionsForSession()
                                 self.navigationController?.pushViewController(sessionViewController, animated: true)
                                 self.clearTextFields()
                                 self.resignKeyboard()
@@ -168,12 +163,7 @@ class OpeningScreenViewController: UIViewController, UIPickerViewDelegate, UITex
     @IBAction func createSessionButtonPressed(_ sender: UIButton) {
         guard let title = createCrowdTitleTextEntry.text, let time = Double(createCrowdTimeLimitEntry.text!) else { return }
         SessionController.sharedController.activeSession = SessionController.sharedController.createSession(title: title, timeLimit: time)
-    }
-    
-    @IBAction func currentCrowdButtonTapped() {
-        guard let nextSessionViewController = storyboard?.instantiateViewController(withIdentifier: "sessionView") as? SessionViewController else { return }
-        SessionController.sharedController.activeSession = SessionController.sharedController.previousSession
-        self.navigationController?.pushViewController(nextSessionViewController, animated: true)
+        SessionController.sharedController.subscribeToQuestionsForSession()
     }
     
     @IBAction func pastSessionsButtonTapped(_ sender: UIButton) {

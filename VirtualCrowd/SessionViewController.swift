@@ -38,7 +38,7 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
         super.viewDidLoad()
         setupSessionLabels()
         setupTapGesture()
-        subscribeToQuestionsForSession()
+        SessionController.sharedController.fullSync()
         sessionQuestionsTableView.allowsSelection = false
         NotificationCenter.default.addObserver(self, selector: #selector(reloadTable), name: Notification.Name(rawValue: "gotRecords"), object: nil)
     }
@@ -83,27 +83,6 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     // MARK: Functions
     //----------------------------------------------------------------------------------------------------------------------
-    
-    func subscribeToQuestionsForSession() {
-        
-        guard let session = self.session else { return }
-        
-        let sessionID = session.recordID
-        
-        let record = CKRecord(recordType: Session.recordType, recordID: sessionID)
-        
-        let reference = CKReference(record: record, action: .none)
-        
-        let predicate = NSPredicate(format: "referenceKey == %@", reference)
-        
-        let subscription = CKQuerySubscription(recordType: Session.recordType, predicate: predicate, options: [.firesOnRecordCreation, .firesOnRecordUpdate])
-        
-        cloudKitManager.publicDatabase.save(subscription) { (subscription, error) in
-            if error != nil {
-                print(error?.localizedDescription)
-            }
-        }
-    }
     
     @IBAction func menuTapped(_ sender: UIBarButtonItem) {
         guard let session = SessionController.sharedController.activeSession else { return }

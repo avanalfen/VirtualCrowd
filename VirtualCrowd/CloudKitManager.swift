@@ -19,6 +19,8 @@ private let ModificationDateKey = "modificationDate"
 
 class CloudKitManager {
     
+    static let sharedController = CloudKitManager()
+    
     let publicDatabase = CKContainer.default().publicCloudDatabase
     let privateDatabase = CKContainer.default().privateCloudDatabase
     
