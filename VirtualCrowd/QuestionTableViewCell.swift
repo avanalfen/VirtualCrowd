@@ -10,7 +10,7 @@ import UIKit
 import CloudKit
 
 protocol UpVoteButtonPressedDelegate: class {
-    func addVoteToQuestion(question: Question)
+    func addVoteToQuestion(deviceQuestion: Question)
 }
 
 class QuestionTableViewCell: UITableViewCell {
@@ -30,8 +30,10 @@ class QuestionTableViewCell: UITableViewCell {
     // MARK: Functions
     
     @IBAction func VoteButtonPressed(_ sender: UIButton) {
-        question?.votes += 1
-        upVoteDelegate?.addVoteToQuestion(question: self.question!)
+        self.upVoteButton.isEnabled = false
+        guard let question = self.question else { return }
+        upVoteDelegate?.addVoteToQuestion(deviceQuestion: question)
+        self.upVoteButton.isEnabled = true
     }
     
     func updateWith(question: Question) {

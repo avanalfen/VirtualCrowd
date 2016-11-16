@@ -9,7 +9,7 @@
 import Foundation
 import CloudKit
 
-class Question {
+class Question: Equatable {
     
     static let kStatement = "statementKey"
     static let kReference = "referenceKey"
@@ -41,3 +41,6 @@ class Question {
     }
 }
 
+func ==(lhs: Question, rhs: Question) -> Bool {
+    return lhs.recordID == rhs.recordID
+}

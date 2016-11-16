@@ -170,74 +170,6 @@
             </objects>
             <point key="canvasLocation" x="2277.5999999999999" y="-596.85157421289364"/>
         </scene>
-        <!--Past Session View Controller-->
-        <scene sceneID="BoK-Ha-bD0">
-            <objects>
-                <viewController id="04w-cg-BQ8" customClass="PastSessionViewController" customModule="VirtualCrowd" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="HaV-qE-ucO"/>
-                        <viewControllerLayoutGuide type="bottom" id="fTG-Hw-4UN"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="HBh-aG-5v8">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Yyw-BC-0C5">
-                                <rect key="frame" x="16" y="0.0" width="343" height="667"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="pastSessionCell" textLabel="QT0-K7-VWY" detailTextLabel="Mel-nn-iwb" style="IBUITableViewCellStyleValue1" id="YbO-QB-HMy">
-                                        <rect key="frame" x="0.0" y="28" width="343" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="YbO-QB-HMy" id="rqK-sj-e9B">
-                                            <rect key="frame" x="0.0" y="0.0" width="343" height="43"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="QT0-K7-VWY">
-                                                    <rect key="frame" x="15" y="11" width="34" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Mel-nn-iwb">
-                                                    <rect key="frame" x="284" y="11" width="44" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </prototypes>
-                            </tableView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="TheCrowd" translatesAutoresizingMaskIntoConstraints="NO" id="JFF-Qx-rrl">
-                                <rect key="frame" x="0.0" y="590" width="375" height="128"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="128" id="NP1-DZ-pz4"/>
-                                    <constraint firstAttribute="width" constant="375" id="pmw-KL-SUC"/>
-                                </constraints>
-                            </imageView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="fTG-Hw-4UN" firstAttribute="top" secondItem="Yyw-BC-0C5" secondAttribute="bottom" id="ESQ-W2-ghN"/>
-                            <constraint firstItem="JFF-Qx-rrl" firstAttribute="centerX" secondItem="HBh-aG-5v8" secondAttribute="centerX" id="RTa-C6-4ae"/>
-                            <constraint firstAttribute="bottom" secondItem="JFF-Qx-rrl" secondAttribute="bottom" constant="-51" id="nlC-S1-DNP"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="Yyw-BC-0C5" secondAttribute="trailing" id="rL5-9F-9xg"/>
-                            <constraint firstAttribute="leadingMargin" secondItem="Yyw-BC-0C5" secondAttribute="leading" id="rLt-8r-2KV"/>
-                            <constraint firstItem="Yyw-BC-0C5" firstAttribute="top" secondItem="HBh-aG-5v8" secondAttribute="topMargin" id="xUR-Af-Dp6"/>
-                        </constraints>
-                    </view>
-                    <connections>
-                        <outlet property="pastSessionTableView" destination="Yyw-BC-0C5" id="m5S-b4-6WA"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="2Di-Wa-DTH" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2630" y="197"/>
-        </scene>
         <!--sessionView-->
         <scene sceneID="mqi-39-oeC">
             <objects>
@@ -284,7 +216,6 @@
                                                         <constraint firstAttribute="height" constant="46" id="yo7-Xm-Es9"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="15"/>
-                                                    <state key="normal" backgroundImage="thumbs-up-vector-art"/>
                                                     <connections>
                                                         <action selector="VoteButtonPressed:" destination="7HX-wE-Ke7" eventType="touchUpInside" id="Ew2-3b-UxQ"/>
                                                     </connections>
@@ -362,30 +293,18 @@
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ofb-HB-Z9C">
+                                        <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ofb-HB-Z9C">
                                             <rect key="frame" x="67" y="213" width="240" height="240"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="Screen Shot 2016-10-12 at 7.15.56 PM" translatesAutoresizingMaskIntoConstraints="NO" id="dzH-Hc-MVc">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Screen Shot 2016-10-12 at 7.15.56 PM" translatesAutoresizingMaskIntoConstraints="NO" id="dzH-Hc-MVc">
                                                     <rect key="frame" x="0.0" y="0.0" width="240" height="240"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="240" id="9xr-Cd-ASB"/>
-                                                        <constraint firstAttribute="width" constant="240" id="pZG-ie-o2T"/>
-                                                    </constraints>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
                                             </subviews>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            <constraints>
-                                                <constraint firstItem="dzH-Hc-MVc" firstAttribute="centerX" secondItem="Ofb-HB-Z9C" secondAttribute="centerX" id="8PY-9C-49t"/>
-                                                <constraint firstAttribute="height" constant="240" id="ChT-X4-ZUF"/>
-                                                <constraint firstItem="dzH-Hc-MVc" firstAttribute="centerY" secondItem="Ofb-HB-Z9C" secondAttribute="centerY" id="g82-zH-3hO"/>
-                                                <constraint firstAttribute="width" constant="240" id="jnZ-9R-IAv"/>
-                                            </constraints>
                                         </view>
                                     </subviews>
-                                    <constraints>
-                                        <constraint firstItem="Ofb-HB-Z9C" firstAttribute="centerY" secondItem="A8C-NH-8Hn" secondAttribute="centerY" id="0NJ-uW-Nuz"/>
-                                        <constraint firstItem="Ofb-HB-Z9C" firstAttribute="centerX" secondItem="A8C-NH-8Hn" secondAttribute="centerX" id="rZG-d8-E8P"/>
-                                    </constraints>
                                 </view>
                                 <blurEffect style="dark"/>
                             </visualEffectView>
@@ -394,7 +313,7 @@
                     <blurEffect style="light"/>
                 </visualEffectView>
             </objects>
-            <point key="canvasLocation" x="3608.8000000000002" y="-434.03298350824593"/>
+            <point key="canvasLocation" x="2746" y="-581"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="vDH-5v-djW">
@@ -421,6 +340,5 @@
         <image name="Rectangle" width="512" height="96"/>
         <image name="Screen Shot 2016-10-12 at 7.15.56 PM" width="148" height="149"/>
         <image name="TheCrowd" width="256" height="78"/>
-        <image name="thumbs-up-vector-art" width="256" height="268"/>
     </resources>
 </document>

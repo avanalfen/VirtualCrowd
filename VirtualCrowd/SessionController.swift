@@ -25,7 +25,15 @@ class SessionController {
         return joinedSessions.sorted(by: { $0.0.endDate > $0.1.endDate })
     }
     var sessionReference: CKReference?
-    var questionsArray: [Question] = []
+    var questionsArray: [Question] = [] {
+        didSet {
+            NotificationCenter.default.post(Notification(name: Notification.Name(rawValue: "QuestionArrayChanged")))
+        }
+    }
+    var sortedQuestions: [Question] {
+        return questionsArray.sorted(by: { $0.0.votes > $0.1.votes })
+    }
+    var questionsVotedOn: [Question] = []
     let cloudKitManager = CloudKitManager.sharedController
     
     // MARK: functions
@@ -54,7 +62,7 @@ class SessionController {
         
         guard let session = self.activeSession else { return }
         
-        print("1")
+        print("\nstarted full sync")
         
         let sessionID = session.recordID
         
@@ -70,9 +78,7 @@ class SessionController {
                 DispatchQueue.main.async {
                     let questionsArray1 = records.flatMap { Question(record: $0) }
                     SessionController.sharedController.questionsArray = questionsArray1
-                    let gotRecords = Notification(name: Notification.Name(rawValue: "gotRecords"))
-                    NotificationCenter.default.post(gotRecords)
-                    print("2")
+                    print("\nreset questions array with cloudkit")
                 }
             }
         }

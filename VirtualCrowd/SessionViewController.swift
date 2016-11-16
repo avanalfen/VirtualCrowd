@@ -40,7 +40,7 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
         setupTapGesture()
         SessionController.sharedController.fullSync()
         sessionQuestionsTableView.allowsSelection = false
-        NotificationCenter.default.addObserver(self, selector: #selector(reloadTable), name: Notification.Name(rawValue: "gotRecords"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadTable), name: Notification.Name(rawValue: "QuestionArrayChanged"), object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -59,12 +59,17 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "questionCell") as? QuestionTableViewCell else { return QuestionTableViewCell() }
         let indexOfQuestion = indexPath.section + indexPath.row
-        let question = SessionController.sharedController.questionsArray[indexOfQuestion]
+        let question = SessionController.sharedController.sortedQuestions[indexOfQuestion]
         cell.layer.cornerRadius = 10
         cell.contentView.layer.cornerRadius = 10
         cell.layer.borderWidth = 1
         cell.upVoteDelegate = self
         cell.updateWith(question: question)
+        if SessionController.sharedController.questionsVotedOn.contains(question) {
+            cell.upVoteButton.setBackgroundImage(#imageLiteral(resourceName: "thumbs-up-vector-art"), for: .normal)
+        } else {
+            cell.upVoteButton.setBackgroundImage(#imageLiteral(resourceName: "thumbs-up-vector-art copy"), for: .normal)
+        }
         return cell
     }
     
@@ -73,7 +78,7 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return SessionController.sharedController.questionsArray.count
+        return SessionController.sharedController.sortedQuestions.count
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -116,22 +121,57 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
     func addQuestionSubmitButtonTapped(question: String) {
         guard let session = SessionController.sharedController.activeSession else { return }
         QuestionController.sharedController.createQuestionRecordFrom(statement: question, session: session)
-        SessionController.sharedController.fullSync()
     }
     
-    func addVoteToQuestion(question: Question) {
-        let record = CKRecord(statement: question.statement, recordID: question.recordID!, votes: question.votes, session: SessionController.sharedController.activeSession!)
-        cloudKitManager.modifyRecords([record], perRecordCompletion: { (record, error) in
-            if let record = record {
-                print(record)
+    func addVoteToQuestion(deviceQuestion: Question) {
+        guard let deviceQuestionID = deviceQuestion.recordID else { return }
+        cloudKitManager.fetchRecord(withID: deviceQuestionID) { (record, error) in
+            guard let pulledRecord = record else { return }
+            guard let pulledQuestion = Question(record: pulledRecord) else { return }
+            if pulledQuestion.votes == deviceQuestion.votes {
+                if SessionController.sharedController.questionsVotedOn.contains(deviceQuestion) {
+                    deviceQuestion.votes -= 1
+                    guard let indexOfDeviceQuestion = SessionController.sharedController.questionsVotedOn.index(of: deviceQuestion) else { return }
+                    DispatchQueue.main.async {
+                        SessionController.sharedController.questionsVotedOn.remove(at: indexOfDeviceQuestion)
+                        self.sessionQuestionsTableView.reloadData()
+                    }
+                    let record = CKRecord(statement: deviceQuestion.statement, recordID: deviceQuestionID, votes: deviceQuestion.votes, session: SessionController.sharedController.activeSession!)
+                    self.cloudKitManager.modifyRecords([record], perRecordCompletion: { (record, error) in
+                        if let record = record {
+                            print(record)
+                        }
+                    }, completion: { (records, error) in
+                        if let records = records {
+                            print(records.count)
+                        }
+                    })
+                } else {
+                    deviceQuestion.votes += 1
+                    DispatchQueue.main.async {
+                        SessionController.sharedController.questionsVotedOn.append(deviceQuestion)
+                        self.sessionQuestionsTableView.reloadData()
+                    }
+                    let record = CKRecord(statement: deviceQuestion.statement, recordID: pulledQuestion.recordID!, votes: deviceQuestion.votes, session: SessionController.sharedController.activeSession!)
+                    self.cloudKitManager.modifyRecords([record], perRecordCompletion: { (record, error) in
+                        if let record = record {
+                            print(record)
+                        }
+                        if error != nil {
+                            print(error!.localizedDescription)
+                        }
+                    }, completion: { (records, error) in
+                        if let records = records {
+                            print(records.count)
+                        }
+                    })
+                }
+            } else {
+               SessionController.sharedController.fullSync()
             }
-        }, completion: { (records, error) in
-            if let records = records {
-                print(records.count)
-            }
-        })
+        }
     }
- 
+    
     func setupSessionLabels() {
         guard let session = SessionController.sharedController.activeSession else { return }
         self.title = session.title

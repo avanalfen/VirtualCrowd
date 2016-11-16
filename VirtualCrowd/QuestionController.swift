@@ -27,6 +27,8 @@ class QuestionController {
         
         let question = Question(statement: statement, recordID: recordID)
         
+        SessionController.sharedController.questionsArray.append(question)
+        
         let record = CKRecord(recordType: "Question", recordID: question.recordID!)
         
         let referenceToSession = CKReference(recordID: sessionID, action: .deleteSelf)
