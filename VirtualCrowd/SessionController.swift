@@ -54,6 +54,8 @@ class SessionController {
         
         guard let session = self.activeSession else { return }
         
+        print("1")
+        
         let sessionID = session.recordID
         
         let record = CKRecord(recordType: Session.recordType, recordID: sessionID)
@@ -70,6 +72,7 @@ class SessionController {
                     SessionController.sharedController.questionsArray = questionsArray1
                     let gotRecords = Notification(name: Notification.Name(rawValue: "gotRecords"))
                     NotificationCenter.default.post(gotRecords)
+                    print("2")
                 }
             }
         }
@@ -87,7 +90,9 @@ class SessionController {
         
         let predicate = NSPredicate(format: "referenceKey == %@", reference)
         
-        let subscription = CKQuerySubscription(recordType: Question.recordType, predicate: predicate, options: .firesOnRecordCreation)
+        let subscription = CKQuerySubscription(recordType: Question.recordType, predicate: predicate, options: [.firesOnRecordCreation, .firesOnRecordUpdate])
+        
+        print(subscription)
         
         let notificationInfo = CKNotificationInfo()
         
@@ -97,21 +102,9 @@ class SessionController {
         
         cloudKitManager.publicDatabase.save(subscription) { (subscription, error) in
             if error != nil {
-                print(error?.localizedDescription)
+                print(error!.localizedDescription)
             }
         }
-    }
-    
-    func sessionNowInactive(session: Session) {
-        
-    }
-    
-    func addVoteToQuestion(question: Question) {
-       
-    }
-    
-    func addNotesToQuestion(text: String, question: Question) {
-        // MARK: fix this
     }
     
     // MARK: random code generator

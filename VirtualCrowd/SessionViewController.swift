@@ -13,7 +13,7 @@ protocol textfieldChangedDelegate: class {
     func updateQuestionWith(text: String)
 }
 
-class SessionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate, UITextFieldDelegate, UITextViewDelegate {
+class SessionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate, UITextFieldDelegate, UITextViewDelegate, UpVoteButtonPressedDelegate {
     
     // MARK: Properties
     //----------------------------------------------------------------------------------------------------------------------
@@ -22,7 +22,7 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
     var selectedIndexPath: IndexPath? = nil
     var previousCellIndexPath: IndexPath?
     var lastQuestionViewed: Question? = nil
-    let cloudKitManager = CloudKitManager()
+    let cloudKitManager = CloudKitManager.sharedController
     var previousCellIndex: IndexPath?
     
     // MARK: Outlets
@@ -57,15 +57,14 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "questionCell") as? QuestionTableViewCell else { return QuestionTableViewCell() }
         let indexOfQuestion = indexPath.section + indexPath.row
         let question = SessionController.sharedController.questionsArray[indexOfQuestion]
         cell.layer.cornerRadius = 10
         cell.contentView.layer.cornerRadius = 10
         cell.layer.borderWidth = 1
+        cell.upVoteDelegate = self
         cell.updateWith(question: question)
-        
         return cell
     }
     
@@ -115,12 +114,26 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func addQuestionSubmitButtonTapped(question: String) {
-        guard let session = self.session else { return }
+        guard let session = SessionController.sharedController.activeSession else { return }
         QuestionController.sharedController.createQuestionRecordFrom(statement: question, session: session)
+        SessionController.sharedController.fullSync()
     }
     
+    func addVoteToQuestion(question: Question) {
+        let record = CKRecord(statement: question.statement, recordID: question.recordID!, votes: question.votes, session: SessionController.sharedController.activeSession!)
+        cloudKitManager.modifyRecords([record], perRecordCompletion: { (record, error) in
+            if let record = record {
+                print(record)
+            }
+        }, completion: { (records, error) in
+            if let records = records {
+                print(records.count)
+            }
+        })
+    }
+ 
     func setupSessionLabels() {
-        guard let session = self.session else { return }
+        guard let session = SessionController.sharedController.activeSession else { return }
         self.title = session.title
     }
     
@@ -139,5 +152,21 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     func longPress() {
         view.addSubview(viewOfSpencer)
+    }
+}
+
+extension CKRecord {
+    convenience init(statement: String, recordID: CKRecordID, votes: Int, session: Session) {
+        let sessionID = session.recordID
+        let question = Question(statement: statement, recordID: recordID, votes: votes, notes: "")
+        let recordIDReference = CKReference(recordID: recordID, action: .none)
+        let referenceToSession = CKReference(recordID: sessionID, action: .deleteSelf)
+        
+        self.init(recordType: Question.recordType, recordID: question.recordID!)
+        self.setObject(question.statement as CKRecordValue?, forKey: Question.kStatement)
+        self.setObject(recordIDReference, forKey: Question.kRecordID)
+        self.setObject(referenceToSession, forKey: Question.kReference)
+        self.setObject(question.votes as CKRecordValue?, forKey: Question.kVotes)
+        self.setObject(question.notes as CKRecordValue?, forKey: Question.kNotes)
     }
 }

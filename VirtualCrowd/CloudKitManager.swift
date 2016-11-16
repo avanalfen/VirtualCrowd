@@ -97,6 +97,10 @@ class CloudKitManager {
         
         publicDatabase.fetch(withRecordID: recordID) { (record, error) in
             
+            if error != nil {
+                print(error!.localizedDescription)
+            }
+            
             completion?(record, error)
         }
     }

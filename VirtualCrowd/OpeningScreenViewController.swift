@@ -105,7 +105,6 @@ class OpeningScreenViewController: UIViewController, UIPickerViewDelegate, UITex
         }
     }
     
-    
     @IBAction func JoinSessionPressed(_ sender: UIButton) {
         joinSession()
     }
@@ -162,8 +161,13 @@ class OpeningScreenViewController: UIViewController, UIPickerViewDelegate, UITex
     
     @IBAction func createSessionButtonPressed(_ sender: UIButton) {
         guard let title = createCrowdTitleTextEntry.text, let time = Double(createCrowdTimeLimitEntry.text!) else { return }
+        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        guard let sessionViewController = storyboard.instantiateViewController(withIdentifier: "sessionView") as? SessionViewController else { return }
         SessionController.sharedController.activeSession = SessionController.sharedController.createSession(title: title, timeLimit: time)
         SessionController.sharedController.subscribeToQuestionsForSession()
+        self.navigationController?.pushViewController(sessionViewController, animated: true)
+        self.clearTextFields()
+        self.resignKeyboard()
     }
     
     @IBAction func pastSessionsButtonTapped(_ sender: UIButton) {
