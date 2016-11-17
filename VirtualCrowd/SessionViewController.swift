@@ -93,7 +93,7 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
         let endTime = date(date: session.endDate).timeR
         let code = session.code
         let menu = UIAlertController(title: "Entry code:\(code) \n Ends at: \(endTime)", message: nil, preferredStyle: .alert)
-        let close = UIAlertAction(title: "Close", style: .default, handler: nil)
+        let close = UIAlertAction(title: "Close", style: .destructive, handler: nil)
         let question = UIAlertAction(title: "Submit Question", style: .default) { (_) in
             let alert = UIAlertController(title: "Enter A Question", message: nil, preferredStyle: .alert)
             var submitTextField: UITextField?
@@ -194,6 +194,9 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     func longPress() {
         view.addSubview(viewOfSpencer)
+    }
+    @IBAction func dismissTapped(_ sender: Any) {
+        viewOfSpencer.removeFromSuperview()
     }
 }
 
