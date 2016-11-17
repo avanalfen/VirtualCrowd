@@ -88,7 +88,7 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
     // MARK: Functions
     //----------------------------------------------------------------------------------------------------------------------
     
-    @IBAction func menuTapped(_ sender: UIBarButtonItem) {
+    func menuTapped(_ sender: UIBarButtonItem) {
         guard let session = SessionController.sharedController.activeSession else { return }
         let endTime = date(date: session.endDate).timeR
         let code = session.code
@@ -175,6 +175,8 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
     func setupSessionLabels() {
         guard let session = SessionController.sharedController.activeSession else { return }
         self.title = session.title
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "111menu") , style: .plain, target: self, action: #selector(menuTapped(_:)))
     }
     
     func reloadTable() {

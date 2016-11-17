@@ -195,7 +195,7 @@
                                         <rect key="frame" x="0.0" y="28" width="375" height="62"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="7HX-wE-Ke7" id="HJb-Ul-uAD">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="62"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="61.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="9" translatesAutoresizingMaskIntoConstraints="NO" id="ocZ-DK-YaC">
@@ -261,13 +261,7 @@
                             <constraint firstItem="ymb-wt-3TD" firstAttribute="leading" secondItem="tG6-4o-Hl1" secondAttribute="leading" id="pNS-mq-hXn"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Title" id="aha-5I-nC7">
-                        <barButtonItem key="rightBarButtonItem" image="111menu" style="plain" id="QhQ-Ua-3H0">
-                            <connections>
-                                <action selector="menuTapped:" destination="l4v-dS-HXL" id="nNg-ch-1G6"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Title" id="aha-5I-nC7"/>
                     <connections>
                         <outlet property="sessionQuestionsTableView" destination="ymb-wt-3TD" id="P6x-FM-8ZN"/>
                         <outlet property="viewOfSpencer" destination="FVS-nY-HV8" id="PNQ-Nx-sgJ"/>
@@ -313,7 +307,7 @@
                     <blurEffect style="light"/>
                 </visualEffectView>
             </objects>
-            <point key="canvasLocation" x="2746" y="-581"/>
+            <point key="canvasLocation" x="3000.8000000000002" y="-597.75112443778119"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="vDH-5v-djW">
@@ -331,11 +325,10 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dYv-o2-IQD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1362" y="-781"/>
+            <point key="canvasLocation" x="1538" y="-597"/>
         </scene>
     </scenes>
     <resources>
-        <image name="111menu" width="26" height="20"/>
         <image name="Group 2" width="450" height="19"/>
         <image name="Rectangle" width="512" height="96"/>
         <image name="Screen Shot 2016-10-12 at 7.15.56 PM" width="148" height="149"/>
