@@ -18,13 +18,14 @@ class SessionController {
     
     var activeSession: Session?
     var previousSession: Session?
-    var viewIsBeingShownComingFromSession: Bool?
     var inactiveSessions: [Session] = []
     var joinedSessions: [Session] = []
+    var sessionReference: CKReference?
+    var questionsVotedOn: [Question] = []
+    let cloudKitManager = CloudKitManager.sharedController
     var sortedJoinedSessions: [Session] {
         return joinedSessions.sorted(by: { $0.0.endDate > $0.1.endDate })
     }
-    var sessionReference: CKReference?
     var questionsArray: [Question] = [] {
         didSet {
             NotificationCenter.default.post(Notification(name: Notification.Name(rawValue: "QuestionArrayChanged")))
@@ -33,12 +34,10 @@ class SessionController {
     var sortedQuestions: [Question] {
         return questionsArray.sorted(by: { $0.0.votes > $0.1.votes })
     }
-    var questionsVotedOn: [Question] = []
-    let cloudKitManager = CloudKitManager.sharedController
     
     // MARK: functions
     //----------------------------------------------------------------------------------------------------------------------
-
+    
     @discardableResult func createSession(title: String, timeLimit: TimeInterval) -> Session {
         let formatter = DateFormatter()
         formatter.timeStyle = .short
@@ -102,7 +101,7 @@ class SessionController {
         
         let notificationInfo = CKNotificationInfo()
         
-        notificationInfo.alertBody = "New Question!"
+        notificationInfo.shouldSendContentAvailable = true
         
         subscription.notificationInfo = notificationInfo
         
@@ -115,7 +114,7 @@ class SessionController {
     
     // MARK: random code generator
     //----------------------------------------------------------------------------------------------------------------------
-
+    
     func randomCodeGenerator() -> String {
         let characters: NSString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
         let randomCodeString: NSMutableString = NSMutableString(capacity: 5)
@@ -173,7 +172,4 @@ class SessionController {
             }
         }
     }
-    
-    
-    
 }

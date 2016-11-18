@@ -29,27 +29,23 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
     //----------------------------------------------------------------------------------------------------------------------
     
     @IBOutlet private var viewOfSpencer: UIVisualEffectView!
-    @IBOutlet weak private var sessionQuestionsTableView: UITableView!
+    @IBOutlet weak private var tableView: UITableView!
     
     // MARK: View Setup
     //----------------------------------------------------------------------------------------------------------------------
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.tableHeaderView = nil
         setupSessionLabels()
         setupTapGesture()
         SessionController.sharedController.fullSync()
-        sessionQuestionsTableView.allowsSelection = false
+        tableView.allowsSelection = false
         NotificationCenter.default.addObserver(self, selector: #selector(reloadTable), name: Notification.Name(rawValue: "QuestionArrayChanged"), object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.navigationBar.isHidden = false
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        SessionController.sharedController.viewIsBeingShownComingFromSession = true
-        SessionController.sharedController.previousSession = self.session
     }
     
     // MARK: TableView
@@ -60,6 +56,7 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "questionCell") as? QuestionTableViewCell else { return QuestionTableViewCell() }
         let indexOfQuestion = indexPath.section + indexPath.row
         let question = SessionController.sharedController.sortedQuestions[indexOfQuestion]
+        
         cell.layer.cornerRadius = 10
         cell.contentView.layer.cornerRadius = 10
         cell.layer.borderWidth = 1
@@ -88,34 +85,34 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
     // MARK: Functions
     //----------------------------------------------------------------------------------------------------------------------
     
-    func menuTapped(_ sender: UIBarButtonItem) {
+    func infoTapped() {
         guard let session = SessionController.sharedController.activeSession else { return }
         let endTime = date(date: session.endDate).timeR
         let code = session.code
-        let menu = UIAlertController(title: "Entry code:\(code) \n Ends at: \(endTime)", message: nil, preferredStyle: .alert)
-        let close = UIAlertAction(title: "Close", style: .destructive, handler: nil)
-        let question = UIAlertAction(title: "Submit Question", style: .default) { (_) in
-            let alert = UIAlertController(title: "Enter A Question", message: nil, preferredStyle: .alert)
-            var submitTextField: UITextField?
-            alert.addTextField { (textField) in
-                submitTextField = textField
-            }
-            let submit = UIAlertAction(title: "Submit", style: .default) { (_) in
-                guard let question = submitTextField?.text else { return }
-                self.addQuestionSubmitButtonTapped(question: question)
-                let alert2 = UIAlertController(title: "You've added a question!", message: "Your question should appear shortly", preferredStyle: .alert)
-                let ok = UIAlertAction(title: "OK", style: .default, handler: nil)
-                alert2.addAction(ok)
-                self.present(alert2, animated: true, completion: nil)
-            }
-            let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-            alert.addAction(submit)
-            alert.addAction(cancel)
-            self.present(alert, animated: true, completion: nil)
-        }
-        menu.addAction(question)
+        let menu = UIAlertController(title: "Entry code: \(code) \n Ends at: \(endTime)", message: nil, preferredStyle: .alert)
+        let close = UIAlertAction(title: "OK", style: .default, handler: nil)
         menu.addAction(close)
         self.present(menu, animated: true, completion: nil)
+    }
+    
+    func menuTapped() {
+        let alert = UIAlertController(title: "Enter A Question", message: nil, preferredStyle: .alert)
+        var submitTextField: UITextField?
+        alert.addTextField { (textField) in
+            submitTextField = textField
+        }
+        let submit = UIAlertAction(title: "Submit", style: .default) { (_) in
+            guard let question = submitTextField?.text else { return }
+            self.addQuestionSubmitButtonTapped(question: question)
+            let alert2 = UIAlertController(title: "You've added a question!", message: "Your question should appear shortly", preferredStyle: .alert)
+            let ok = UIAlertAction(title: "OK", style: .default, handler: nil)
+            alert2.addAction(ok)
+            self.present(alert2, animated: true, completion: nil)
+        }
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alert.addAction(submit)
+        alert.addAction(cancel)
+        self.present(alert, animated: true, completion: nil)
     }
     
     func addQuestionSubmitButtonTapped(question: String) {
@@ -134,7 +131,7 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
                     guard let indexOfDeviceQuestion = SessionController.sharedController.questionsVotedOn.index(of: deviceQuestion) else { return }
                     DispatchQueue.main.async {
                         SessionController.sharedController.questionsVotedOn.remove(at: indexOfDeviceQuestion)
-                        self.sessionQuestionsTableView.reloadData()
+                        self.tableView.reloadData()
                     }
                     let record = CKRecord(statement: deviceQuestion.statement, recordID: deviceQuestionID, votes: deviceQuestion.votes, session: SessionController.sharedController.activeSession!)
                     self.cloudKitManager.modifyRecords([record], perRecordCompletion: { (record, error) in
@@ -150,7 +147,7 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
                     deviceQuestion.votes += 1
                     DispatchQueue.main.async {
                         SessionController.sharedController.questionsVotedOn.append(deviceQuestion)
-                        self.sessionQuestionsTableView.reloadData()
+                        self.tableView.reloadData()
                     }
                     let record = CKRecord(statement: deviceQuestion.statement, recordID: pulledQuestion.recordID!, votes: deviceQuestion.votes, session: SessionController.sharedController.activeSession!)
                     self.cloudKitManager.modifyRecords([record], perRecordCompletion: { (record, error) in
@@ -176,11 +173,13 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
         guard let session = SessionController.sharedController.activeSession else { return }
         self.title = session.title
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "111menu") , style: .plain, target: self, action: #selector(menuTapped(_:)))
+        let info = UIBarButtonItem(image: UIImage(named: "informationbubble"), style: .plain, target: self, action: #selector(infoTapped))
+        let addQuestion = UIBarButtonItem(image: UIImage(named: "speechbubble"), style: .plain, target: self, action: #selector(menuTapped))
+        navigationItem.rightBarButtonItems = [info, addQuestion]
     }
     
     func reloadTable() {
-        self.sessionQuestionsTableView.reloadData()
+        self.tableView.reloadData()
     }
     
     // MARK: Tap Gesture Easter Egg

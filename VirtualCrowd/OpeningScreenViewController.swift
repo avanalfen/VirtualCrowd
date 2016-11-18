@@ -34,7 +34,6 @@ class OpeningScreenViewController: UIViewController, UIPickerViewDelegate, UITex
         setupTextfields()
         theInceptionView.layer.cornerRadius = 5
         theInceptionView.layer.masksToBounds = true
-        SessionController.sharedController.viewIsBeingShownComingFromSession = false
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -45,10 +44,6 @@ class OpeningScreenViewController: UIViewController, UIPickerViewDelegate, UITex
         self.navigationController?.navigationBar.isHidden = true
         createButton.isEnabled = false
         joinButton.isEnabled = false
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        SessionController.sharedController.viewIsBeingShownComingFromSession = false
     }
     
     // MARK: Textfields
